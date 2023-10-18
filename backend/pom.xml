@@ -17,7 +17,7 @@
         <java.version>17</java.version>
         <sonar.organization>weimingtay</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-<sonar.projectName>weimingtay_capstone-verleihApp-backend</sonar.projectName>
+        <sonar.projectName>weimingtay_capstone-verleihApp-backend</sonar.projectName>
     </properties>
     <dependencies>
         <dependency>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo.spring30x</artifactId>
-            <version>4.9.3</version>
+            <version>4.9.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>

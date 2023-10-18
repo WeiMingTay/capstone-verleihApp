@@ -13,7 +13,7 @@ public class ToolsController {
 
     private final ToolsService toolsService;
 
-    @PostMapping
+    @PostMapping("/add")
     public Tool createTool(@RequestBody Tool tool) {
         return toolsService.createTool(tool);
     }
