@@ -10,10 +10,12 @@ class ToolsServiceTest {
     ToolsRepository toolsRepository = mock(ToolsRepository.class);
     ToolsService toolsService = new ToolsService(toolsRepository);
 
+    Tool newTool = new Tool("1", "Hammer", "Keller");
+
     @Test
     void createTool_expectCreatedToolObject() {
         //GIVEN
-        Tool newTool1 = new Tool("1", "Hammer", "Keller");
+        Tool newTool1 = newTool;
 
         //WHEN
         when(toolsRepository.save(newTool1)).thenReturn(newTool1);
@@ -28,7 +30,7 @@ class ToolsServiceTest {
     @Test
     void createToolWithWrongId_expectWrongArgument() {
         //GIVEN
-        Tool newTool1 = new Tool("1", "Hammer", "Keller");
+        Tool newTool1 = newTool;
 
         //WHEN
         Tool unexpected = new Tool("2", "Hammer", "Keller");
