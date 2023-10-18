@@ -28,7 +28,6 @@ class ToolsControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "id": "1",
                                     "name": "Hammer",
                                     "location": "Keller"
                                     }
@@ -37,7 +36,6 @@ class ToolsControllerIntegrationTests {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
                             {
-                            "id": "1",
                             "name": "Hammer",
                             "location": "Keller"
                             }
