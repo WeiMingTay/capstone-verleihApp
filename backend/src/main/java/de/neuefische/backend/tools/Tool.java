@@ -1,19 +1,27 @@
 package de.neuefische.backend.tools;
 
-import lombok.With;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
 @Document
-public record Tool(
-        @With
-        String id,
-        String name,
-        String location
-/*        String image,
-        Category category,
-        String user,
+public class Tool {
+    private String id;
+    private String name;
+    private String location;
 
-        String description,
-        String author*/
-) {
+    private String image;
+    private Category category;
+    private String user;
+    private String description;
+    private String author;
+
+
+    //CONSTRUCTOR
+
+    public Tool(String id, String name, String location) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+    }
 }
