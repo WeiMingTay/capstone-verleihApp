@@ -10,12 +10,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ToolsService {
 
-    private final ToolRepository toolRepository;
+    private final ToolsRepository toolsRepository;
 
     public Tool createTool(Tool tool) {
         String id = UUID.randomUUID().toString();
         Tool toolToSave = tool.withId(id);
 
-        return toolRepository.save(toolToSave);
+        return toolsRepository.save(toolToSave);
     }
 }

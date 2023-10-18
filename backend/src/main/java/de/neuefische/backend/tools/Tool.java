@@ -6,11 +6,12 @@ public record Tool(
         @With
         String id,
         String name,
-        String image,
+        String location
+/*        String image,
         Category category,
         String user,
-        String location,
+
         String description,
-        String author
+        String author*/
 ) {
 }
