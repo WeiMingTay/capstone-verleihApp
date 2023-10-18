@@ -29,7 +29,8 @@ class ToolsControllerIntegrationTests {
                         .content("""
                                 {
                                     "name": "Hammer",
-                                    "location": "Keller"
+                                    "location": "Keller",
+                                    "category": "TOOLS"
                                     }
                                 """)
                 )
@@ -37,7 +38,8 @@ class ToolsControllerIntegrationTests {
                 .andExpect(MockMvcResultMatchers.content().json("""
                             {
                             "name": "Hammer",
-                            "location": "Keller"
+                            "location": "Keller",
+                            "category": "TOOLS"
                             }
                         """
                 ));
