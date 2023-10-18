@@ -14,4 +14,7 @@ public class Tool {
     private Category category;
 
 
+    public Tool() {
+
+    }
 }

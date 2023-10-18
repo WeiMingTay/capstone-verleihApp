@@ -11,7 +11,12 @@ public class ToolsService {
 
     private final ToolsRepository toolsRepository;
 
-    public Tool createTool(Tool tool) {
+    public Tool createTool(NewTool newTool) {
+        Tool tool = new Tool();
+            tool.setName(newTool.getName());
+            tool.setLocation(newTool.getLocation());
+            tool.setCategory(newTool.getCategory());
+
 
         return toolsRepository.save(tool);
     }

@@ -14,7 +14,7 @@ public class ToolsController {
     private final ToolsService toolsService;
 
     @PostMapping("/add")
-    public Tool createTool(@RequestBody Tool tool) {
-        return toolsService.createTool(tool);
+    public Tool createTool(@RequestBody NewTool newTool) {
+        return toolsService.createTool(newTool);
     }
 }
