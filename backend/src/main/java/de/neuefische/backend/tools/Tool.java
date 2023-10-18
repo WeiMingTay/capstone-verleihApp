@@ -1,7 +1,9 @@
 package de.neuefische.backend.tools;
 
 import lombok.With;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public record Tool(
         @With
         String id,
