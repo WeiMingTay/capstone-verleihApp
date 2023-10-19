@@ -1,4 +1,32 @@
-.addToolPage form {
+@import "../../assets/Variables.scss";
+
+.addToolPage {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  form {
     display: flex;
-background-color: red;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    background-color: $backgroundColorMedium;
+    text-align: center;
+    padding: 3rem;
+
+    label {
+      input, select {
+        font-family: $fontFamily;
+        width: 200px;
+        padding: .5rem 1rem;
+        accent-color: hotpink;
+      }
+    }
+  }
+  p {
+    text-align: start;
+  }
 }
