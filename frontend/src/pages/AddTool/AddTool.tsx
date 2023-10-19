@@ -1,6 +1,6 @@
 import axios from "axios";
 import {allCategories} from "../../assets/entities/tools.ts";
-
+import "./AddTool.scss"
 
 
 export default function AddTool() {
