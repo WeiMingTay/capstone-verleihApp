@@ -20,8 +20,6 @@ S
 backend/pom.xml,f/9/f9590cd73598b6f2427c8b1327d922c50d1dc504
 D
 frontend/src/App.tsx,b/9/b9c5384815ed26f7912bd4d34cab45985cb9a0cd
-D
-frontend/src/App.css,8/a/8a75d7beb1451b6fe9282486fbd897a9a8156b7f
 E
 frontend/src/main.tsx,d/3/d34671d283228d7092732121699241dc2e7bac4b
 E
