@@ -5,11 +5,11 @@ import {ChangeEvent, FormEvent, useState} from "react";
 
 
 export default function AddTool() {
-    const [, setTool] = useState<Tools>()
+    const [tool, setTool] = useState<Tools>()
     const [name, setName] = useState("")
     const [location, setLocation] = useState("")
     const [category, setCategory] = useState("")
-
+console.log(tool)
 
     function submitNewTool(event: FormEvent) {
 
@@ -61,7 +61,7 @@ export default function AddTool() {
                 <label><input type="text" placeholder="Location" onInput={changeLocation} value={location}
                               required/></label>
                 <label><select onChange={changeCategory} value={category} required>
-                    <option value="" disabled >Kategorie</option>
+                    <option value="" disabled>Kategorie</option>
                     {allCategories.map(category => {
                         return <option
                             key={category}
@@ -72,9 +72,11 @@ export default function AddTool() {
                 </select></label>
                 <button>Speichern</button>
             </form>
-            <p>Bezeichnung: {name}</p>
-            <p>Location: {location}</p>
-            <p>Kategorie: {category}</p>
+            <section>
+                <p>Bezeichnung: {name}</p>
+                <p>Location: {location}</p>
+                <p>Kategorie: {category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}</p>
+            </section>
         </div>
     );
 }

@@ -21,3 +21,13 @@ $accentColor: #f86268;
 $textColorLight: white;
 $textColorMedium: lightgray;
 $textColorDark: black;
+
+/* === SPACING ===*/
+
+/* === MIXIN ===*/
+@mixin flexCenter($gap) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $gap;
+}
