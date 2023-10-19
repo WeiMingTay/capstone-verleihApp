@@ -9,8 +9,8 @@ export default function App() {
 
     return (
         <BrowserRouter>
-            <h1>Moin</h1>
-            <Link to={"ulrike/flipCard"}>Ulrike</Link>
+
+            <Link to={"ulrike/flipCard"}>▶ Ulrike ◀</Link>
             <Routes>
                 <Route path={"werkzeuge/add"} element={<AddTool/>}/>
                 <Route path={"ulrike/flipCard"} element={<FlipCard/>}/>
