@@ -16,25 +16,27 @@
     padding: 3rem;
 
     label {
-      input, select {
+      input, select, textarea {
         font-family: $fontFamily;
         width: 200px;
         padding: .5rem 1rem;
         accent-color: $accentColor;
       }
     }
-  }
 
-  section {
-    width: 100%;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: .5rem;
+    section {
+      width: 100%;
+      font-size: $fontSizeM;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .25rem;
 
-    p {
-      text-align: center;
+      p {
+        text-align: center;
+      }
     }
   }
+
+
 }
