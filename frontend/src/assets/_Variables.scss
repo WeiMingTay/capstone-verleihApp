@@ -31,3 +31,8 @@ $textColorDark: black;
   align-items: center;
   gap: $gap;
 }
+
+@mixin aTag {
+  text-decoration: none;
+  color: inherit;
+}

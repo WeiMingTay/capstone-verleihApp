@@ -1,4 +1,97 @@
 @import "../../assets/_Variables.scss";
+
 header {
   background-color: $backgroundColorMedium;
+  @include flexCenter(0);
+  justify-content: space-between;
+  padding: .25rem;
+  height: 10vh;
+
+  div {
+    @include flexCenter(.5rem);
+
+    img {
+      min-width: 4rem;
+      width: 20vw;
+      max-width: 5rem;
+    }
+
+    h1 {
+      font-size: $fontSizeXXL;
+
+    }
+  }
+
+  .menu-toggle {
+    position: relative;
+    height: fit-content;
+
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+
+      .bar {
+        background-color: $textColorDark;
+        height: .15rem;
+        width: 2rem;
+        transition: all 500ms ease-in-out;
+
+      }
+    }
+
+    nav {
+      visibility: hidden;
+      position: absolute;
+      bottom: -6rem;
+      right: 0;
+
+      border: 2px solid $backgroundColorLight;
+
+      background-color: $backgroundColorMedium;
+      transition: all 100ms ease-in-out;
+
+      ul {
+        @include flexCenter(.5rem);
+        flex-direction: column;
+        align-items: flex-end;
+        list-style: none;
+        padding: 1rem;
+        font-size: $fontSizeL;
+
+        li {
+          a {
+            @include aTag;
+          }
+        }
+      }
+    }
+
+
+  }
+
+  .open {
+    nav {
+
+      visibility: visible;
+    }
+
+    .bar {
+      &:nth-child(1) {
+        transform: translateY(5px);
+      }
+
+      &:nth-child(2) {
+        transform: scale(0);
+      }
+
+      &:nth-child(3) {
+        transform: translateY(-10px);
+      }
+    }
+  }
+
+
 }
