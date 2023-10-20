@@ -1,0 +1,33 @@
+/* === FONTS ===*/
+$fontFamily: 'Roboto', sans-serif;
+
+/* fontSize */
+$fontSizeXS: .5rem;
+$fontSizeS: .75rem;
+$fontSizeM: 1rem;
+$fontSizeL: 1.25rem;
+$fontSizeXL: 1.5rem;
+$fontSizeXXL: 1.75rem;
+
+/* === COLORS ===*/
+$backgroundColorLight: white;
+$backgroundColorMedium: lightgray;
+$backgroundColorDark: black;
+
+$primaryColor: #59822b;
+$secondaryColor: #3f799d;
+$accentColor: #f86268;
+
+$textColorLight: white;
+$textColorMedium: lightgray;
+$textColorDark: black;
+
+/* === SPACING ===*/
+
+/* === MIXIN ===*/
+@mixin flexCenter($gap) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $gap;
+}
