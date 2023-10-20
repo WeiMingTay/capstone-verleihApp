@@ -28,10 +28,10 @@ class ToolsControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "name": "Hammer",
-                                    "location": "Keller",
-                                    "category": "TOOLS"
-                                    }
+                                "name": "Hammer",
+                                "location": "Keller",
+                                "category": "TOOLS"
+                                }
                                 """)
                 )
                 .andExpect(status().isOk())
@@ -42,6 +42,25 @@ class ToolsControllerIntegrationTests {
                             "category": "TOOLS"
                             }
                         """
+                ));
+    }
+
+    @Test
+    @DirtiesContext
+    void createToolWithEmpty_POST_expectNullPointerException() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/tools/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "name": "Hammer",
+                                "location": null,
+                                "category": "TOOLS"
+                                                               
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(
+                        "Elemente können nicht null sein!"
                 ));
     }
 }
