@@ -40,6 +40,7 @@ console.log(tool)
 
     function resetForm() {
         setName("");
+        setImageFile(null);
         setStrasse("");
         setHausnummer("")
         setCategory("");
@@ -90,6 +91,7 @@ console.log(tool)
                 <label>
                     <input
                         type="file"
+
                         onChange={(event) => {
                             const selectedFile = event.target?.files ? event.target.files[0] : null;
                             setImageFile(selectedFile);
@@ -106,6 +108,7 @@ console.log(tool)
                             }
                         }}
                     />
+                    {imageFile && <img src={previewImage} alt={name}/>}
                 </label>
 
                 <label>
