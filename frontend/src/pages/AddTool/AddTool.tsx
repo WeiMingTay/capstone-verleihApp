@@ -14,8 +14,9 @@ export default function AddTool() {
     const [strasse, setStrasse] = useState("")
     const [hausnummer, setHausnummer] = useState("")
     const [category, setCategory] = useState("")
-    console.log(tool)
-
+    const [author, setAuthor] = useState("")
+    const [description, setDescription] = useState("")
+console.log(tool)
     function submitNewTool(event: FormEvent) {
 
         event.preventDefault()
@@ -24,10 +25,11 @@ export default function AddTool() {
                 name: name,
                 image: imageFile,
                 location: strasse + " " + hausnummer,
-                category: category
+                category: category,
+                author: author
             })
             .then((response) => {
-                setTool(response.data) // brauch ich das???
+                setTool(response.data) // brauche ich das?
                 resetForm()
             })
             .catch((error) => {
@@ -41,6 +43,8 @@ export default function AddTool() {
         setStrasse("");
         setHausnummer("")
         setCategory("");
+        setAuthor("")
+        setDescription("")
 
     }
 
@@ -58,11 +62,17 @@ export default function AddTool() {
         const newHausnummer = event.target.value;
         setHausnummer(newHausnummer);
     }
-
-
     function changeCategory(event: ChangeEvent<HTMLSelectElement>) {
         const newCategory = event.target.value;
         setCategory(newCategory);
+    }
+    function changeAuthor(event: ChangeEvent<HTMLInputElement>) {
+        const newAuthor = event.target.value;
+        setAuthor(newAuthor);
+    }
+    function changeDescription(event: ChangeEvent<HTMLTextAreaElement>) {
+        const newDescription = event.target.value;
+        setDescription(newDescription);
     }
 
     return (
@@ -112,13 +122,10 @@ export default function AddTool() {
                         </option>
                         {
                             allCategories.map(category => {
-                                return <>
-                                    <option
-                                        key={category}
-                                        value={category}>{category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}
-                                    </option>
-
-                                </>
+                                return <option
+                                    key={category}
+                                    value={category}>{category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}
+                                </option>
                             })
                         }
                     </select>
@@ -126,21 +133,22 @@ export default function AddTool() {
                 <label>
                     <input
                         type="text"
-                        placeholder="Ansprechpartner"/>
+                        placeholder="Ansprechpartner"
+                        onChange={changeAuthor}
+                        value={author}
+                    />
                 </label>
                 <label>
                     <select onChange={changeStrasse} value={strasse} required>
                         <option value="" disabled>Straße</option>
                         {
                             strassen.map(str => {
-                                return <>
-                                    <option
-                                        key={str}
-                                        value={str}
-                                    >
-                                        {str}
-                                    </option>
-                                </>
+                                return <option
+                                    key={str}
+                                    value={str}
+                                >
+                                    {str}
+                                </option>
                             })
                         }
                     </select>
@@ -149,20 +157,25 @@ export default function AddTool() {
                         placeholder="Hausnummer"
                         onChange={changeHausnummer}
                         value={hausnummer}
-                        required/>
+                        required
+                    />
                 </label>
                 <label>
-                    <textarea placeholder="Beschreibung"/>
+                    <textarea
+                        placeholder="Beschreibung"
+                        onChange={changeDescription}
+                        value={description}
+                    />
                 </label>
 
                 <button>Speichern</button>
                 <section>
                     <p>Bezeichnung: {name}</p>
-                    <p>Bild:</p><img src={previewImage} alt={name}/>
+                    {imageFile && <img src={previewImage} alt={name}/>}
                     <p>Kategorie: {category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}</p>
-                    <p>Ansprechpartner:</p>
+                    <p>Ansprechpartner: {author}</p>
                     <p>Location: {strasse + " " + hausnummer}</p>
-                    <p>Beschreibung:</p>
+                    <p>Beschreibung: {description}</p>
                 </section>
             </form>
 
