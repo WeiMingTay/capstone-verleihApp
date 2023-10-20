@@ -13,7 +13,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Tool {
 
     private @NonNull String name;
-    private @NonNull String location;
+
     private @NonNull Category category;
+    private String author;
+    private @NonNull String location;
+    private String description;
+
 
 }

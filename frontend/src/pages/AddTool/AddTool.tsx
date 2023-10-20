@@ -16,7 +16,9 @@ export default function AddTool() {
     const [category, setCategory] = useState("")
     const [author, setAuthor] = useState("")
     const [description, setDescription] = useState("")
-console.log(tool)
+
+    console.log(tool)
+
     function submitNewTool(event: FormEvent) {
 
         event.preventDefault()
@@ -24,9 +26,10 @@ console.log(tool)
             {
                 name: name,
                 image: imageFile,
-                location: strasse + " " + hausnummer,
                 category: category,
-                author: author
+                author: author,
+                location: strasse + " " + hausnummer,
+                description: description
             })
             .then((response) => {
                 setTool(response.data) // brauche ich das?
@@ -63,16 +66,19 @@ console.log(tool)
         const newHausnummer = event.target.value;
         setHausnummer(newHausnummer);
     }
+
     function changeCategory(event: ChangeEvent<HTMLSelectElement>) {
         const newCategory = event.target.value;
         setCategory(newCategory);
     }
+
     function changeAuthor(event: ChangeEvent<HTMLInputElement>) {
         const newAuthor = event.target.value;
         setAuthor(newAuthor);
     }
+
     function changeDescription(event: ChangeEvent<HTMLTextAreaElement>) {
-        const newDescription = event.target.value;
+        const newDescription = event.target.value.toString();
         setDescription(newDescription);
     }
 
@@ -91,18 +97,25 @@ console.log(tool)
                 <label>
                     <input
                         type="file"
-
                         onChange={(event) => {
                             const selectedFile = event.target?.files ? event.target.files[0] : null;
-                            setImageFile(selectedFile);
+
                             if (selectedFile) {
-                                const reader = new FileReader();
-                                reader.onload = (e) => {
-                                    if (e.target) {
-                                        setPreviewImage(e.target.result as string);
-                                    }
-                                };
-                                reader.readAsDataURL(selectedFile);
+                                // Check if the selected file is an image
+                                if (selectedFile.type.startsWith('image/')) {
+                                    setImageFile(selectedFile);
+
+                                    const reader = new FileReader();
+                                    reader.onload = (e) => {
+                                        if (e.target) {
+                                            setPreviewImage(e.target.result as string);
+                                        }
+                                    };
+                                    reader.readAsDataURL(selectedFile);
+                                } else {
+                                    // Display an error message or handle the non-image file selection
+                                    console.error("Selected file is not an image.");
+                                }
                             } else {
                                 setPreviewImage(""); // Clear the preview if no file is selected
                             }
@@ -110,7 +123,6 @@ console.log(tool)
                     />
                     {imageFile && <img src={previewImage} alt={name}/>}
                 </label>
-
                 <label>
                     <select
                         onChange={changeCategory}
@@ -172,6 +184,7 @@ console.log(tool)
                 </label>
 
                 <button>Speichern</button>
+
                 <section>
                     <p>Bezeichnung: {name}</p>
                     {imageFile && <img src={previewImage} alt={name}/>}
