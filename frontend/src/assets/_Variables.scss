@@ -10,20 +10,20 @@ $fontSizeXL: 1.5rem;
 $fontSizeXXL: 1.75rem;
 
 /* === COLORS ===*/
-$backgroundColorLight: white;
+$backgroundColorLight: #fff;
 $backgroundColorMedium: lightgray;
-$backgroundColorDark: black;
+$backgroundColorDark: #000;
 
 $primaryColor: #59822b;
 $secondaryColor: #3f799d;
 $accentColor: #f86268;
 
-$textColorLight: white;
+$textColorLight: #fff;
 $textColorMedium: lightgray;
-$textColorDark: black;
+$textColorDark: #000;
 
 /* === SPACING ===*/
-
+$headerHeight: 4rem;
 /* === MIXIN ===*/
 @mixin flexCenter($gap) {
   display: flex;

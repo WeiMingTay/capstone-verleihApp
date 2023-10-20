@@ -2,6 +2,8 @@ import {Link} from "react-router-dom";
 import "./Header.scss"
 import {useState} from "react";
 
+import logo from "../../assets/images/logo.jpg";
+
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false)
 
@@ -11,7 +13,7 @@ export default function Header() {
     return (
         <header>
             <div>
-                <Link to={"/"}><img src="../../../public/logo.jpg" alt="Logo"/></Link>
+                <Link to={"/"}><img src={logo} alt="Logo"/></Link>
                 <h1>Capstone</h1>
             </div>
             <div className={`menu-toggle ${isOpen ? "open" : ""}`}>

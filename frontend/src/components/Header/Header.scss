@@ -5,7 +5,7 @@ header {
   @include flexCenter(0);
   justify-content: space-between;
   padding: .25rem;
-  height: 4rem;
+  height: $headerHeight;
 
 
   div {
@@ -86,9 +86,6 @@ header {
       transform: scaleY(1);
       visibility: visible;
 
-      li {
-
-      }
     }
 
     .bar {
