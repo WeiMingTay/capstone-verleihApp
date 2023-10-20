@@ -8,10 +8,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class NewTool {
 
-        private String name;
-        private Category category;
-        private String author;
-        private String location;
-        private String description;
+    private String name;
+    private Category category;
+    private String location;
+
 
 }

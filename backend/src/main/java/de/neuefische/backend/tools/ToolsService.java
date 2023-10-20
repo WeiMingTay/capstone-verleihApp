@@ -13,11 +13,9 @@ public class ToolsService {
 
     public Tool createTool(NewTool newTool) {
         Tool tool = new Tool();
-            tool.setName(newTool.getName());
-            tool.setCategory(newTool.getCategory());
-            tool.setAuthor(newTool.getAuthor());
-            tool.setLocation(newTool.getLocation());
-            tool.setDescription(newTool.getDescription());
+        tool.setName(newTool.getName());
+        tool.setCategory(newTool.getCategory());
+        tool.setLocation(newTool.getLocation());
 
 
         return toolsRepository.save(tool);
