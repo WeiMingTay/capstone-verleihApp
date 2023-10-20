@@ -11,7 +11,7 @@ export default function Header() {
     return (
         <header>
             <div>
-                <img src="../../../public/logo.jpg" alt="Logo"/>
+                <Link to={"/"}><img src="../../../public/logo.jpg" alt="Logo"/></Link>
                 <h1>Capstone</h1>
             </div>
             <div className={`menu-toggle ${isOpen ? "open" : ""}`}>
@@ -24,6 +24,7 @@ export default function Header() {
                     <ul>
                         <li><Link to={"/start"}>Start</Link></li>
                         <li><Link to={"/werkzeuge"}>Werkzeuge</Link></li>
+                        <li><Link to={"/schwarzes-brett"}>Schwarzes Brett</Link></li>
                     </ul>
                 </nav>
             </div>

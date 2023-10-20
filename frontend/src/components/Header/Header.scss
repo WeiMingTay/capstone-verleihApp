@@ -5,7 +5,8 @@ header {
   @include flexCenter(0);
   justify-content: space-between;
   padding: .25rem;
-  height: 10vh;
+  height: 4rem;
+
 
   div {
     @include flexCenter(.5rem);
@@ -45,13 +46,17 @@ header {
     nav {
       visibility: hidden;
       position: absolute;
-      bottom: -6rem;
+      top: 2rem;
       right: 0;
+      width: max-content;
 
       border: 2px solid $backgroundColorLight;
+      outline: 1px solid $backgroundColorMedium;
 
       background-color: $backgroundColorMedium;
-      transition: all 100ms ease-in-out;
+      transition: all 250ms ease-in-out;
+      transform: scaleY(0);
+      transform-origin: top;
 
       ul {
         @include flexCenter(.5rem);
@@ -64,6 +69,10 @@ header {
         li {
           a {
             @include aTag;
+
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       }
@@ -74,21 +83,25 @@ header {
 
   .open {
     nav {
-
+      transform: scaleY(1);
       visibility: visible;
+
+      li {
+
+      }
     }
 
     .bar {
       &:nth-child(1) {
-        transform: translateY(5px);
+        transform: translateY(5px) rotate(45deg);
       }
 
       &:nth-child(2) {
-        transform: scale(0);
+        transform: scale(0) translateX(20px)
       }
 
       &:nth-child(3) {
-        transform: translateY(-10px);
+        transform: translateY(-10px) rotate(-45deg)
       }
     }
   }
