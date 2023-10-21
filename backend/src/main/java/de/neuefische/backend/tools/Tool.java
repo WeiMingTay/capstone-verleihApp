@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document
 public class Tool {
-
+    private String id;
     private @NonNull String name;
     private @NonNull Category category;
     private String author;
