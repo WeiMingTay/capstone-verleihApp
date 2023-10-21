@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -18,6 +19,9 @@ public class ToolsService {
         return toolsRepository.findAll();
     }
 
+    public Tool getToolById(String id) throws NoSuchElementException {
+        return toolsRepository.findById(id).orElseThrow();
+    }
     //POST
     public Tool createTool(NewTool newTool) {
         Tool tool = new Tool();
@@ -28,6 +32,5 @@ public class ToolsService {
 
         return toolsRepository.save(tool);
     }
-
 
 }
