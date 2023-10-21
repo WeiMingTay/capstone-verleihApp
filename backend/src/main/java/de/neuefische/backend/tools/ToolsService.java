@@ -4,6 +4,8 @@ package de.neuefische.backend.tools;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -11,6 +13,12 @@ public class ToolsService {
 
     private final ToolsRepository toolsRepository;
 
+    // GET
+    public List<Tool> getAllTools() {
+        return toolsRepository.findAll();
+    }
+
+    //POST
     public Tool createTool(NewTool newTool) {
         Tool tool = new Tool();
         tool.setName(newTool.getName());
@@ -20,4 +28,6 @@ public class ToolsService {
 
         return toolsRepository.save(tool);
     }
+
+
 }
