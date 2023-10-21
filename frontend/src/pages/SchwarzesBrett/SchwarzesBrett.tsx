@@ -1,4 +1,4 @@
-
+import "./SchwarzesBrett.scss";
 
 export default function SchwarzesBrett() {
     return (

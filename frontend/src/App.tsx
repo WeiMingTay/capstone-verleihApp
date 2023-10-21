@@ -1,4 +1,4 @@
-import './assets/App.css'
+import './assets/App.scss'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import AddTool from "./pages/AddTool/AddTool.tsx";
 import StartPage from "./pages/StartPage/StartPage.tsx";
