@@ -21,6 +21,42 @@ class ToolsControllerIntegrationTests {
     @Autowired
     ToolsRepository toolsRepository;
 
+
+    // === GET ===
+    @Test
+    @DirtiesContext
+    void getAllTools_expectEmptyList() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/tools"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("[]"));
+    }
+
+    @Test
+    @DirtiesContext
+    void getAllTools_expectTools() throws Exception {
+        Tool tool1 = new Tool("Hammer", Category.TOOLS, "Keller");
+        toolsRepository.save(tool1);
+        toolsRepository.save(new Tool("Bohrmaschine", Category.TOOLS, "Keller"));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/tools"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        [
+                            {
+                            "name": "Hammer",
+                            "location": "Keller",
+                            "category": "TOOLS"
+                            },
+                            {
+                            "name": "Bohrmaschine",
+                            "location": "Keller",
+                            "category": "TOOLS"
+                            }
+                        ]
+                        """));
+    }
+
+    // === POST ===
     @Test
     @DirtiesContext
     void createTool_POST_expectCreatedToolObject() throws Exception {
