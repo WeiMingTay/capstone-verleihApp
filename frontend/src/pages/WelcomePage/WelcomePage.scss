@@ -1,15 +1,16 @@
 @import "../../assets/Variables.scss";
 
 .welcome-page {
-  height: calc(100vh - $headerHeight);
+  height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-rows: 8fr 2fr;
+  grid-template-rows: 6fr 2fr;
 
 
   section {
     @include flexCenter(1rem);
     flex-direction: column;
+
 
     &:first-of-type {
       justify-content: flex-end;
@@ -23,6 +24,7 @@
 
       h4 {
         font-size: $fontSizeXL;
+        font-family: $fontFamily;
       }
     }
 
@@ -45,17 +47,21 @@
             background-color: $primaryColor;
             color: $backgroundColorLight;
           }
+
           &:last-of-type {
             background-color: $secondaryColor;
             color: $backgroundColorLight;
           }
         }
       }
+
       p {
-      font-size: $fontSizeS;
+        font-size: $fontSizeS;
+
         a {
-        color: $accentColor;
+          color: $accentColor;
+        }
       }
-    }}
+    }
   }
 }

@@ -1,0 +1,41 @@
+@import "../../assets/Variables.scss";
+
+.start-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 1rem;
+  padding: 1rem 0;
+  height: calc(100vh - $headerHeight);
+
+
+  h5 {
+    font-size: $fontSizeM;
+    margin-bottom: .25rem;
+  }
+
+  .schwarzesBrett-img {
+    text-decoration: none;
+    color: inherit;
+
+    div {
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        object-fit: contain;
+        filter: grayscale(.75);
+        transition: all 500ms ease-in-out;
+      }
+
+      &:hover, &:focus-visible {
+        img {
+          filter: grayscale(.25);
+          rotate: 2deg;
+          scale: 1.05;
+        }
+      }
+    }
+  }
+
+}
