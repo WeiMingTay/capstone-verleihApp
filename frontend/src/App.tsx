@@ -13,9 +13,7 @@ export default function App() {
 
     return (
         <BrowserRouter>
-            {
-                location.pathname === '/' ? <></> : <Header/>
-            }
+            <Header/>
             <Routes>
                 <Route path={"/"} element={<WelcomePage/>}/>
                 <Route path={"/start"} element={<StartPage/>}/>

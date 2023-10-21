@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import "./Header.scss"
 import {useState} from "react";
 
@@ -6,10 +6,18 @@ import logo from "../../assets/images/logo.jpg";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false)
+    const location = useLocation();
+
+    const isOnWelcomePage = location.pathname === "/";
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     }
+
+    if (isOnWelcomePage) {
+        return null;
+    }
+
     return (
         <header>
             <div>
