@@ -28,7 +28,9 @@ class ToolsControllerIntegrationTests {
     void getAllTools_expectEmptyList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("[]"));
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        []
+                        """));
     }
 
     @Test
@@ -54,6 +56,35 @@ class ToolsControllerIntegrationTests {
                             }
                         ]
                         """));
+    }
+
+    @Test
+    @DirtiesContext
+    void getToolsById_expectTool() throws Exception {
+        Tool tool1 = toolsRepository.save(new Tool(
+                "Hammer",
+                Category.TOOLS,
+                "Keller"));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/tools/" + tool1.getId()))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        {
+                        "name": "Hammer",
+                        "location": "Keller",
+                        "category": "TOOLS"
+                        }
+                        """));
+    }
+
+    @Test
+    @DirtiesContext
+    void getToolsById_expectNoSuchElementException() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/tools/" + "quatschID"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(
+                        "Die ID gibt es leider nicht"
+                ));
     }
 
     // === POST ===
