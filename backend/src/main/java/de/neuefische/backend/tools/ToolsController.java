@@ -30,6 +30,12 @@ public class ToolsController {
     }
 
     // === Exception Handling ===
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public String handleNoSuchElementException() {
+        return "Die ID gibt es leider nicht";
+    }
+
     @ExceptionHandler(NullPointerException.class)
     public String handleNullPointerException() {
         return "Elemente können nicht null sein!";

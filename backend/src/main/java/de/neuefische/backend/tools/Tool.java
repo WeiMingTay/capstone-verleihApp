@@ -13,16 +13,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Tool {
     private String id;
     private @NonNull String name;
+    private String image;
     private @NonNull Category category;
     private String author;
     private @NonNull String location;
     private String description;
+    private String timestamp;
 
 
     public Tool(@NonNull String name, @NonNull Category category, @NonNull String location) {
         this.name = name;
         this.category = category;
         this.location = location;
+    }
 
+    public Tool(String id, @NonNull String name, @NonNull Category category, @NonNull String location) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.location = location;
     }
 }

@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -14,6 +16,7 @@ class ToolsServiceTest {
     ToolsService toolsService = new ToolsService(toolsRepository);
 
     Tool tool1 = new Tool("Hammer", Category.TOOLS, "Keller");
+    Tool toolId = new Tool("65317b1294a88f39ea92a61a", "Hammer", Category.TOOLS, "Keller");
 
     // GETall
     @Test
@@ -51,6 +54,34 @@ class ToolsServiceTest {
 
         verify(toolsRepository).findAll();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getToolById_expectHammer() {
+        // GIVEN
+        String id = toolId.getId();
+
+        // WHEN
+        when(toolsRepository.findById(id)).thenReturn(Optional.ofNullable(toolId));
+        Tool actual = toolsService.getToolById(id);
+
+        // THEN
+        Tool expected = new Tool("65317b1294a88f39ea92a61a", "Hammer", Category.TOOLS, "Keller");
+
+        verify(toolsRepository).findById(id);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getToolById_expectNoSuchElementException() {
+        // GIVEN
+        String id = "quatschId";
+
+        // WHEN
+        when(toolsRepository.findById(id)).thenReturn(Optional.empty());
+
+        // THEN
+        assertThrows(NoSuchElementException.class, () -> toolsService.getToolById(id));
     }
 
     // POST newTool
