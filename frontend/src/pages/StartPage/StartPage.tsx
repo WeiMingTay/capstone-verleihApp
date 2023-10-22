@@ -5,7 +5,7 @@ import FavoriteCategories from "../../components/FavoriteCategories/FavoriteCate
 import {Tools} from "../../assets/entities/tools.ts";
 
 type Props = {
-    tools: Tools[]
+   readonly tools: Tools[]
 }
 export default function StartPage(props: Props) {
 
