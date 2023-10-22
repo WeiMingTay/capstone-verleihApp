@@ -1,0 +1,67 @@
+@import "../../assets/Variables.scss";
+
+.welcome-page {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-rows: 6fr 2fr;
+
+
+  section {
+    @include flexCenter(1rem);
+    flex-direction: column;
+
+
+    &:first-of-type {
+      justify-content: flex-end;
+
+      background-image: linear-gradient(transparent, rgba($backgroundColorLight, .5), $backgroundColorLight 80%),
+      url(https://images.unsplash.com/photo-1663638964085-13ee056c0a2f?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHRvb2xzJTIwYW5kJTIwZXF1aXBtZW50fGVufDB8MXwwfHx8MA%3D%3D);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+
+      h4 {
+        font-size: $fontSizeXL;
+        font-family: $fontFamily;
+      }
+    }
+
+    &:last-of-type {
+      justify-content: space-evenly;
+      background-color: $backgroundColorLight;
+
+      div {
+        @include flexCenter(.5rem);
+        flex-direction: column;
+        width: 50%;
+
+
+        button {
+          width: 100%;
+          border: none;
+          padding: .5rem 0;
+
+          &:first-of-type {
+            background-color: $primaryColor;
+            color: $backgroundColorLight;
+          }
+
+          &:last-of-type {
+            background-color: $secondaryColor;
+            color: $backgroundColorLight;
+          }
+        }
+      }
+
+      p {
+        font-size: $fontSizeS;
+
+        a {
+          color: $accentColor;
+        }
+      }
+    }
+  }
+}

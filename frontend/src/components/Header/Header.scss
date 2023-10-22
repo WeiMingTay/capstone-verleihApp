@@ -1,0 +1,107 @@
+@import "../../assets/_Variables.scss";
+
+header {
+  background-color: $backgroundColorMedium;
+  @include flexCenter(0);
+  justify-content: space-between;
+  padding: .25rem;
+  height: $headerHeight;
+
+
+  div {
+    @include flexCenter(.5rem);
+
+    img {
+      min-width: 4rem;
+      width: 20vw;
+      max-width: 5rem;
+    }
+
+    h1 {
+      font-size: $fontSizeXXL;
+
+    }
+  }
+
+  .menu-toggle {
+    position: relative;
+    height: fit-content;
+
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+
+      .bar {
+        background-color: $textColorDark;
+        height: .15rem;
+        width: 2rem;
+        transition: all 500ms ease-in-out;
+
+      }
+    }
+
+    nav {
+      visibility: hidden;
+      position: absolute;
+      top: 2rem;
+      right: 0;
+      width: max-content;
+
+      border: 2px solid $backgroundColorLight;
+      outline: 1px solid $backgroundColorMedium;
+
+      background-color: $backgroundColorMedium;
+      transition: all 250ms ease-in-out;
+      transform: scaleY(0);
+      transform-origin: top;
+
+      ul {
+        @include flexCenter(.5rem);
+        flex-direction: column;
+        align-items: flex-end;
+        list-style: none;
+        padding: 1rem;
+        font-size: $fontSizeL;
+
+        li {
+          a {
+            @include aTag;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+
+  }
+
+  .open {
+    nav {
+      transform: scaleY(1);
+      visibility: visible;
+
+    }
+
+    .bar {
+      &:nth-child(1) {
+        transform: translateY(5px) rotate(45deg);
+      }
+
+      &:nth-child(2) {
+        transform: scale(0) translateX(20px)
+      }
+
+      &:nth-child(3) {
+        transform: translateY(-10px) rotate(-45deg)
+      }
+    }
+  }
+
+
+}
