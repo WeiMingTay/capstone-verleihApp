@@ -2,7 +2,7 @@ import "./LatestTool.scss";
 import {Tools} from "../../assets/entities/tools.ts";
 
 type Props = {
-    tools: Tools[]
+    readonly tools: Tools[]
 }
 export default function LatestTool(props: Props) {
 

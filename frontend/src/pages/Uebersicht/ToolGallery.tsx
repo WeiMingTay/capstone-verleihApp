@@ -3,7 +3,7 @@ import {Tools} from "../../assets/entities/tools.ts";
 import ToolCard from "../../components/ToolCard/ToolCard.tsx";
 
 type Props = {
-    tools: Tools[]
+   readonly tools: Tools[]
 }
 export default function ToolGallery(props: Props) {
     return (<>

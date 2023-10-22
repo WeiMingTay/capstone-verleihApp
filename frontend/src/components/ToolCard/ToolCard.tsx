@@ -2,7 +2,7 @@ import {Tools} from "../../assets/entities/tools.ts";
 import {Link} from "react-router-dom";
 
 type Props = {
-    tool: Tools;
+   readonly tool: Tools;
 }
 
 export default function ToolCard(props: Props) {
