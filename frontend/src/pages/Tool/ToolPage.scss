@@ -31,6 +31,17 @@
       color: $textColorLight;
       border-radius: 1rem;
       font-size: $fontSizeM;
+
+
+    }
+  }
+
+  p {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .25rem;
+    span {
+      font-size: $fontSizeL;
     }
   }
 
