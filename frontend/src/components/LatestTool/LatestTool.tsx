@@ -1,5 +1,6 @@
 import "./LatestTool.scss";
 import {Tools} from "../../assets/entities/tools.ts";
+import {Link} from "react-router-dom";
 
 type Props = {
     readonly tools: Tools[]
@@ -18,7 +19,8 @@ export default function LatestTool(props: Props) {
     }
 
     return (
-        <article className={"latestTool"}>
+        <Link className={"latestTool"} to={`/werkzeuge/${randomTool.id}`}>
+
             <h5>Neu hinzugefügt</h5>
             <div style={inlineStyle}>
                 <div>
@@ -26,6 +28,7 @@ export default function LatestTool(props: Props) {
                     <p>{randomTool?.location}</p>
                 </div>
             </div>
-        </article>
+
+        </Link>
     );
 }
