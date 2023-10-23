@@ -2,7 +2,7 @@ import './assets/App.scss'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import AddTool from "./pages/AddTool/AddTool.tsx";
 import StartPage from "./pages/StartPage/StartPage.tsx";
-import ToolGallery from "./pages/Uebersicht/ToolGallery.tsx";
+import ToolGallery from "./pages/ToolGallery/ToolGallery.tsx";
 import SchwarzesBrett from "./pages/SchwarzesBrett/SchwarzesBrett.tsx";
 import WelcomePage from "./pages/WelcomePage/WelcomePage.tsx";
 import Header from "./components/Header/Header.tsx";
@@ -40,7 +40,7 @@ export default function App() {
                 <Route path={"/start"} element={<StartPage tools={tools}/>}/>
                 <Route path={"/werkzeuge"} element={<ToolGallery tools={tools}/>}/>
                 <Route path={"/werkzeuge/:id"} element={<Tool/>}/>
-                <Route path={"/werkzeuge/add"} element={<AddTool/>}/>
+                <Route path={"/werkzeuge/add"} element={<AddTool  onToolUpdate={getAllTools}/>}/>
                 <Route path={"/schwarzes-brett"} element={<SchwarzesBrett/>}/>
             </Routes>
         </BrowserRouter>

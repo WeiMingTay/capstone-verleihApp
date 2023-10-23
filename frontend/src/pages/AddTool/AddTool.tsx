@@ -3,10 +3,13 @@ import {allCategories, Tools} from "../../assets/entities/tools.ts";
 import "./AddTool.scss"
 import {ChangeEvent, FormEvent, useState} from "react";
 import {strassen} from "../../assets/entities/locations.ts";
+import {useNavigate} from "react-router-dom";
 
-
-export default function AddTool() {
-    const [tool, setTool] = useState<Tools>()
+type Props = {
+    onToolUpdate: () => void
+}
+export default function AddTool(props: Props) {
+    const [, setTool] = useState<Tools>()
     const [previewImage, setPreviewImage] = useState<string>("");
 
     const [imageFile, setImageFile] = useState<File | null>(null)
@@ -17,10 +20,9 @@ export default function AddTool() {
     const [author, setAuthor] = useState("")
     const [description, setDescription] = useState("")
 
-    console.log(tool)
+    const navigate = useNavigate();
 
     function submitNewTool(event: FormEvent) {
-
         event.preventDefault()
         axios.post("/api/tools/add",
             {
@@ -35,6 +37,10 @@ export default function AddTool() {
                 setTool(response.data) // brauche ich das?
                 resetForm()
             })
+            .then(() => {
+                navigate("/werkzeuge")
+            })
+            .then(props.onToolUpdate)
             .catch((error) => {
                 console.error(error);
             })
