@@ -13,3 +13,4 @@
 ###### 23. Oktober
 - Styling der Gallery
 - Styling der Detailansicht
+- Anpassen der Tests
