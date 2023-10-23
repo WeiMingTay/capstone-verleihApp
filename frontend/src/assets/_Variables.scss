@@ -1,5 +1,5 @@
 /* === FONTS ===*/
-$fontFamily: 'Roboto', sans-serif;
+$fontFamily: Arial, Helvetica, sans-serif;
 
 /* fontSize */
 $fontSizeXS: .5rem;
@@ -10,24 +10,29 @@ $fontSizeXL: 1.5rem;
 $fontSizeXXL: 1.75rem;
 
 /* === COLORS ===*/
-$backgroundColorLight: white;
+$backgroundColorLight: #fff;
 $backgroundColorMedium: lightgray;
-$backgroundColorDark: black;
+$backgroundColorDark: #000;
 
 $primaryColor: #59822b;
 $secondaryColor: #3f799d;
 $accentColor: #f86268;
 
-$textColorLight: white;
+$textColorLight: #fff;
 $textColorMedium: lightgray;
-$textColorDark: black;
+$textColorDark: #000;
 
 /* === SPACING ===*/
-
+$headerHeight: 4rem;
 /* === MIXIN ===*/
 @mixin flexCenter($gap) {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: $gap;
+}
+
+@mixin aTag {
+  text-decoration: none;
+  color: inherit;
 }
