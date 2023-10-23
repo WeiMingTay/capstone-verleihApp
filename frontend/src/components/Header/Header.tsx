@@ -19,7 +19,7 @@ export default function Header() {
     }
 
     return (
-        <header>
+        <header className={isOpen ? "open" : ""}>
             <div>
                 <Link to={"/"}><img src={logo} alt="Logo"/></Link>
                 <h1>Capstone</h1>
@@ -32,6 +32,7 @@ export default function Header() {
                 </div>
                 <nav>
                     <ul>
+                        <li><Link to={"/"}>Profil</Link></li>
                         <li><Link onClick={toggleMenu} to={"/start"}>Start</Link></li>
                         <li><Link onClick={toggleMenu} to={"/werkzeuge"}>Werkzeuge</Link></li>
                         <li><Link onClick={toggleMenu} to={"/schwarzes-brett"}>Schwarzes Brett</Link></li>
