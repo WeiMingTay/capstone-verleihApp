@@ -14,3 +14,5 @@
 - Styling der Gallery
 - Styling der Detailansicht
 - Anpassen der Tests
+- Styling von LatestTool
+- Anzeige der Kategorien
