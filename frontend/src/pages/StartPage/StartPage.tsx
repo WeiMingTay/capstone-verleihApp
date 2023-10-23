@@ -2,12 +2,18 @@ import {Link} from "react-router-dom";
 import "./StartPage.scss";
 import LatestTool from "../../components/LatestTool/LatestTool.tsx";
 import FavoriteCategories from "../../components/FavoriteCategories/FavoriteCategories.tsx";
+import {Tools} from "../../assets/entities/tools.ts";
 
-export default function StartPage() {
+type Props = {
+   readonly tools: Tools[]
+}
+export default function StartPage(props: Props) {
+
+
     return (
         <section className={"start-page"}>
 
-            <LatestTool/>
+            <LatestTool tools={props.tools}/>
             <FavoriteCategories/>
             <Link className="schwarzesBrett-img" to={"/schwarzes-brett"}>
                 <h5>Schwarzes Brett</h5>

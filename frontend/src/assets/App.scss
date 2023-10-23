@@ -18,3 +18,17 @@ body, input, button, textarea {
     height: 100%;
     width: 100%;
 }
+a {
+    @include aTag;
+}
+
+
+/*
+@media (prefers-color-scheme: dark) {
+
+    body {
+        background-color: $backgroundColorDark;
+        color: $textColorLight;
+    }
+}
+*/

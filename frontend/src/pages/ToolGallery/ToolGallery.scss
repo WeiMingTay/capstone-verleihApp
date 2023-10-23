@@ -1,0 +1,8 @@
+@import "../../assets/Variables.scss";
+
+.toolGallery-page {
+  margin: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .5rem;
+}
