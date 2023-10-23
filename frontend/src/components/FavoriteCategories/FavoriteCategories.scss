@@ -5,17 +5,27 @@
 
   div {
 
-    background-color: $textColorMedium;
+    background-color: $secondaryColor;
     width: 100%;
-    height: 100%;
+
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: .5rem;
+    gap: .25rem .5rem;
     padding: .5rem;
 
-    div {
-      background-color: rgba($primaryColor, .5);
+    a {
+      width: 100%;
+      height: 100%;
+
+      div {
+        height: max-content;
+      }
+
+      p {
+        font-size: $fontSizeM;
+        color: $textColorLight;
+      }
     }
   }
 }
