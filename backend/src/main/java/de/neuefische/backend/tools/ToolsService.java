@@ -28,6 +28,8 @@ public class ToolsService {
         tool.setName(newTool.getName());
         tool.setCategory(newTool.getCategory());
         tool.setLocation(newTool.getLocation());
+        tool.setAuthor(newTool.getAuthor());
+        tool.setDescription(newTool.getDescription());
 
 
         return toolsRepository.save(tool);
