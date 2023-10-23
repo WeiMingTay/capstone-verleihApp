@@ -8,6 +8,7 @@ header {
   height: $headerHeight;
 
 
+
   div {
     @include flexCenter(.5rem);
 
@@ -51,7 +52,10 @@ header {
       position: absolute;
       top: 2rem;
       right: 0;
-      width: max-content;
+      min-width: max-content;
+      width: 75vw;
+      height: calc(100vh - $headerHeight);
+      z-index: 1;
 
       border: 2px solid $backgroundColorMedium;
       outline: 1px solid $backgroundColorLight;
@@ -62,7 +66,7 @@ header {
       transform-origin: top;
 
       ul {
-        @include flexCenter(.5rem);
+        @include flexCenter(1.5rem);
         flex-direction: column;
         align-items: flex-end;
         list-style: none;
@@ -85,6 +89,7 @@ header {
 
 
   }
+
 
   .open {
 
@@ -115,3 +120,10 @@ header {
 
 
 }
+
+header.open {
+
+    + * {
+      filter: blur(2px) grayscale(.75);
+    }
+  }

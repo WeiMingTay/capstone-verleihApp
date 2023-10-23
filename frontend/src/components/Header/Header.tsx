@@ -19,7 +19,7 @@ export default function Header() {
     }
 
     return (
-        <header>
+        <header className={isOpen ? "open" : ""}>
             <div>
                 <Link to={"/"}><img src={logo} alt="Logo"/></Link>
                 <h1>Capstone</h1>

@@ -5,15 +5,14 @@ import ToolCard from "../../components/ToolCard/ToolCard.tsx";
 import "./ToolGallery.scss"
 
 type Props = {
-   readonly tools: Tools[]
+    readonly tools: Tools[]
 }
 export default function ToolGallery(props: Props) {
-    return (<>
-        <div>Alle Werkzeuge</div>
-        <Link to={"/werkzeuge/add"}>Werkzeug hinzufügen</Link>
+    return (<section>
+        <Link to={"/werkzeuge/add"}>+</Link>
         <section className={"toolGallery-page"}>
             {props.tools.map(tool => <ToolCard key={tool.id} tool={tool}/>)}
         </section>
-    </>);
+    </section>);
 }
 
