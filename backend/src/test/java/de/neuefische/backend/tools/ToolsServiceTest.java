@@ -15,8 +15,17 @@ class ToolsServiceTest {
     ToolsRepository toolsRepository = mock(ToolsRepository.class);
     ToolsService toolsService = new ToolsService(toolsRepository);
 
-    Tool tool1 = new Tool("Hammer", Category.TOOLS, "Keller");
-    Tool toolId = new Tool("65317b1294a88f39ea92a61a", "Hammer", Category.TOOLS, "Keller");
+    Tool tool1 = new Tool(
+            "Hammer",
+            Category.TOOLS,
+            "Dim Sum",
+            "Keller",
+            "Bla Bla");
+    Tool toolId = new Tool(
+            "65317b1294a88f39ea92a61a",
+            "Hammer",
+            Category.TOOLS,
+            "Keller");
 
     // GETall
     @Test
@@ -33,7 +42,10 @@ class ToolsServiceTest {
         List<Tool> expected = List.of(new Tool(
                 "Hammer",
                 Category.TOOLS,
-                "Keller"));
+                "Dim Sum",
+                "Keller",
+                "Bla Bla"
+        ));
 
         verify(toolsRepository).findAll();
         assertEquals(expected, actual);
@@ -66,7 +78,11 @@ class ToolsServiceTest {
         Tool actual = toolsService.getToolById(id);
 
         // THEN
-        Tool expected = new Tool("65317b1294a88f39ea92a61a", "Hammer", Category.TOOLS, "Keller");
+        Tool expected = new Tool(
+                "65317b1294a88f39ea92a61a",
+                "Hammer",
+                Category.TOOLS,
+                "Keller");
 
         verify(toolsRepository).findById(id);
         assertEquals(expected, actual);
@@ -89,14 +105,26 @@ class ToolsServiceTest {
     void createTool_expectCreatedToolObject() {
         //GIVEN
         Tool tool = tool1;
-        NewTool newTool = new NewTool("Hammer", Category.TOOLS, "Keller");
+        NewTool newTool = new NewTool(
+                "Hammer",
+                Category.TOOLS,
+                "Dim Sum",
+                "Keller",
+                "Bla Bla"
+        );
 
         //WHEN
         when(toolsRepository.save(tool)).thenReturn(tool);
         Tool actual = toolsService.createTool(newTool);
         //THEN
 
-        Tool expected = new Tool("Hammer", Category.TOOLS, "Keller");
+        Tool expected = new Tool(
+                "Hammer",
+                Category.TOOLS,
+                "Dim Sum",
+                "Keller",
+                "Bla Bla"
+        );
         verify(toolsRepository).save(expected);
         assertEquals(expected, actual);
     }
@@ -105,7 +133,13 @@ class ToolsServiceTest {
     void createToolWithWrongId_expectWrongArgument() {
         //GIVEN
         Tool tool = tool1;
-        NewTool newTool = new NewTool("Hammer", Category.TOOLS, "Keller");
+        NewTool newTool = new NewTool(
+                "Hammer",
+                Category.TOOLS,
+                "Dim Sum",
+                "Keller",
+                "Bla Bla"
+        );
 
         //WHEN
         Tool unexpected = new Tool("Bohrmaschine", Category.TOOLS, "Keller");
@@ -113,7 +147,13 @@ class ToolsServiceTest {
         Tool actual = toolsService.createTool(newTool);
         //THEN
 
-        Tool expected = new Tool("Hammer", Category.TOOLS, "Keller");
+        Tool expected = new Tool(
+                "Hammer",
+                Category.TOOLS,
+                "Dim Sum",
+                "Keller",
+                "Bla Bla"
+        );
         verify(toolsRepository).save(expected);
         assertNotEquals(expected, actual);
     }
