@@ -27,6 +27,72 @@ class ToolsServiceTest {
             Category.TOOLS,
             "Keller");
 
+    // Constructor Tests
+    @Test
+    void testNoArgConstructor() {
+        // GIVEN
+        Tool tool = new Tool();
+
+        // THEN
+        assertNotNull(tool);
+        assertNull(tool.getId());
+        assertNull(tool.getName());
+        assertNull(tool.getImage());
+        assertNull(tool.getCategory());
+        assertNull(tool.getAuthor());
+        assertNull(tool.getLocation());
+        assertNull(tool.getDescription());
+        assertNull(tool.getTimestamp());
+    }
+
+    @Test
+    void testConstructorWithIdNameCategoryLocation() {
+        // GIVEN
+        String id = "12345";
+        String name = "Hammer";
+        Category category = Category.TOOLS;
+        String location = "Keller";
+
+        // WHEN
+        Tool tool = new Tool(id, name, category, location);
+
+        // THEN
+        assertNotNull(tool);
+        assertEquals(id, tool.getId());
+        assertEquals(name, tool.getName());
+        assertNull(tool.getImage());
+        assertEquals(category, tool.getCategory());
+        assertNull(tool.getAuthor());
+        assertEquals(location, tool.getLocation());
+        assertNull(tool.getDescription());
+        assertNull(tool.getTimestamp());
+    }
+    @Test
+    void testConstructorWithNameCategoryLocationDiscription() {
+        // GIVEN
+        String name = "Hammer";
+        Category category = Category.TOOLS;
+        String author = "Dim Sum";
+        String location = "Keller";
+        String description = "Bla Bla";
+
+        // WHEN
+        Tool tool = new Tool(name, category, author, location, description);
+
+        // THEN
+        assertNotNull(tool);
+        assertNull(tool.getId());
+        assertEquals(name, tool.getName());
+        assertNull(tool.getImage());
+        assertEquals(category, tool.getCategory());
+        assertEquals(author, tool.getAuthor());
+        assertEquals(location, tool.getLocation());
+        assertEquals(description, tool.getDescription());
+        assertNull(tool.getTimestamp());
+
+    }
+
+
     // GETall
     @Test
     void getAllTools_expectOneTool() {
