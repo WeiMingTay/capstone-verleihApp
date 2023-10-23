@@ -1,8 +1,13 @@
 export type Tools = {
     id: string;
     name: string;
-    location: string;
+    image: string;
     category: Category;
+    author: string;
+    location: string;
+    description: string;
+    timestamp: string;
+
 }
 
 

@@ -33,4 +33,12 @@ public class Tool {
         this.category = category;
         this.location = location;
     }
+
+    public Tool(@NonNull String name, @NonNull Category category, String author, @NonNull String location, String description) {
+        this.name = name;
+        this.category = category;
+        this.author = author;
+        this.location = location;
+        this.description = description;
+    }
 }

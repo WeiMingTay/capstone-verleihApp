@@ -9,7 +9,7 @@ type Props = {
     onToolUpdate: () => void
 }
 export default function AddTool(props: Props) {
-    const [tool , setTool] = useState<Tools>()
+    const [tool, setTool] = useState<Tools>()
     const [previewImage, setPreviewImage] = useState<string>("");
 
     const [imageFile, setImageFile] = useState<File | null>(null)
@@ -200,7 +200,7 @@ export default function AddTool(props: Props) {
                     <p>Beschreibung: {description}</p>
                 </section>
             </form>
-
+            {tool && <p>{tool?.name} wurde erstellt</p>}
         </div>
     );
 }

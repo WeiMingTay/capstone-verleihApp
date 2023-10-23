@@ -1,0 +1,58 @@
+@import "../../assets/Variables.scss";
+
+.toolPage-page {
+  height: calc(100vh - $headerHeight);
+  padding: 0 1rem;
+  font-size: $fontSizeM;
+
+  > p:first-of-type {
+    font-size: $fontSizeS;
+  }
+
+  h4 {
+    font-size: $fontSizeXXL;
+  }
+
+  img {
+    margin: 1rem 0;
+    width: 100%;
+
+  }
+
+  .categories {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    p {
+      width: fit-content;
+      padding: 0.5rem 1rem;
+      background-color: $primaryColor;
+      color: $textColorLight;
+      border-radius: 1rem;
+      font-size: $fontSizeM;
+
+
+    }
+  }
+
+  p {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .25rem;
+    span {
+      font-size: $fontSizeL;
+    }
+  }
+
+  button {
+    width: 100%;
+    margin: 1rem 0;
+    border-radius: 1rem;
+    border: none;
+    padding: .5rem 1rem;
+    font-size: $fontSizeM;
+    background-color: $secondaryColor;
+    color: $textColorLight;
+  }
+}

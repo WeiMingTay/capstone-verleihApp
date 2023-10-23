@@ -9,7 +9,7 @@ import Header from "./components/Header/Header.tsx";
 import {useEffect, useState} from "react";
 import {Tools} from "./assets/entities/tools.ts";
 import axios from "axios";
-import Tool from "./pages/Tool/Tool.tsx";
+import ToolPage from "./pages/Tool/ToolPage.tsx";
 
 
 
@@ -32,6 +32,7 @@ export default function App() {
     }
 
 
+
     return (
         <BrowserRouter>
             <Header/>
@@ -39,7 +40,7 @@ export default function App() {
                 <Route path={"/"} element={<WelcomePage/>}/>
                 <Route path={"/start"} element={<StartPage tools={tools}/>}/>
                 <Route path={"/werkzeuge"} element={<ToolGallery tools={tools}/>}/>
-                <Route path={"/werkzeuge/:id"} element={<Tool/>}/>
+                <Route path={"/werkzeuge/:id"} element={<ToolPage/>}/>
                 <Route path={"/werkzeuge/add"} element={<AddTool  onToolUpdate={getAllTools}/>}/>
                 <Route path={"/schwarzes-brett"} element={<SchwarzesBrett/>}/>
             </Routes>
