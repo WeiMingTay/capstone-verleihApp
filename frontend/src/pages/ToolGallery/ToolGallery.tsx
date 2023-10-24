@@ -8,9 +8,9 @@ type Props = {
     readonly tools: Tools[]
 }
 export default function ToolGallery(props: Props) {
-    return (<section>
+    return (<section  className={"toolGallery-page"}>
         <Link to={"/werkzeuge/add"}>+</Link>
-        <section className={"toolGallery-page"}>
+        <section>
             {props.tools.map(tool => <ToolCard key={tool.id} tool={tool}/>)}
         </section>
     </section>);

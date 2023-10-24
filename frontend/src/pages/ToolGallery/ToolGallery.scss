@@ -1,8 +1,25 @@
 @import "../../assets/Variables.scss";
 
 .toolGallery-page {
-  margin: 1rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: .5rem;
+  display: flex;
+  flex-direction: column;
+  > a {
+    font-size: $fontSizeXXL;
+     color: $textColorLight;
+    background-color: $primaryColor;
+    text-align: center;
+    margin: 0 1rem;
+    border-radius:1rem;
+
+    &:active {
+      scale: .95;
+    }
+
+  }
+  section {
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .5rem;
+  }
 }
