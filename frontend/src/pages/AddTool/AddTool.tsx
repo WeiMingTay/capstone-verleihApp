@@ -166,9 +166,16 @@ export default function AddTool(props: Props) {
                         options={catOptions}
                         value={selectedOptions}
                         onChange={(newValue) => {
-                            setSelectedOptions([...newValue]);
+                            // Create a mutable copy of selectedOptions
+                            const mutableSelectedOptions = [...newValue];
+
+                            // Update the state with the mutable copy
+                            setSelectedOptions(mutableSelectedOptions);
                         }}
                     />
+
+
+
 
                 </label>
                 <label>
