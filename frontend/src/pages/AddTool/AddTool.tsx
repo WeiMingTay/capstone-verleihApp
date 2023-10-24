@@ -1,10 +1,12 @@
 import axios from "axios";
-import {allCategories, Tools} from "../../assets/entities/tools.ts";
+import {allCategories, getCategoryTranslation, Tools} from "../../assets/entities/tools.ts";
 import "./AddTool.scss"
 import {ChangeEvent, FormEvent, useState} from "react";
 import {strassen} from "../../assets/entities/locations.ts";
 import {useNavigate} from "react-router-dom";
 import {capitalizeWords} from "../../components/FavoriteCategories/FavoriteCategories.tsx";
+import ButtonLarge from "../../components/Button/ButtonLarge.tsx";
+import Select from "react-select";
 
 type Props = {
     onToolUpdate: () => void
@@ -17,34 +19,45 @@ export default function AddTool(props: Props) {
     const [name, setName] = useState("")
     const [strasse, setStrasse] = useState("")
     const [hausnummer, setHausnummer] = useState("")
-    const [category, setCategory] = useState("")
+    const [selectedOptions, setSelectedOptions] = useState<{
+        label: string;
+        value: string
+    }[]>([]);
     const [author, setAuthor] = useState("")
     const [description, setDescription] = useState("")
 
     const navigate = useNavigate();
 
+
+    const catOptions = allCategories.map(category => ({
+        label: capitalizeWords(getCategoryTranslation(category)),
+        value: category
+    }));
+
+
     function submitNewTool(event: FormEvent) {
         event.preventDefault()
+
+        const selectedCategoryValues = selectedOptions.map(option => option.value);
+
         axios.post("/api/tools/add",
             {
                 name: name,
                 image: imageFile,
-                category: category,
+                categories: selectedCategoryValues,
                 author: author,
                 location: strasse + " " + hausnummer,
                 description: description
             })
             .then((response) => {
-                setTool(response.data) // brauche ich das?
-                resetForm()
+                setTool(response.data);
+                resetForm();
+                navigate("/werkzeuge");
+                props.onToolUpdate();
             })
-            .then(() => {
-                navigate("/werkzeuge")
-            })
-            .then(props.onToolUpdate)
             .catch((error) => {
                 console.error(error);
-            })
+            });
 
     }
 
@@ -53,7 +66,6 @@ export default function AddTool(props: Props) {
         setImageFile(null);
         setStrasse("");
         setHausnummer("")
-        setCategory("");
         setAuthor("")
         setDescription("")
 
@@ -74,11 +86,6 @@ export default function AddTool(props: Props) {
         setHausnummer(newHausnummer);
     }
 
-    function changeCategory(event: ChangeEvent<HTMLSelectElement>) {
-        const newCategory = event.target.value;
-        setCategory(newCategory);
-    }
-
     function changeAuthor(event: ChangeEvent<HTMLInputElement>) {
         const newAuthor = event.target.value;
         setAuthor(newAuthor);
@@ -89,6 +96,7 @@ export default function AddTool(props: Props) {
         setDescription(newDescription);
     }
 
+    const sortedStrassen = [...strassen].sort();
     return (
         <div className="addToolPage">
             <form onSubmit={submitNewTool}>
@@ -130,11 +138,11 @@ export default function AddTool(props: Props) {
                     />
                     {imageFile && <img src={previewImage} alt={name}/>}
                 </label>
-                <label>
+                {/*<label>
                     <select
                         onChange={changeCategory}
                         value={category}
-                        required
+
                     >
                         <option
                             value=""
@@ -151,6 +159,17 @@ export default function AddTool(props: Props) {
                             })
                         }
                     </select>
+                </label>*/}
+                <label>
+                    <Select
+                        isMulti
+                        options={catOptions}
+                        value={selectedOptions}
+                        onChange={(newValue) => {
+                            setSelectedOptions([...newValue]);
+                        }}
+                    />
+
                 </label>
                 <label>
                     <input
@@ -160,11 +179,11 @@ export default function AddTool(props: Props) {
                         value={author}
                     />
                 </label>
-                <label>
+                <label className="addTool-strasse">
                     <select onChange={changeStrasse} value={strasse} required>
                         <option value="" disabled>Straße</option>
                         {
-                            strassen.map(str => {
+                            sortedStrassen.map(str => {
                                 return <option
                                     key={str}
                                     value={str}
@@ -176,7 +195,7 @@ export default function AddTool(props: Props) {
                     </select>
                     <input
                         type="text"
-                        placeholder="Hausnummer"
+                        placeholder="Nr."
                         onChange={changeHausnummer}
                         value={hausnummer}
                         required
@@ -190,16 +209,8 @@ export default function AddTool(props: Props) {
                     />
                 </label>
 
-                <button>Speichern</button>
+                <ButtonLarge name={"Speichern"}/>
 
-                <section>
-                    <p>Bezeichnung: {name}</p>
-                    {imageFile && <img src={previewImage} alt={name}/>}
-                    <p>Kategorie: {category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}</p>
-                    <p>Ansprechpartner: {author}</p>
-                    <p>Location: {strasse + " " + hausnummer}</p>
-                    <p>Beschreibung: {description}</p>
-                </section>
             </form>
             {tool && <p>{tool?.name} wurde erstellt</p>}
         </div>

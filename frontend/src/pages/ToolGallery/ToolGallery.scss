@@ -3,17 +3,10 @@
 .toolGallery-page {
   display: flex;
   flex-direction: column;
-  > a {
-    font-size: $fontSizeXXL;
-     color: $textColorLight;
-    background-color: $primaryColor;
-    text-align: center;
-    margin: 0 1rem;
-    border-radius:1rem;
+>a {
+@include flexCenter(0)
 
-    &:active {
-      scale: .95;
-    }
+}
 
   }
   section {
@@ -22,4 +15,3 @@
     grid-template-columns: repeat(2, 1fr);
     gap: .5rem;
   }
-}

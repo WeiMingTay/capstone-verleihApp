@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,29 +16,29 @@ public class Tool {
     private String id;
     private @NonNull String name;
     private String image;
-    private @NonNull Category category;
+    private @NonNull List<Category> categories;
     private String author;
     private @NonNull String location;
     private String description;
     private String timestamp;
 
 
-    public Tool(@NonNull String name, @NonNull Category category, @NonNull String location) {
+    public Tool(@NonNull String name, @NonNull List<Category> categories, @NonNull String location) {
         this.name = name;
-        this.category = category;
+        this.categories = categories;
         this.location = location;
     }
 
-    public Tool(String id, @NonNull String name, @NonNull Category category, @NonNull String location) {
+    public Tool(String id, @NonNull String name, @NonNull List<Category> categories, @NonNull String location) {
         this.id = id;
         this.name = name;
-        this.category = category;
+        this.categories = categories;
         this.location = location;
     }
 
-    public Tool(@NonNull String name, @NonNull Category category, String author, @NonNull String location, String description) {
+    public Tool(@NonNull String name, @NonNull List<Category> categories, String author, @NonNull String location, String description) {
         this.name = name;
-        this.category = category;
+        this.categories = categories;
         this.author = author;
         this.location = location;
         this.description = description;
