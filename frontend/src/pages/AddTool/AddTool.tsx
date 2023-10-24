@@ -4,6 +4,7 @@ import "./AddTool.scss"
 import {ChangeEvent, FormEvent, useState} from "react";
 import {strassen} from "../../assets/entities/locations.ts";
 import {useNavigate} from "react-router-dom";
+import {capitalizeWords} from "../../components/FavoriteCategories/FavoriteCategories.tsx";
 
 type Props = {
     onToolUpdate: () => void
@@ -145,7 +146,7 @@ export default function AddTool(props: Props) {
                             allCategories.map(category => {
                                 return <option
                                     key={category}
-                                    value={category}>{category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}
+                                    value={category}>{capitalizeWords(category)}
                                 </option>
                             })
                         }
