@@ -155,5 +155,20 @@ class ToolsControllerIntegrationTests {
                 );
 
     }
+    @Test
+    @DirtiesContext
+    void deleteToolById_expectIdNotFoundMessage() throws Exception {
+
+        String id = "quatschId";
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/tools/" + id))
+                .andExpect(status().isNotFound())
+                .andExpect(
+                        MockMvcResultMatchers
+                                .content()
+                                .string("Die ID '" + id + "' existiert nicht!")
+                );
+
+    }
 
 }
