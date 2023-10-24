@@ -16,3 +16,5 @@
 - Anpassen der Tests
 - Styling von LatestTool
 - Anzeige der Kategorien
+###### 24. Oktober
+- DELETE Request im Backend und Frontend
