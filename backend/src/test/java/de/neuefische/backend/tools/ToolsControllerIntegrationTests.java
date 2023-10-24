@@ -19,7 +19,7 @@ class ToolsControllerIntegrationTests {
     MockMvc mockMvc;
 
     @Autowired
-    ToolsRepository toolsRepository;
+    ToolsRepository toolsRepo;
 
 
     // === GET ===
@@ -37,8 +37,8 @@ class ToolsControllerIntegrationTests {
     @DirtiesContext
     void getAllTools_expectTools() throws Exception {
         Tool tool1 = new Tool("Hammer", Category.TOOLS, "Keller");
-        toolsRepository.save(tool1);
-        toolsRepository.save(new Tool("Bohrmaschine", Category.TOOLS, "Keller"));
+        toolsRepo.save(tool1);
+        toolsRepo.save(new Tool("Bohrmaschine", Category.TOOLS, "Keller"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools"))
                 .andExpect(status().isOk())
@@ -61,7 +61,7 @@ class ToolsControllerIntegrationTests {
     @Test
     @DirtiesContext
     void getToolsById_expectTool() throws Exception {
-        Tool tool1 = toolsRepository.save(new Tool(
+        Tool tool1 = toolsRepo.save(new Tool(
                 "Hammer",
                 Category.TOOLS,
                 "Keller"));
@@ -130,4 +130,30 @@ class ToolsControllerIntegrationTests {
                         "Elemente können nicht null sein!"
                 ));
     }
+
+
+    // === DELETE ===
+    @Test
+    @DirtiesContext
+    void deleteToolById_expectDeleteMessage() throws Exception {
+
+        String id = "65317b1294a88f39ea92a61a";
+
+        toolsRepo.save(new Tool(
+                "65317b1294a88f39ea92a61a",
+                "Hammer",
+                Category.TOOLS,
+                "Keller"
+        ));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/tools/" + id))
+                .andExpect(status().isOk())
+                .andExpect(
+                        MockMvcResultMatchers
+                                .content()
+                                .string("Tool with id: " + id + " was deleted.")
+                );
+
+    }
+
 }

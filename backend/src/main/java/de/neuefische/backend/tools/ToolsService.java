@@ -2,6 +2,8 @@ package de.neuefische.backend.tools;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,13 +38,13 @@ public class ToolsService {
     }
 
     // === DELETE ===
-    public String deleteToolById(String id) {
-
-        if(toolsRepository.existsById(id)) {
+    public ResponseEntity<String> deleteToolById(String id) {
+        if (toolsRepository.existsById(id)) {
             toolsRepository.deleteById(id);
-            return "Tool with id: " + id + " was deleted.";
+            return ResponseEntity.status(HttpStatus.OK).body("Tool with id: " + id + " was deleted.");
         }
 
-        return "die ID '" + id + "' existiert nicht!";
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Die ID '" + id + "' existiert nicht!");
     }
+
 }

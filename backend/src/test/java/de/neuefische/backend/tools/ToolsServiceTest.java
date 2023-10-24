@@ -1,6 +1,7 @@
 package de.neuefische.backend.tools;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -248,14 +249,18 @@ class ToolsServiceTest {
         // GIVEN
         String id = "quatschId";
 
-        // WHEN
         when(toolsRepository.existsById(id)).thenReturn(false);
-        toolsRepository.deleteById(id);
-        String actual = toolsService.deleteToolById(id);
-        String expected = "die ID '" + id + "' existiert nicht!";
+
+        ToolsService toolsService = new ToolsService(toolsRepository);
+
+        // WHEN
+        ResponseEntity<String> responseEntity = toolsService.deleteToolById(id);
+        String actual = responseEntity.getBody();
+        String expected = "Die ID '" + id + "' existiert nicht!";
 
         // THEN
-        verify(toolsRepository, times(1)).deleteById(id);
         assertEquals(expected, actual);
     }
+
+
 }

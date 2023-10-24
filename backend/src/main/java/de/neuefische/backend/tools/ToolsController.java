@@ -1,6 +1,7 @@
 package de.neuefische.backend.tools;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,11 +32,13 @@ public class ToolsController {
     }
 
     // === DELETE ===
-
-    @DeleteMapping("/tools/delete/{id}")
-    public void deleteToolById(@PathVariable String id) {
-        toolsService.deleteToolById(id);
+    @DeleteMapping("/tools/{id}")
+    public ResponseEntity<String> deleteToolById(@PathVariable String id) {
+        return toolsService.deleteToolById(id);
     }
+
+
+
 
     // === Exception Handling ===
 
