@@ -1,7 +1,7 @@
 import "./Button.scss";
 
 type Props = {
-    name: string
+    readonly name: string
     onClick?: () => void
 }
 export default function ButtonLarge(props: Props) {
