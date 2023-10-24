@@ -1,14 +1,19 @@
 import {Tools} from "../../assets/entities/tools.ts";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import "./ToolPage.scss";
 
-export default function ToolPage() {
+type Props = {
+    onToolUpdate: () => void
+};
+
+export default function ToolPage(props: Props) {
     const [tool, setTool] = useState<Tools>()
 
     const {id} = useParams()
 
+    const navigate = useNavigate();
     useEffect(() => {
         getTool()
     }, [])
@@ -17,6 +22,15 @@ export default function ToolPage() {
         axios.get(`/api/tools/${id}`)
             .then(response => {
                 setTool(response.data)
+            })
+            .catch(error => console.error(error))
+    }
+
+    function deleteToolById(id: string) {
+        axios.delete(`/api/tools/${id}`)
+            .then(() => {
+                navigate("/werkzeuge")
+                props.onToolUpdate?.()
             })
             .catch(error => console.error(error))
     }
@@ -38,6 +52,8 @@ export default function ToolPage() {
         <p>Ansprechpartner:in: <span>{tool?.author}</span></p>
         <button>Anfrage</button>
         <p> Anleitung: {tool?.description}</p>
+        <button onClick={() => tool?.id && deleteToolById(tool.id)}>Löschen</button>
+
 
 
     </article>);

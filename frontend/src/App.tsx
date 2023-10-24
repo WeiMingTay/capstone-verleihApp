@@ -40,8 +40,8 @@ export default function App() {
                 <Route path={"/"} element={<WelcomePage/>}/>
                 <Route path={"/start"} element={<StartPage tools={tools}/>}/>
                 <Route path={"/werkzeuge"} element={<ToolGallery tools={tools}/>}/>
-                <Route path={"/werkzeuge/:id"} element={<ToolPage/>}/>
-                <Route path={"/werkzeuge/add"} element={<AddTool  onToolUpdate={getAllTools}/>}/>
+                <Route path={"/werkzeuge/:id"} element={<ToolPage onToolUpdate={getAllTools}/>}/>
+                <Route path={"/werkzeuge/add"} element={<AddTool onToolUpdate={getAllTools}/>}/>
                 <Route path={"/schwarzes-brett"} element={<SchwarzesBrett/>}/>
             </Routes>
         </BrowserRouter>
