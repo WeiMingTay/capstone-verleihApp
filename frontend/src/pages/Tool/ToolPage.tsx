@@ -4,6 +4,7 @@ import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 import "./ToolPage.scss";
 import {capitalizeWords} from "../../components/FavoriteCategories/FavoriteCategories.tsx";
+import ButtonLarge from "../../components/Button/ButtonLarge.tsx";
 
 type Props = {
     onToolUpdate: () => void
@@ -53,9 +54,10 @@ export default function ToolPage(props: Props) {
             : <div></div>}
         <p>Ort: <span>{tool?.location}</span></p>
         <p>Ansprechpartner:in: <span>{tool?.author}</span></p>
-        <button>Anfrage</button>
+        <ButtonLarge name={"Anfrage"}/>
         <p> Anleitung: {tool?.description}</p>
-        <button onClick={() => tool?.id && deleteToolById(tool.id)}>Löschen</button>
+        <ButtonLarge name={"Löschen"} onClick={() => tool?.id && deleteToolById(tool.id)}/>
+
 
 
     </article>);

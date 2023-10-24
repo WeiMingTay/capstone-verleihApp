@@ -9,7 +9,8 @@ type Props = {
 }
 export default function ToolGallery(props: Props) {
     return (<section  className={"toolGallery-page"}>
-        <Link to={"/werkzeuge/add"}>+</Link>
+        <Link className={"buttonLarge"} to={"/werkzeuge/add"}>+</Link>
+
         <section>
             {props.tools.map(tool => <ToolCard key={tool.id} tool={tool}/>)}
         </section>

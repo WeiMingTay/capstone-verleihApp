@@ -1,8 +1,9 @@
+
 export type Tools = {
     id: string;
     name: string;
     image: string;
-    category: Category;
+    categories: Category[];
     author: string;
     location: string;
     description: string;

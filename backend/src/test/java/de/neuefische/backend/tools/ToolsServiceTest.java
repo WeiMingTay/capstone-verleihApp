@@ -39,7 +39,7 @@ class ToolsServiceTest {
         assertNull(tool.getId());
         assertNull(tool.getName());
         assertNull(tool.getImage());
-        assertNull(tool.getCategory());
+        assertNull(tool.getCategories());
         assertNull(tool.getAuthor());
         assertNull(tool.getLocation());
         assertNull(tool.getDescription());
@@ -62,7 +62,7 @@ class ToolsServiceTest {
         assertEquals(id, tool.getId());
         assertEquals(name, tool.getName());
         assertNull(tool.getImage());
-        assertEquals(category, tool.getCategory());
+        assertEquals(category, tool.getCategories());
         assertNull(tool.getAuthor());
         assertEquals(location, tool.getLocation());
         assertNull(tool.getDescription());
@@ -86,7 +86,7 @@ class ToolsServiceTest {
         assertNull(tool.getId());
         assertEquals(name, tool.getName());
         assertNull(tool.getImage());
-        assertEquals(category, tool.getCategory());
+        assertEquals(category, tool.getCategories());
         assertEquals(author, tool.getAuthor());
         assertEquals(location, tool.getLocation());
         assertEquals(description, tool.getDescription());
