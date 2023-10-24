@@ -1,8 +1,9 @@
-import {Tools} from "../../assets/entities/tools.ts";
+import {getCategoryTranslation, Tools} from "../../assets/entities/tools.ts";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 import "./ToolPage.scss";
+import {capitalizeWords} from "../../components/FavoriteCategories/FavoriteCategories.tsx";
 
 type Props = {
     onToolUpdate: () => void
@@ -46,7 +47,7 @@ export default function ToolPage(props: Props) {
         </a>
         {tool?.category
             ? <div className={"categories"}>
-                <p className={"category"}>{tool?.category.toLowerCase()}</p>
+                <p className={"category"}>{capitalizeWords(getCategoryTranslation(tool?.category))}</p>
                 <p className={"category"}>garden</p>
             </div>
             : <div></div>}

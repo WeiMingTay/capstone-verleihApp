@@ -1,6 +1,14 @@
-import "./FavoriteCategories.scss"
-import {allCategories} from "../../assets/entities/tools.ts";
+import "./FavoriteCategories.scss";
+import {allCategories, getCategoryTranslation} from "../../assets/entities/tools.ts";
 import {Link} from "react-router-dom";
+
+
+export function capitalizeWords(str: string) {
+    return str
+        .split(" ")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ")
+}
 
 export default function FavoriteCategories() {
 
@@ -8,6 +16,7 @@ export default function FavoriteCategories() {
     const inlineStyle = {
         backgroundImage: `url(${backgroundImageUrl1})`
     }
+
 
     return (
         <article className={"favoriteCategories-comp"}>
@@ -19,13 +28,13 @@ export default function FavoriteCategories() {
                         <Link to={"/"} key={cat}>
                             <div
                                 style={inlineStyle}
+                            >
+                                <p>{capitalizeWords(getCategoryTranslation(cat))}</p>
+                            </div>
 
-                            />
-                            <p>{cat.toLowerCase()}</p>
                         </Link>)
                 }
             </div>
         </article>
-    )
-        ;
+    );
 }
