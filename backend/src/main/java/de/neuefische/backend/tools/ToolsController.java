@@ -23,10 +23,18 @@ public class ToolsController {
     public Tool getToolById(@PathVariable String id) throws NoSuchElementException {
         return toolsService.getToolById(id);
     }
+
     // === POST ===
     @PostMapping("/tools/add")
     public Tool createTool(@RequestBody NewTool newTool) {
         return toolsService.createTool(newTool);
+    }
+
+    // === DELETE ===
+
+    @DeleteMapping("/tools/delete/{id}")
+    public void deleteTool(@PathVariable String id) {
+        toolsService.deleteTool(id);
     }
 
     // === Exception Handling ===

@@ -14,7 +14,7 @@ public class ToolsService {
 
     private final ToolsRepository toolsRepository;
 
-    // GET
+    // === GET ===
     public List<Tool> getAllTools() {
         return toolsRepository.findAll();
     }
@@ -22,7 +22,8 @@ public class ToolsService {
     public Tool getToolById(String id) throws NoSuchElementException {
         return toolsRepository.findById(id).orElseThrow();
     }
-    //POST
+
+    // === POST ===
     public Tool createTool(NewTool newTool) {
         Tool tool = new Tool();
         tool.setName(newTool.getName());
@@ -31,8 +32,11 @@ public class ToolsService {
         tool.setAuthor(newTool.getAuthor());
         tool.setDescription(newTool.getDescription());
 
-
         return toolsRepository.save(tool);
     }
 
+    // === DELETE ===
+    public void deleteTool(String id) {
+        toolsRepository.deleteById(id);
+    }
 }
