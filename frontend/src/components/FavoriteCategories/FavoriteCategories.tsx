@@ -10,9 +10,9 @@ export default function FavoriteCategories() {
     }
 
     return (
-        < article className={"favoriteCategories-comp"}>
-            < h5> Beliebteste
-                Kategorien < /h5>
+        <article className={"favoriteCategories-comp"}>
+            <h5> Beliebteste
+                Kategorien </h5>
             <div>
                 {
                     allCategories.slice(0, 6).map(cat =>
