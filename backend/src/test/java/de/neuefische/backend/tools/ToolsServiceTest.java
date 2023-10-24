@@ -3,10 +3,7 @@ package de.neuefische.backend.tools;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -18,14 +15,15 @@ class ToolsServiceTest {
 
     Tool tool1 = new Tool(
             "Hammer",
-            Category.TOOLS,
+            Collections.singletonList(Category.TOOLS),
             "Dim Sum",
             "Keller",
-            "Bla Bla");
+            "Bla Bla"
+    );
     Tool toolId = new Tool(
             "65317b1294a88f39ea92a61a",
             "Hammer",
-            Category.TOOLS,
+            Collections.singletonList(Category.TOOLS),
             "Keller");
 
     // === Constructor Tests ===
@@ -51,18 +49,18 @@ class ToolsServiceTest {
         // GIVEN
         String id = "12345";
         String name = "Hammer";
-        Category category = Category.TOOLS;
+        List<Category> categories = Collections.singletonList(Category.TOOLS);
         String location = "Keller";
 
         // WHEN
-        Tool tool = new Tool(id, name, category, location);
+        Tool tool = new Tool(id, name, categories, location);
 
         // THEN
         assertNotNull(tool);
         assertEquals(id, tool.getId());
         assertEquals(name, tool.getName());
         assertNull(tool.getImage());
-        assertEquals(category, tool.getCategories());
+        assertEquals(categories, tool.getCategories());
         assertNull(tool.getAuthor());
         assertEquals(location, tool.getLocation());
         assertNull(tool.getDescription());
@@ -70,23 +68,23 @@ class ToolsServiceTest {
     }
 
     @Test
-    void testConstructorWithNameCategoryLocationDiscription() {
+    void testConstructorWithNameCategoryLocationDescription() {
         // GIVEN
         String name = "Hammer";
-        Category category = Category.TOOLS;
+        List<Category> categories = Collections.singletonList(Category.TOOLS);
         String author = "Dim Sum";
         String location = "Keller";
         String description = "Bla Bla";
 
         // WHEN
-        Tool tool = new Tool(name, category, author, location, description);
+        Tool tool = new Tool(name, categories, author, location, description);
 
         // THEN
         assertNotNull(tool);
         assertNull(tool.getId());
         assertEquals(name, tool.getName());
         assertNull(tool.getImage());
-        assertEquals(category, tool.getCategories());
+        assertEquals(categories, tool.getCategories());
         assertEquals(author, tool.getAuthor());
         assertEquals(location, tool.getLocation());
         assertEquals(description, tool.getDescription());
@@ -109,7 +107,7 @@ class ToolsServiceTest {
         //THEN
         List<Tool> expected = List.of(new Tool(
                 "Hammer",
-                Category.TOOLS,
+                Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
                 "Bla Bla"
@@ -150,7 +148,7 @@ class ToolsServiceTest {
         Tool expected = new Tool(
                 "65317b1294a88f39ea92a61a",
                 "Hammer",
-                Category.TOOLS,
+                Collections.singletonList(Category.TOOLS),
                 "Keller");
 
         verify(toolsRepository).findById(id);
@@ -176,7 +174,7 @@ class ToolsServiceTest {
         Tool tool = tool1;
         NewTool newTool = new NewTool(
                 "Hammer",
-                Category.TOOLS,
+                Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
                 "Bla Bla"
@@ -189,7 +187,7 @@ class ToolsServiceTest {
 
         Tool expected = new Tool(
                 "Hammer",
-                Category.TOOLS,
+                Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
                 "Bla Bla"
@@ -204,21 +202,21 @@ class ToolsServiceTest {
         Tool tool = tool1;
         NewTool newTool = new NewTool(
                 "Hammer",
-                Category.TOOLS,
+                Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
                 "Bla Bla"
         );
 
         //WHEN
-        Tool unexpected = new Tool("Bohrmaschine", Category.TOOLS, "Keller");
+        Tool unexpected = new Tool("Bohrmaschine", Collections.singletonList(Category.TOOLS), "Keller");
         when(toolsRepository.save(tool)).thenReturn(unexpected);
         Tool actual = toolsService.createTool(newTool);
         //THEN
 
         Tool expected = new Tool(
                 "Hammer",
-                Category.TOOLS,
+                Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
                 "Bla Bla"
