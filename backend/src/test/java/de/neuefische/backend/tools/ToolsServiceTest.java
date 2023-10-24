@@ -27,7 +27,7 @@ class ToolsServiceTest {
             Category.TOOLS,
             "Keller");
 
-    // Constructor Tests
+    // === Constructor Tests ===
     @Test
     void testNoArgConstructor() {
         // GIVEN
@@ -67,6 +67,7 @@ class ToolsServiceTest {
         assertNull(tool.getDescription());
         assertNull(tool.getTimestamp());
     }
+
     @Test
     void testConstructorWithNameCategoryLocationDiscription() {
         // GIVEN
@@ -92,8 +93,8 @@ class ToolsServiceTest {
 
     }
 
+    // === GETall ===
 
-    // GETall
     @Test
     void getAllTools_expectOneTool() {
         // GIVEN
@@ -134,6 +135,7 @@ class ToolsServiceTest {
         assertEquals(expected, actual);
     }
 
+    // === GETbyID ===
     @Test
     void getToolById_expectHammer() {
         // GIVEN
@@ -166,7 +168,7 @@ class ToolsServiceTest {
         assertThrows(NoSuchElementException.class, () -> toolsService.getToolById(id));
     }
 
-    // POST newTool
+    // === POST newTool ===
     @Test
     void createTool_expectCreatedToolObject() {
         //GIVEN
@@ -224,5 +226,19 @@ class ToolsServiceTest {
         assertNotEquals(expected, actual);
     }
 
+    // === DELETE ===
+    @Test
+    void deleteTool() {
+        // GIVEN
+        toolsRepository.save(toolId);
+        String id = toolId.getId();
 
+        // WHEN
+        when(toolsRepository.existsById(id)).thenReturn(true);
+        doNothing().when(toolsRepository).deleteById(id);
+        toolsService.deleteTool(id);
+
+        // THEN
+        verify(toolsRepository, times(1)).deleteById(id);
+    }
 }
