@@ -228,7 +228,7 @@ class ToolsServiceTest {
 
     // === DELETE ===
     @Test
-    void deleteTool() {
+    void deleteToolById_expect() {
         // GIVEN
         toolsRepository.save(toolId);
         String id = toolId.getId();
@@ -236,9 +236,26 @@ class ToolsServiceTest {
         // WHEN
         when(toolsRepository.existsById(id)).thenReturn(true);
         doNothing().when(toolsRepository).deleteById(id);
-        toolsService.deleteTool(id);
+        toolsService.deleteToolById(id);
 
         // THEN
         verify(toolsRepository, times(1)).deleteById(id);
+    }
+
+
+    @Test
+    void deleteToolById_expectNoSuchElementException() {
+        // GIVEN
+        String id = "quatschId";
+
+        // WHEN
+        when(toolsRepository.existsById(id)).thenReturn(false);
+        toolsRepository.deleteById(id);
+        String actual = toolsService.deleteToolById(id);
+        String expected = "die ID '" + id + "' existiert nicht!";
+
+        // THEN
+        verify(toolsRepository, times(1)).deleteById(id);
+        assertEquals(expected, actual);
     }
 }

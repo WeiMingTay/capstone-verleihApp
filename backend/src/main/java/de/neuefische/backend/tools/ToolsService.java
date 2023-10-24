@@ -36,7 +36,13 @@ public class ToolsService {
     }
 
     // === DELETE ===
-    public void deleteTool(String id) {
-        toolsRepository.deleteById(id);
+    public String deleteToolById(String id) {
+
+        if(toolsRepository.existsById(id)) {
+            toolsRepository.deleteById(id);
+            return "Tool with id: " + id + " was deleted.";
+        }
+
+        return "die ID '" + id + "' existiert nicht!";
     }
 }

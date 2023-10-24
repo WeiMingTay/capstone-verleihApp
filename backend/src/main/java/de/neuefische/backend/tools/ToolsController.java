@@ -33,8 +33,8 @@ public class ToolsController {
     // === DELETE ===
 
     @DeleteMapping("/tools/delete/{id}")
-    public void deleteTool(@PathVariable String id) {
-        toolsService.deleteTool(id);
+    public void deleteToolById(@PathVariable String id) {
+        toolsService.deleteToolById(id);
     }
 
     // === Exception Handling ===
