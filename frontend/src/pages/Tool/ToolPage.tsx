@@ -44,10 +44,12 @@ export default function ToolPage(props: Props) {
             src={"https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&q=80&w=1170&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
             alt={tool?.name}/>
         </a>
-        <div className={"categories"}>
-            <p className={"category"}>{tool?.category.toLowerCase()}</p>
-            <p className={"category"}>garden</p>
-        </div>
+        {tool?.category
+            ? <div className={"categories"}>
+                <p className={"category"}>{tool?.category.toLowerCase()}</p>
+                <p className={"category"}>garden</p>
+            </div>
+            : <div></div>}
         <p>Ort: <span>{tool?.location}</span></p>
         <p>Ansprechpartner:in: <span>{tool?.author}</span></p>
         <button>Anfrage</button>
@@ -55,13 +57,12 @@ export default function ToolPage(props: Props) {
         <button onClick={() => tool?.id && deleteToolById(tool.id)}>Löschen</button>
 
 
-
     </article>);
 }
 
 /*
 PostMapping
-@RequestPart MultipartFile „VariableName“
+@RequestPart MultipartFile "VariableName"
 
 Ggf. Service
 Byte[] byte= MultipartFile.getBytes();
