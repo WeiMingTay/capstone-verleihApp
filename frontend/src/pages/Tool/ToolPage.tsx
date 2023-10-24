@@ -37,6 +37,7 @@ export default function ToolPage(props: Props) {
             .catch(error => console.error(error))
     }
 
+    console.log(tool?.categories)
     return (<article className={"toolPage-page"}>
         <p>{tool?.id}</p>
 
@@ -46,12 +47,18 @@ export default function ToolPage(props: Props) {
             src={"https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&q=80&w=1170&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
             alt={tool?.name}/>
         </a>
-        {tool?.category
+        {tool?.categories
             ? <div className={"categories"}>
-                <p className={"category"}>{capitalizeWords(getCategoryTranslation(tool?.category))}</p>
-                <p className={"category"}>garden</p>
+                {
+                    tool?.categories.map((category) => {
+                        return <p key={category}
+                                  className={"category"}>{capitalizeWords(getCategoryTranslation(category))}</p>
+                    })
+                }
             </div>
-            : <div></div>}
+            :
+            <div></div>
+        }
         <p>Ort: <span>{tool?.location}</span></p>
         <p>Ansprechpartner:in: <span>{tool?.author}</span></p>
         <ButtonLarge name={"Anfrage"}/>
@@ -59,8 +66,8 @@ export default function ToolPage(props: Props) {
         <ButtonLarge name={"Löschen"} onClick={() => tool?.id && deleteToolById(tool.id)}/>
 
 
-
-    </article>);
+    </article>)
+        ;
 }
 
 /*
