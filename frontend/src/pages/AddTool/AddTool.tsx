@@ -88,7 +88,7 @@ export default function AddTool(props: Props) {
         const newDescription = event.target.value.toString();
         setDescription(newDescription);
     }
-
+    const sortedStrassen = [...strassen].sort();
     return (
         <div className="addToolPage">
             <form onSubmit={submitNewTool}>
@@ -164,7 +164,7 @@ export default function AddTool(props: Props) {
                     <select onChange={changeStrasse} value={strasse} required>
                         <option value="" disabled>Straße</option>
                         {
-                            strassen.map(str => {
+                            sortedStrassen.map(str => {
                                 return <option
                                     key={str}
                                     value={str}
