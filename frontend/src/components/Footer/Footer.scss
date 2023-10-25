@@ -1,12 +1,38 @@
 @import "../../assets/Variables.scss";
 
 footer {
-  height: 2rem;
+  height: 3rem;
   width: 100%;
   position: fixed;
   bottom: 0;
-  background: linear-gradient(transparent, $backgroundColorLight 40%);
+  background-color: $backgroundColorLight;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
+  font-size: $fontSizeS;
+
+  p {
+    color: rgba($textColorDark, .5);
+  }
+
+  div {
+
+    a {
+
+
+      &:first-of-type {
+        color: $primaryColor;
+      }
+
+      &:last-of-type {
+        color: $secondaryColor;
+      }
+    }
+
+    span {
+      color: $textColorDark;
+    }
+
+  }
 }
