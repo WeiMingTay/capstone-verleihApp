@@ -1,24 +1,26 @@
 @import "../../assets/_Variables.scss";
 
 header {
-  background-color: $backgroundColorMedium;
+  background-color: $backgroundColorLight;
   @include flexCenter(0);
   justify-content: space-between;
   padding: .25rem;
   height: $headerHeight;
+  top: 0;
+  width: 100%;
 
 
   div {
     @include flexCenter(.5rem);
 
     img {
-      min-width: 4rem;
+      min-width: 3rem;
       width: 20vw;
       max-width: 5rem;
     }
 
     h1 {
-      font-size: $fontSizeXXL;
+      font-size: $fontSizeXL;
 
     }
   }
@@ -26,6 +28,7 @@ header {
   .menu-toggle {
     position: relative;
     height: fit-content;
+    aspect-ratio: 1/1;
 
 
     div {
@@ -35,10 +38,12 @@ header {
       cursor: pointer;
 
       .bar {
+
         background-color: $textColorDark;
         height: .15rem;
         width: 2rem;
         transition: all 500ms ease-in-out;
+        right: 0;
 
       }
     }
@@ -48,30 +53,61 @@ header {
       position: absolute;
       top: 2rem;
       right: 0;
-      width: max-content;
+      min-width: max-content;
+      width: 75vw;
+      height: calc(100vh - $headerHeight);
+      z-index: 2;
 
-      border: 2px solid $backgroundColorLight;
-      outline: 1px solid $backgroundColorMedium;
+      border: 2px solid $backgroundColorMedium;
+      outline: 1px solid $backgroundColorLight;
 
-      background-color: $backgroundColorMedium;
+      background-color: $backgroundColorLight;
       transition: all 250ms ease-in-out;
       transform: scaleY(0);
       transform-origin: top;
+      @include flexCenter(0);
+      flex-direction: column;
+      justify-content: space-between;
 
       ul {
-        @include flexCenter(.5rem);
-        flex-direction: column;
+        display: flex;
         align-items: flex-end;
+        gap: 1rem;
         list-style: none;
-        padding: 1rem;
+        padding: 2rem 1rem;
         font-size: $fontSizeL;
+        height: 100%;
+        width: 100%;
+
+        &:first-of-type {
+          justify-content: flex-start;
+          flex-direction: column;
+        }
+
+        &:last-of-type {
+          justify-content: space-evenly;
+          flex-direction: row;
+        }
 
         li {
           a {
             @include aTag;
 
+
             &:hover {
               text-decoration: underline;
+
+            }
+          }
+          i {
+            font-size: calc($fontSizeXXL * 1.5);
+            transition: color 250ms ease-in-out;
+
+            &:hover {
+              color: $accentColor;
+            }
+            &:active {
+              scale: .9;
             }
           }
         }
@@ -81,7 +117,9 @@ header {
 
   }
 
+
   .open {
+
     nav {
       transform: scaleY(1);
       visibility: visible;
@@ -91,17 +129,28 @@ header {
     .bar {
       &:nth-child(1) {
         transform: translateY(5px) rotate(45deg);
+
       }
 
       &:nth-child(2) {
-        transform: scale(0) translateX(20px)
+        transform: scale(0) translateX(5px);
+
+
       }
 
       &:nth-child(3) {
-        transform: translateY(-10px) rotate(-45deg)
+        transform: translateY(-10px) rotate(-45deg);
+
       }
     }
   }
 
 
+}
+
+header.open {
+
+  + * {
+    filter: blur(2px) grayscale(.75);
+  }
 }

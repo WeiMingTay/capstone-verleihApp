@@ -1,6 +1,7 @@
 package de.neuefische.backend.tools;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,11 +24,21 @@ public class ToolsController {
     public Tool getToolById(@PathVariable String id) throws NoSuchElementException {
         return toolsService.getToolById(id);
     }
+
     // === POST ===
     @PostMapping("/tools/add")
     public Tool createTool(@RequestBody NewTool newTool) {
         return toolsService.createTool(newTool);
     }
+
+    // === DELETE ===
+    @DeleteMapping("/tools/{id}")
+    public ResponseEntity<String> deleteToolById(@PathVariable String id) {
+        return toolsService.deleteToolById(id);
+    }
+
+
+
 
     // === Exception Handling ===
 
