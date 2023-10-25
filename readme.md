@@ -18,3 +18,6 @@
 - Anzeige der Kategorien
 ###### 24. Oktober
 - DELETE Request im Backend und Frontend
+###### 25. Oktober
+- Diverse Styling Elemente eingebaut
+- Icons mit LineAwesome
