@@ -1,0 +1,12 @@
+@import "../../assets/Variables.scss";
+
+footer {
+  height: 2rem;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background: linear-gradient(transparent, $backgroundColorLight 40%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
