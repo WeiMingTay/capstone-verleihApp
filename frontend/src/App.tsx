@@ -10,6 +10,7 @@ import {useEffect, useState} from "react";
 import {Tools} from "./assets/entities/tools.ts";
 import axios from "axios";
 import ToolPage from "./pages/Tool/ToolPage.tsx";
+import Footer from "./components/Footer/Footer.tsx";
 
 
 
@@ -44,6 +45,7 @@ export default function App() {
                 <Route path={"/werkzeuge/add"} element={<AddTool onToolUpdate={getAllTools}/>}/>
                 <Route path={"/schwarzes-brett"} element={<SchwarzesBrett/>}/>
             </Routes>
+            <Footer/>
         </BrowserRouter>
     )
 }
