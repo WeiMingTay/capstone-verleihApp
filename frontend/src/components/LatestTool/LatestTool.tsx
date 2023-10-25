@@ -21,7 +21,10 @@ export default function LatestTool(props: Props) {
     return (
         <Link className={"latestTool"} to={`/werkzeuge/${randomTool.id}`}>
 
-            <h5>Neu hinzugefügt</h5>
+            <div>
+                <h5>Frisch dabei</h5>
+                <Link to={"/werkzeuge"}>Alle</Link>
+            </div>
             <div style={inlineStyle}>
                 <div>
                     <h6>{randomTool?.name}</h6>

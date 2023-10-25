@@ -15,8 +15,10 @@ export default function FavoriteCategories() {
 
     return (
         <article className={"favoriteCategories-comp"}>
-            <h5> Beliebteste
-                Kategorien </h5>
+            <div>
+                <h5>Beliebteste Kategorien</h5>
+                <Link to={"/"}>Alle</Link>
+            </div>
             <div>
                 {allCategories.slice(0, 6).map(cat => {
                     const backgroundImageUrl = getCategoryImage(cat); // Get the image URL for the category

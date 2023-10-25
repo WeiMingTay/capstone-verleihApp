@@ -25,6 +25,14 @@
         width: 100%;
         padding: .5rem 1rem;
         accent-color: $accentColor;
+        font-size: $fontSizeM;
+
+        border: 1px solid $textColorMedium;
+      }
+
+      input[type="file"] {
+        padding: .5rem 0;
+        border: none;
       }
 
       img {
@@ -32,12 +40,23 @@
         max-height: 10rem;
         object-fit: contain;
       }
+
+      select {
+        background-color: inherit;
+      }
+
     }
 
     .addTool-strasse {
       width: 100%;
       display: grid;
       grid-template-columns: 8fr 2fr;
+    }
+
+    #react-select-7-placeholder, #react-select-3-placeholder {
+      text-align: start;
+      padding-left: .5rem;
+      font-size: $fontSizeM;
     }
   }
 }

@@ -3,7 +3,17 @@
 .favoriteCategories-comp {
   margin: 2rem 0;
 
-  > div {
+  >div:first-of-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 .25rem;
+    a {
+      font-size: $fontSizeS;
+      text-decoration: underline;
+    }
+  }
+  > div:last-of-type {
     width: 100%;
 
     display: grid;
