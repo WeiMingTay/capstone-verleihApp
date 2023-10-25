@@ -37,7 +37,6 @@ export default function ToolPage(props: Props) {
             .catch(error => console.error(error))
     }
 
-    console.log(tool?.categories)
     return (<article className={"toolPage-page"}>
         <p>{tool?.id}</p>
 
