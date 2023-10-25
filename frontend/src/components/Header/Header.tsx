@@ -38,8 +38,8 @@ export default function Header() {
                         <li><Link onClick={toggleMenu} to={"/schwarzes-brett"}>Schwarzes Brett</Link></li>
                     </ul>
                     <ul>
-                        <li><Link to={"/start"}>Home</Link></li>
-                        <li><Link to={"/"}>Profil</Link></li>
+                        <li><Link to={"/start"}><i className="las la-home"></i></Link></li>
+                        <li><Link to={"/"}><i className="las la-user-circle"></i></Link></li>
                     </ul>
                 </nav>
             </div>
