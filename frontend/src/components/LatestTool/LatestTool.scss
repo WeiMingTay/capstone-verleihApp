@@ -3,7 +3,19 @@
 .latestTool {
   height: 100%;
 
-  > div {
+  > div:first-of-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 .25rem;
+
+    a {
+      font-size: $fontSizeS;
+      text-decoration: underline;
+    }
+  }
+
+  > div:last-of-type {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -26,6 +38,7 @@
       h6 {
         font-size: $fontSizeXXL;
       }
+
       p {
         font-size: $fontSizeS;
         color: $textColorMedium;

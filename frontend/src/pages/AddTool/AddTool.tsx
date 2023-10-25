@@ -175,8 +175,6 @@ export default function AddTool(props: Props) {
                     />
 
 
-
-
                 </label>
                 <label>
                     <input

@@ -6,7 +6,8 @@ header {
   justify-content: space-between;
   padding: .25rem;
   height: $headerHeight;
-
+  top: 0;
+  width: 100%;
 
 
   div {
@@ -55,7 +56,7 @@ header {
       min-width: max-content;
       width: 75vw;
       height: calc(100vh - $headerHeight);
-      z-index: 1;
+      z-index: 2;
 
       border: 2px solid $backgroundColorMedium;
       outline: 1px solid $backgroundColorLight;
@@ -64,14 +65,29 @@ header {
       transition: all 250ms ease-in-out;
       transform: scaleY(0);
       transform-origin: top;
+      @include flexCenter(0);
+      flex-direction: column;
+      justify-content: space-between;
 
       ul {
-        @include flexCenter(1.5rem);
-        flex-direction: column;
+        display: flex;
         align-items: flex-end;
+        gap: 1rem;
         list-style: none;
         padding: 2rem 1rem;
         font-size: $fontSizeL;
+        height: 100%;
+        width: 100%;
+
+        &:first-of-type {
+          justify-content: flex-start;
+          flex-direction: column;
+        }
+
+        &:last-of-type {
+          justify-content: space-evenly;
+          flex-direction: row;
+        }
 
         li {
           a {
@@ -81,6 +97,17 @@ header {
             &:hover {
               text-decoration: underline;
 
+            }
+          }
+          i {
+            font-size: calc($fontSizeXXL * 1.5);
+            transition: color 250ms ease-in-out;
+
+            &:hover {
+              color: $accentColor;
+            }
+            &:active {
+              scale: .9;
             }
           }
         }
@@ -123,7 +150,7 @@ header {
 
 header.open {
 
-    + * {
-      filter: blur(2px) grayscale(.75);
-    }
+  + * {
+    filter: blur(2px) grayscale(.75);
   }
+}
