@@ -99,6 +99,17 @@ header {
 
             }
           }
+          i {
+            font-size: calc($fontSizeXXL * 1.5);
+            transition: color 250ms ease-in-out;
+
+            &:hover {
+              color: $accentColor;
+            }
+            &:active {
+              scale: .9;
+            }
+          }
         }
       }
     }
