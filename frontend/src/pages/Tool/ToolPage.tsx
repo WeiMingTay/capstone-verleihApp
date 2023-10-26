@@ -38,7 +38,7 @@ export default function ToolPage(props: Props) {
     }
 
     return (<article className={"toolPage-page"}>
-        <p>{tool?.id}</p>
+        <p>{tool?.timestamp.toLocaleString()}</p>
 
         <h4>{tool?.name}</h4>
         <a target={"_blank"}

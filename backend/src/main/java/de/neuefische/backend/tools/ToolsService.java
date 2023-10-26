@@ -33,6 +33,8 @@ public class ToolsService {
         tool.setLocation(newTool.getLocation());
         tool.setAuthor(newTool.getAuthor());
         tool.setDescription(newTool.getDescription());
+        tool.setTimestamp(newTool.getTimestamp());
+
 
         return toolsRepository.save(tool);
     }
