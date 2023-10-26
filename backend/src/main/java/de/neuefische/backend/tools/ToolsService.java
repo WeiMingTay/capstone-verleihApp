@@ -29,6 +29,7 @@ public class ToolsService {
     public Tool createTool(NewTool newTool) {
         Tool tool = new Tool();
         tool.setName(newTool.getName());
+        tool.setImage(newTool.getImage());
         tool.setCategories(newTool.getCategories());
         tool.setLocation(newTool.getLocation());
         tool.setAuthor(newTool.getAuthor());

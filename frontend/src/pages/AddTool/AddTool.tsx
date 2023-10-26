@@ -13,8 +13,8 @@ type Props = {
 }
 export default function AddTool(props: Props) {
     const [tool, setTool] = useState<Tools>()
-    const [previewImage, setPreviewImage] = useState<string>("");
 
+    const [imageUrl, setImageUrl] = useState<string>('');
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [name, setName] = useState("")
     const [strasse, setStrasse] = useState("")
@@ -36,12 +36,60 @@ export default function AddTool(props: Props) {
 
 
     function submitNewTool(event: FormEvent) {
-        event.preventDefault()
+        event.preventDefault();
 
         const selectedCategoryValues = selectedOptions.map(option => option.value);
 
-        axios.post("/api/tools/add",
-            {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('categories', JSON.stringify(selectedCategoryValues));
+        formData.append('author', author);
+        formData.append('location', strasse + ' ' + hausnummer);
+        formData.append('description', description);
+        if (imageFile) {
+            formData.append('image', imageFile);
+        }
+
+
+        axios
+            .post('/api/tools/add/imageUpload', formData)
+            .then(response => {
+
+                const uploadedImageURL = response.data.url;
+
+                axios
+                    .post('/api/tools/add', {
+                        name,
+                        image: uploadedImageURL,
+                        categories: selectedCategoryValues,
+                        author,
+                        location: strasse + ' ' + hausnummer,
+                        description,
+                        timestamp: new Date().toLocaleString([], {
+                            day: '2-digit',
+                            month: 'long',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                        }),
+                    })
+                    .then(response => {
+                        setTool(response.data);
+                        resetForm();
+                        navigate('/werkzeuge');
+                        props.onToolUpdate();
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    /*
+    {
                 name: name,
                 image: imageFile,
                 categories: selectedCategoryValues,
@@ -54,23 +102,13 @@ export default function AddTool(props: Props) {
                     year: 'numeric',
                     hour: '2-digit',
                     minute: '2-digit'
-                })
-            })
-            .then((response) => {
-                setTool(response.data);
-                resetForm();
-                navigate("/werkzeuge");
-                props.onToolUpdate();
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+                }
+                */
 
-    }
 
     function resetForm() {
         setName("");
-        setImageFile(null);
+        setImageUrl('');
         setStrasse("");
         setHausnummer("")
         setAuthor("")
@@ -104,6 +142,32 @@ export default function AddTool(props: Props) {
     }
 
     const sortedStrassen = [...strassen].sort();
+
+
+    function handleFileUpload(event: ChangeEvent<HTMLInputElement>) {
+        if (event.target.files && event.target.files.length > 0) {
+            const selectedFile = event.target.files[0];
+
+            if (selectedFile.type.startsWith("image/")) {
+                setImageFile(selectedFile);
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (e.target) {
+                        setImageUrl(e.target.result as string);
+                    }
+                };
+                reader.readAsDataURL(selectedFile);
+            } else {
+                console.error("Selected file is not an image.");
+            }
+        } else {
+
+            setImageUrl("");
+        }
+    }
+
+
     return (
         <div className="addToolPage">
             <form onSubmit={submitNewTool}>
@@ -119,31 +183,9 @@ export default function AddTool(props: Props) {
                 <label>
                     <input
                         type="file"
-                        onChange={(event) => {
-                            const selectedFile = event.target?.files ? event.target.files[0] : null;
-
-                            if (selectedFile) {
-                                // Check if the selected file is an image
-                                if (selectedFile.type.startsWith('image/')) {
-                                    setImageFile(selectedFile);
-
-                                    const reader = new FileReader();
-                                    reader.onload = (e) => {
-                                        if (e.target) {
-                                            setPreviewImage(e.target.result as string);
-                                        }
-                                    };
-                                    reader.readAsDataURL(selectedFile);
-                                } else {
-                                    // Display an error message or handle the non-image file selection
-                                    console.error("Selected file is not an image.");
-                                }
-                            } else {
-                                setPreviewImage(""); // Clear the preview if no file is selected
-                            }
-                        }}
+                        onChange={handleFileUpload}
                     />
-                    {imageFile && <img src={previewImage} alt={name}/>}
+                    {imageUrl && <img src={imageUrl} alt={name}/>}
                 </label>
                 {/*<label>
                     <select

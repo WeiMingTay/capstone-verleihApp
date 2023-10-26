@@ -7,6 +7,8 @@
 
   > p:first-of-type {
     font-size: $fontSizeS;
+
+    color: $textColorMedium;
   }
 
   h4 {
@@ -38,10 +40,10 @@
 
   p {
     display: flex;
-    justify-content: space-between;
+
     margin-bottom: .25rem;
     span {
-      font-size: $fontSizeL;
+      margin-left: 1rem;
     }
   }
 

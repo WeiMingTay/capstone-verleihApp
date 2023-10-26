@@ -11,6 +11,7 @@ import java.util.List;
 public class NewTool {
 
     private String name;
+    private String image;
     private List<Category> categories;
     private String author;
     private String location;
