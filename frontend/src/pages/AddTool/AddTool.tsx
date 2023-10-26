@@ -47,7 +47,14 @@ export default function AddTool(props: Props) {
                 categories: selectedCategoryValues,
                 author: author,
                 location: strasse + " " + hausnummer,
-                description: description
+                description: description,
+                timestamp: new Date().toLocaleString([], {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })
             })
             .then((response) => {
                 setTool(response.data);

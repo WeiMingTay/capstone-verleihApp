@@ -7,7 +7,7 @@ export type Tools = {
     author: string;
     location: string;
     description: string;
-    timestamp: string;
+    timestamp : Date;
 
 }
 
