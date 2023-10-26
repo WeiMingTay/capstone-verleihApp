@@ -18,7 +18,8 @@ class ToolsServiceTest {
             Collections.singletonList(Category.TOOLS),
             "Dim Sum",
             "Keller",
-            "Bla Bla"
+            "Bla Bla",
+            "25.10.2021"
     );
     Tool toolId = new Tool(
             "65317b1294a88f39ea92a61a",
@@ -75,9 +76,10 @@ class ToolsServiceTest {
         String author = "Dim Sum";
         String location = "Keller";
         String description = "Bla Bla";
+        String timestamp = "25.10.2021";
 
         // WHEN
-        Tool tool = new Tool(name, categories, author, location, description);
+        Tool tool = new Tool(name, categories, author, location, description, timestamp);
 
         // THEN
         assertNotNull(tool);
@@ -88,7 +90,7 @@ class ToolsServiceTest {
         assertEquals(author, tool.getAuthor());
         assertEquals(location, tool.getLocation());
         assertEquals(description, tool.getDescription());
-        assertNull(tool.getTimestamp());
+        assertEquals(timestamp, tool.getTimestamp());
 
     }
 
@@ -110,7 +112,8 @@ class ToolsServiceTest {
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
-                "Bla Bla"
+                "Bla Bla",
+                "25.10.2021"
         ));
 
         verify(toolsRepository).findAll();
@@ -177,7 +180,8 @@ class ToolsServiceTest {
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
-                "Bla Bla"
+                "Bla Bla",
+                "25.10.2021"
         );
 
         //WHEN
@@ -190,7 +194,8 @@ class ToolsServiceTest {
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
-                "Bla Bla"
+                "Bla Bla",
+                "25.10.2021"
         );
         verify(toolsRepository).save(expected);
         assertEquals(expected, actual);
@@ -205,7 +210,8 @@ class ToolsServiceTest {
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
-                "Bla Bla"
+                "Bla Bla",
+                "25.10.2021"
         );
 
         //WHEN
@@ -219,7 +225,8 @@ class ToolsServiceTest {
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
-                "Bla Bla"
+                "Bla Bla",
+                "25.10.2021"
         );
         verify(toolsRepository).save(expected);
         assertNotEquals(expected, actual);

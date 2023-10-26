@@ -38,13 +38,13 @@ public class Tool {
 
     }
 
-    public Tool(@NonNull String name, @NonNull List<Category> categories, String author, @NonNull String location, String description) {
+    public Tool(@NonNull String name, @NonNull List<Category> categories, String author, @NonNull String location, String description, String timestamp) {
         this.name = name;
         this.categories = categories;
         this.author = author;
         this.location = location;
         this.description = description;
+        this.timestamp = timestamp;
     }
-
 
 }
