@@ -58,8 +58,8 @@ export default function ToolPage(props: Props) {
             :
             <div></div>
         }
-        <p>Ort: <span>{tool?.location}</span></p>
-        <p>Ansprechpartner:in: <span>{tool?.author}</span></p>
+        <p className={"italic"}>Ort: <span>{tool?.location}</span></p>
+        <p className={"italic"}>Ansprechpartner:in: <span>{tool?.author}</span></p>
         <ButtonLarge name={"Anfrage"}/>
         <p> Anleitung: {tool?.description}</p>
         <ButtonLarge name={"Löschen"} onClick={() => tool?.id && deleteToolById(tool.id)}/>

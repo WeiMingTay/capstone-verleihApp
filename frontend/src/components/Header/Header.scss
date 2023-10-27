@@ -6,7 +6,7 @@ header {
   justify-content: space-between;
   padding: .25rem;
   height: $headerHeight;
-  top: 0;
+
   width: 100%;
 
 
@@ -99,6 +99,7 @@ header {
 
             }
           }
+
           i {
             font-size: calc($fontSizeXXL * 1.5);
             transition: color 250ms ease-in-out;
@@ -106,6 +107,7 @@ header {
             &:hover {
               color: $accentColor;
             }
+
             &:active {
               scale: .9;
             }

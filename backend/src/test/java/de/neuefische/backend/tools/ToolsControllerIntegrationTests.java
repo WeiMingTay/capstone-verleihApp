@@ -1,17 +1,22 @@
 package de.neuefische.backend.tools;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.Uploader;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 
 import java.util.Collections;
 
+import static org.mockito.Mockito.mock;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -23,6 +28,10 @@ class ToolsControllerIntegrationTests {
     @Autowired
     ToolsRepository toolsRepo;
 
+    @MockBean
+    Cloudinary cloudinary;
+    Uploader uploader = mock(Uploader.class);
+
 
     // === GET ===
     @Test
@@ -30,7 +39,7 @@ class ToolsControllerIntegrationTests {
     void getAllTools_expectEmptyList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
+                .andExpect(content().json("""
                         []
                         """));
     }
@@ -44,7 +53,7 @@ class ToolsControllerIntegrationTests {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
+                .andExpect(content().json("""
                         [
                             {
                             "name": "Hammer",
@@ -70,7 +79,7 @@ class ToolsControllerIntegrationTests {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools/" + tool1.getId()))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
+                .andExpect(content().json("""
                         {
                         "name": "Hammer",
                         "location": "Keller",
@@ -84,7 +93,7 @@ class ToolsControllerIntegrationTests {
     void getToolsById_expectNoSuchElementException() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools/" + "quatschID"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(
+                .andExpect(content().string(
                         "Die ID gibt es leider nicht"
                 ));
     }
@@ -104,7 +113,7 @@ class ToolsControllerIntegrationTests {
                                 """)
                 )
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
+                .andExpect(content().json("""
                             {
                             "name": "Hammer",
                             "location": "Keller",
@@ -128,7 +137,7 @@ class ToolsControllerIntegrationTests {
                                 }
                                 """))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(
+                .andExpect(content().string(
                         "Elemente können nicht null sein!"
                 ));
     }
@@ -151,12 +160,12 @@ class ToolsControllerIntegrationTests {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/tools/" + id))
                 .andExpect(status().isOk())
                 .andExpect(
-                        MockMvcResultMatchers
-                                .content()
+                        content()
                                 .string("Tool with id: " + id + " was deleted.")
                 );
 
     }
+
     @Test
     @DirtiesContext
     void deleteToolById_expectIdNotFoundMessage() throws Exception {
@@ -166,8 +175,7 @@ class ToolsControllerIntegrationTests {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/tools/" + id))
                 .andExpect(status().isNotFound())
                 .andExpect(
-                        MockMvcResultMatchers
-                                .content()
+                        content()
                                 .string("Die ID '" + id + "' existiert nicht!")
                 );
 
