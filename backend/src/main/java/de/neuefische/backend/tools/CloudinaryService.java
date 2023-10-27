@@ -19,7 +19,7 @@ public class CloudinaryService {
         File fileUpload = File.createTempFile("image", null);
         image.transferTo(fileUpload);
 
-        Map response = cloudinary.uploader().upload(image, Collections.emptyMap());
+        Map response = cloudinary.uploader().upload(fileUpload, Collections.emptyMap());
 
         return response.get("url").toString();
     }

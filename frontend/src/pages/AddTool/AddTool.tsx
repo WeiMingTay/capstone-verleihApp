@@ -46,46 +46,47 @@ export default function AddTool(props: Props) {
         formData.append('author', author);
         formData.append('location', strasse + ' ' + hausnummer);
         formData.append('description', description);
-        if (imageFile) {
-            formData.append('image', imageFile);
+
+        const newTool = {
+            name: name,
+
+            categories: selectedCategoryValues,
+            author: author,
+            location: strasse + ' ' + hausnummer,
+            description: description,
+            timestamp: new Date().toLocaleString([], {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+
+            })
         }
+
+        if (imageFile) {
+            formData.append("file", imageFile);
+        }
+        formData.append("data", new Blob([JSON.stringify(newTool)], {type: 'application/json'}));
 
 
         axios
-            .post('/api/tools/add', formData)
+            .post('/api/tools/add',
+                formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
             .then(response => {
-
-                const uploadedImageURL = response.data.url;
-
-                axios
-                    .post('/api/tools/add', {
-                        name,
-                        image: uploadedImageURL,
-                        categories: selectedCategoryValues,
-                        author,
-                        location: strasse + ' ' + hausnummer,
-                        description,
-                        timestamp: new Date().toLocaleString([], {
-                            day: '2-digit',
-                            month: 'long',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                        }),
-                    })
-                    .then(response => {
-                        setTool(response.data);
-                        resetForm();
-                        navigate('/werkzeuge');
-                        props.onToolUpdate();
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
+                setTool(response.data);
+                resetForm();
+                navigate('/werkzeuge');
+                props.onToolUpdate();
             })
             .catch(error => {
                 console.error(error);
             });
+
     }
 
     function resetForm() {

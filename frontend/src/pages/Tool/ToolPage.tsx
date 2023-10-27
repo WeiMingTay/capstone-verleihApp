@@ -41,11 +41,11 @@ export default function ToolPage(props: Props) {
         <p>{tool?.timestamp.toLocaleString()}</p>
 
         <h4>{tool?.name}</h4>
-        <a target={"_blank"}
-           href={tool?.image}><img
-            src={tool?.name}
-            alt={tool?.name+"-image"}/>
-        </a>
+        <img
+            src={tool?.image}
+            alt={tool?.name + "-image"}
+        />
+
         {tool?.categories
             ? <div className={"categories"}>
                 {

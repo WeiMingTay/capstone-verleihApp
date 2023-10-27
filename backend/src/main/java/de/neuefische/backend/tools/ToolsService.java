@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -28,22 +29,26 @@ public class ToolsService {
     }
 
     // === POST ===
-    public Tool createTool(NewTool newTool, MultipartFile image) throws Exception {
-        Tool tool = new Tool();
-        tool.setName(newTool.getName());
+    public Tool createTool(NewTool newTool, MultipartFile image) throws IOException {
 
-        tool.setCategories(newTool.getCategories());
-        tool.setLocation(newTool.getLocation());
-        tool.setAuthor(newTool.getAuthor());
-        tool.setDescription(newTool.getDescription());
-        tool.setTimestamp(newTool.getTimestamp());
-
+        String url = null;
         if (image != null) {
-            String url = cloudinaryService.uploadImage(image);
-            tool.withImage(url);
-        }
+            url = cloudinaryService.uploadImage(image);
 
-            return toolsRepository.save(tool);
+
+        }
+        Tool tool = new Tool(
+                null,
+                newTool.getName(),
+                url,
+                newTool.getCategories(),
+                newTool.getAuthor(),
+                newTool.getLocation(),
+                newTool.getDescription(),
+                newTool.getTimestamp()
+        );
+
+        return toolsRepository.save(tool);
     }
 
     // === DELETE ===
