@@ -42,9 +42,9 @@ export default function ToolPage(props: Props) {
 
         <h4>{tool?.name}</h4>
         <a target={"_blank"}
-           href={"https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&q=80&w=1170&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}><img
-            src={"https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&q=80&w=1170&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
-            alt={tool?.name}/>
+           href={tool?.image}><img
+            src={tool?.name}
+            alt={tool?.name+"-image"}/>
         </a>
         {tool?.categories
             ? <div className={"categories"}>
