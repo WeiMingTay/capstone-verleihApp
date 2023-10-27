@@ -36,39 +36,12 @@ public class ToolsController {
     }
 
     // === POST ===
-    @PostMapping("/tools/add/imageUpload")
-    public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile image) {
-        if (image != null) {
-            try {
-                Map<String, String> cloudinaryResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-                String imageUrl = cloudinaryResult.get("url");
-
-                return ResponseEntity.ok(imageUrl);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return ResponseEntity.badRequest().body("Image upload failed: " + e.getMessage());
-            }
-        } else {
-            return ResponseEntity.badRequest().body("Image is missing");
-        }
-    }
-
 
     @PostMapping("/tools/add")
-    public Tool createTool(@RequestBody NewTool newTool) {
-        try {
-            ResponseEntity<String> imageResponse = uploadImage(newTool.getImageFile());
-            String imageUrl = imageResponse.getBody();
+    public Tool createTool(@RequestPart("data") NewTool newTool, @RequestPart(name = "file", required = false) MultipartFile image) throws Exception {
+        return toolsService.createTool(newTool, image);
 
-            newTool.setImage(imageUrl);
-
-            return toolsService.createTool(newTool);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
-
 
 
     // === DELETE ===

@@ -52,7 +52,7 @@ export default function AddTool(props: Props) {
 
 
         axios
-            .post('/api/tools/add/imageUpload', formData)
+            .post('/api/tools/add', formData)
             .then(response => {
 
                 const uploadedImageURL = response.data.url;
@@ -88,24 +88,6 @@ export default function AddTool(props: Props) {
             });
     }
 
-    /*
-    {
-                name: name,
-                image: imageFile,
-                categories: selectedCategoryValues,
-                author: author,
-                location: strasse + " " + hausnummer,
-                description: description,
-                timestamp: new Date().toLocaleString([], {
-                    day: '2-digit',
-                    month: 'long',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }
-                */
-
-
     function resetForm() {
         setName("");
         setImageUrl('');
@@ -113,7 +95,6 @@ export default function AddTool(props: Props) {
         setHausnummer("")
         setAuthor("")
         setDescription("")
-
     }
 
     function changeName(event: ChangeEvent<HTMLInputElement>) {
