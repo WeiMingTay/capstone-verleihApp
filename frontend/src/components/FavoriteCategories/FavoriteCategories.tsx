@@ -26,7 +26,7 @@ export default function FavoriteCategories() {
                         backgroundImage: `url(${backgroundImageUrl})`
                     };
                     return (
-                        <Link to={"/"} key={cat}>
+                        <Link to={"/kategorie"} key={cat}>
                             <div className="category" style={inlineStyle}>
                                 <p>{capitalizeWords(getCategoryTranslation(cat))}</p>
                             </div>
