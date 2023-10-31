@@ -12,6 +12,7 @@ import axios from "axios";
 import ToolPage from "./pages/Tool/ToolPage.tsx";
 import Footer from "./components/Footer/Footer.tsx";
 import CategoryGalleryPage from "./pages/CategoryGalleryPage/CategoryGalleryPage.tsx";
+import CategoryPage from "./pages/CategoryPage/CategoryPage.tsx";
 
 
 
@@ -45,6 +46,7 @@ export default function App() {
                 <Route path={"/werkzeuge/:id"} element={<ToolPage onToolUpdate={getAllTools}/>}/>
                 <Route path={"/werkzeuge/add"} element={<AddTool onToolUpdate={getAllTools}/>}/>
                 <Route path={"/kategorie"} element={<CategoryGalleryPage/>}/>
+                <Route path={"/kategorie/:id"} element={<CategoryPage tools={tools}/>}/>
                 <Route path={"/schwarzes-brett"} element={<SchwarzesBrett/>}/>
             </Routes>
             <Footer/>

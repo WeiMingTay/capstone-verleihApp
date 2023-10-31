@@ -12,17 +12,17 @@
     object-fit: contain;
     height: 100%;
     width: 100%;
+
     article {
       height: 100%;
-      background: linear-gradient(transparent, gray 90%);
-      border: 2px solid red;
+      background-color: rgba($backgroundColorDark, .5);
+
 
       display: flex;
-        align-items: flex-end;
-        justify-content: center;
+      align-items: center;
+      justify-content: center;
 
       p {
-
         font-size: $fontSizeXL;
         color: $textColorLight;
       }
