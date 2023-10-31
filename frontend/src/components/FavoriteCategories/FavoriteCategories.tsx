@@ -1,5 +1,5 @@
 import "./FavoriteCategories.scss";
-import {allCategories, getCategoryImage, getCategoryTranslation} from "../../assets/entities/tools.ts";
+import {Category, getCategoryImage, getCategoryTranslation, Tools} from "../../assets/entities/tools.ts";
 import {Link} from "react-router-dom";
 
 
@@ -10,8 +10,21 @@ export function capitalizeWords(str: string) {
         .join(" ")
 }
 
-export default function FavoriteCategories() {
+type Props = {
+    readonly tools: Tools[];
+}
+export default function FavoriteCategories(props: Props) {
 
+    const categoryCount = props.tools.reduce((count, tool) => {
+        for (const category of tool.categories) {
+            count[category] = (count[category] || 0) + 1;
+        }
+        console.log(count);
+        return count;
+    }, {} as { [key: string]: number });
+    const sortedCategories = Object.keys(categoryCount).sort((a, b) => {
+        return categoryCount[b] - categoryCount[a];
+    });
 
     return (
         <article className={"favoriteCategories-comp"}>
@@ -20,15 +33,15 @@ export default function FavoriteCategories() {
                 <Link to={"/kategorie"}>Alle</Link>
             </div>
             <div>
-                {allCategories.slice(0, 4).map(cat => {
-                    const backgroundImageUrl = getCategoryImage(cat); // Get the image URL for the category
+                {sortedCategories.slice(0, 4).map(cat => {
+                    const backgroundImageUrl = getCategoryImage(cat as Category); // Get the image URL for the category
                     const inlineStyle = {
                         backgroundImage: `url(${backgroundImageUrl})`
                     };
                     return (
-                        <Link to={"/kategorie"} key={cat}>
+                        <Link to={"/kategorie/" + cat} key={cat}>
                             <div className="category" style={inlineStyle}>
-                                <p>{capitalizeWords(getCategoryTranslation(cat))}</p>
+                                <p>{capitalizeWords(getCategoryTranslation(cat as Category))}</p>
                             </div>
                         </Link>
                     );
