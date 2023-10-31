@@ -9,7 +9,7 @@
   overflow: hidden;
 
   a {
-    object-fit: contain;
+    background-size: cover;
     height: 100%;
     width: 100%;
 
@@ -25,6 +25,8 @@
       p {
         font-size: $fontSizeXL;
         color: $textColorLight;
+        text-shadow: 0 0 15px $textColorDark;
+
       }
     }
   }
