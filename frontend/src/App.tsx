@@ -13,7 +13,8 @@ import ToolPage from "./pages/Tool/ToolPage.tsx";
 import Footer from "./components/Footer/Footer.tsx";
 import CategoryGalleryPage from "./pages/CategoryGalleryPage/CategoryGalleryPage.tsx";
 import CategoryPage from "./pages/CategoryPage/CategoryPage.tsx";
-
+import ContactPage from "./pages/ContactPage/ContactPage.tsx";
+import ProfilPage from "./pages/ProfilPage/ProfilPage.tsx";
 
 
 export default function App() {
@@ -35,13 +36,14 @@ export default function App() {
     }
 
 
-
     return (
         <BrowserRouter>
             <Header/>
             <Routes>
                 <Route path={"/"} element={<WelcomePage/>}/>
                 <Route path={"/start"} element={<StartPage tools={tools}/>}/>
+                <Route path={"/profil"} element={<ProfilPage/>}/>
+                <Route path={"/contact"} element={<ContactPage/>}/>
                 <Route path={"/werkzeuge"} element={<ToolGallery tools={tools}/>}/>
                 <Route path={"/werkzeuge/:id"} element={<ToolPage onToolUpdate={getAllTools}/>}/>
                 <Route path={"/werkzeuge/add"} element={<AddTool onToolUpdate={getAllTools}/>}/>

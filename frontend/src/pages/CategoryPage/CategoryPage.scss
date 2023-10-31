@@ -13,4 +13,9 @@
     color: $textColorLight;
     text-shadow: 0 0 15px $textColorDark;
   }
+
+  p {
+    font-size: $fontSizeM;
+    margin: 1rem;
+  }
 }

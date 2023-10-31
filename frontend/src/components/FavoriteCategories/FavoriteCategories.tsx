@@ -19,7 +19,6 @@ export default function FavoriteCategories(props: Props) {
         for (const category of tool.categories) {
             count[category] = (count[category] || 0) + 1;
         }
-        console.log(count);
         return count;
     }, {} as { [key: string]: number });
     const sortedCategories = Object.keys(categoryCount).sort((a, b) => {

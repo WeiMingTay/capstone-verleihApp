@@ -24,8 +24,11 @@ export default function Header() {
                 <Link to={"/"}><img src={logo} alt="Logo"/></Link>
                 <h1>Capstone</h1>
             </div>
-            <div className={`menu-toggle ${isOpen ? "open" : ""}`}>
-                <div onClick={toggleMenu}>
+            <div
+                className={`menu-toggle ${isOpen ? "open" : ""}`}
+                onClick={toggleMenu}
+            >
+                <div>
                     <span className="bar"></span>
                     <span className="bar"></span>
                     <span className="bar"></span>
@@ -38,8 +41,9 @@ export default function Header() {
                         <li><Link onClick={toggleMenu} to={"/schwarzes-brett"}>Schwarzes Brett</Link></li>
                     </ul>
                     <ul>
-                        <li><Link to={"/start"}><i className="las la-home"></i></Link></li>
-                        <li><Link to={"/"}><i className="las la-user-circle"></i></Link></li>
+                        <li><Link onClick={toggleMenu} to={"/start"}><i className="las la-home"></i></Link></li>
+                        <li><Link onClick={toggleMenu} to={"/profil"}><i className="las la-user-circle"></i></Link></li>
+                        <li><Link onClick={toggleMenu} to={"/contact"}><i className="las la-envelope"></i></Link></li>
                     </ul>
                 </nav>
             </div>
