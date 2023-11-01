@@ -23,6 +23,7 @@ export default function Header() {
             <div>
                 <Link to={"/"}><img src={logo} alt="Logo"/></Link>
                 <h1>Capstone</h1>
+
             </div>
             <div
                 className={`menu-toggle ${isOpen ? "open" : ""}`}
