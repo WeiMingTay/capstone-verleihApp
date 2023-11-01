@@ -38,7 +38,9 @@
         width: 50%;
 
 
-        button {
+        a {
+          @include flexCenter(.5rem);
+          font-size: $fontSizeM;
           width: 100%;
           border: none;
           padding: .5rem 0;

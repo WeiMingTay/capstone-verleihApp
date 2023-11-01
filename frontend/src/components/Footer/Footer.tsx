@@ -19,7 +19,7 @@ export default function Footer() {
         <footer>
             <p>Noch nicht angemeldet?</p>
             <div>
-                <Link to={"/"}>Einloggen</Link>
+                <Link to={"/login"}>Einloggen</Link>
                 <span> oder </span>
                 <Link to={"/"}>Registrieren</Link>
             </div>
