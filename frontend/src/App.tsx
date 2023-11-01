@@ -71,7 +71,7 @@ navigate('/')
 
     return (
         <>
-            <Header/>
+            <Header userProfile={userProfile}/>
             <Routes>
                 <Route path={"/login"} element={<UserLogin userProfile={userProfile} login={login} logout={logout}/>}/>
                 <Route path={"/"} element={<WelcomePage/>}/>
