@@ -1,0 +1,21 @@
+@import "../../assets/Variables.scss";
+
+.CategoryPage {
+
+  h2 {
+    height: 5rem;
+    padding: 0 1rem;
+    font-size: $fontSizeXL;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    color: $textColorLight;
+    text-shadow: 0 0 15px $textColorDark;
+  }
+
+  p {
+    font-size: $fontSizeM;
+    margin: 1rem;
+  }
+}

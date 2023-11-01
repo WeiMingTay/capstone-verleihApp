@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
+import java.io.IOException;
 import java.util.Collections;
 
 import static org.mockito.Mockito.mock;

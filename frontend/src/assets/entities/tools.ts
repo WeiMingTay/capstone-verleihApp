@@ -12,7 +12,7 @@ export type Tools = {
 }
 
 
-type Category = "GARDEN" | "TOOLS" | "KITCHEN" | "PLUMBING" | "ELECTRONICS" | "SEWING" | "OTHER";
+export type Category = "GARDEN" | "TOOLS" | "KITCHEN" | "PLUMBING" | "ELECTRONICS" | "SEWING" | "OTHER";
 
 const categoryTranslations: Record<Category, string> = {
     GARDEN: "GARTEN",

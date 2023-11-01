@@ -18,12 +18,14 @@
     text-decoration: none;
     color: inherit;
 
+
     div {
       overflow: hidden;
 
       img {
         width: 100%;
-        object-fit: contain;
+        max-height: 150px;
+        object-fit: cover;
         filter: grayscale(.75);
         transition: all 500ms ease-in-out;
       }
