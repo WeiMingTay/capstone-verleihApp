@@ -1,5 +1,5 @@
 import './assets/App.scss'
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import AddTool from "./pages/AddTool/AddTool.tsx";
 import StartPage from "./pages/StartPage/StartPage.tsx";
 import ToolGallery from "./pages/ToolGallery/ToolGallery.tsx";
@@ -23,8 +23,7 @@ export default function App() {
     const [tools, setTools] = useState<Tools[]>([])
     const [userProfile, setUserProfile] = useState<UserProfile>()
 
-
-
+const navigate = useNavigate();
     useEffect(
         getAllTools, []
     )
@@ -48,11 +47,12 @@ export default function App() {
 
         window.open(host + '/oauth2/authorization/github', '_self')
     }
+
     function logout() {
         axios.post("/api/logout")
             .then(() => {
                 setUserProfile(undefined)
-
+navigate('/')
             })
             .catch(error => {
                 console.error(error)
@@ -70,7 +70,7 @@ export default function App() {
     }
 
     return (
-        <BrowserRouter>
+        <>
             <Header/>
             <Routes>
                 <Route path={"/login"} element={<UserLogin userProfile={userProfile} login={login} logout={logout}/>}/>
@@ -85,7 +85,7 @@ export default function App() {
                 <Route path={"/kategorie/:id"} element={<CategoryPage tools={tools}/>}/>
                 <Route path={"/schwarzes-brett"} element={<SchwarzesBrett/>}/>
             </Routes>
-            <Footer/>
-        </BrowserRouter>
+            <Footer userProfile={userProfile}/>
+        </>
     )
 }
