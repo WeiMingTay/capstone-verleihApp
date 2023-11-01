@@ -23,12 +23,15 @@ export default function App() {
     const [tools, setTools] = useState<Tools[]>([])
     const [userProfile, setUserProfile] = useState<UserProfile>()
 
+
+
     useEffect(
         getAllTools, []
     )
     useEffect(
         profile, []
     )
+
 
     function getAllTools() {
         axios.get("/api/tools")
@@ -41,9 +44,19 @@ export default function App() {
     }
 
     function login() {
-        const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080': window.location.origin
+        const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
 
         window.open(host + '/oauth2/authorization/github', '_self')
+    }
+    function logout() {
+        axios.post("/api/logout")
+            .then(() => {
+                setUserProfile(undefined)
+
+            })
+            .catch(error => {
+                console.error(error)
+            })
     }
 
     function profile() {
@@ -55,14 +68,15 @@ export default function App() {
                 console.error("Fehler beim Abrufen des Benutzerprofils", error)
             })
     }
+
     return (
         <BrowserRouter>
             <Header/>
             <Routes>
-                <Route path={"/login"} element={<UserLogin userProfile={userProfile} login={login}/>}/>
+                <Route path={"/login"} element={<UserLogin userProfile={userProfile} login={login} logout={logout}/>}/>
                 <Route path={"/"} element={<WelcomePage/>}/>
                 <Route path={"/start"} element={<StartPage tools={tools}/>}/>
-                <Route path={"/profil"} element={<ProfilPage/>}/>
+                <Route path={"/profil"} element={<ProfilPage userProfile={userProfile} logout={logout}/>}/>
                 <Route path={"/contact"} element={<ContactPage/>}/>
                 <Route path={"/werkzeuge"} element={<ToolGallery tools={tools}/>}/>
                 <Route path={"/werkzeuge/:id"} element={<ToolPage onToolUpdate={getAllTools}/>}/>

@@ -3,6 +3,7 @@ import {UserProfile} from "../../assets/entities/userProfile.ts";
 type Props = {
     userProfile: UserProfile | undefined
     login: () => void
+    logout: () => void
 }
 export default function UserLogin(props: Props) {
 
@@ -13,7 +14,10 @@ export default function UserLogin(props: Props) {
 
             {
                 props.userProfile?.name
-                    ? <p>{props.userProfile?.name}</p>
+                    ? <>
+                    <p>{props.userProfile?.name}</p>
+                    <button onClick={props.logout}>Logout</button>
+                    </>
                     : <p>nicht angemeldet</p>
             }
         </div>
