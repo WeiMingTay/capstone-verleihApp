@@ -1,0 +1,61 @@
+@import "../../assets/Variables.scss";
+
+.userLogin {
+  form {
+    @include flexCenter(.5rem);
+    flex-direction: column;
+
+    label {
+      margin: 0 1rem;
+      width: calc(100% - 2rem);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      input {
+        accent-color: $accentColor;
+      }
+
+      span {
+        position: absolute;
+        right: 1%;
+        top: 50%;
+        cursor: pointer;
+      }
+    }
+
+    button {
+      width: calc(100% - 2rem);
+
+    }
+
+  }
+
+  hr {
+    margin: 1rem;
+    color: $backgroundColorMedium;
+  }
+
+  .externalLogin {
+    margin: 0 1rem;
+    text-align: center;
+
+    button {
+      border: none;
+      background-color: inherit;
+      cursor: pointer;
+
+      i {
+        font-size: calc($fontSizeXXL * 1.5);
+      }
+
+      &:active {
+        scale: .9;
+      }
+    }
+
+    .oAuthAnbieter {
+      @include flexCenter(1rem)
+    }
+  }
+}

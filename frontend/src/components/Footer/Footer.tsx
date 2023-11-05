@@ -1,23 +1,19 @@
 import "./Footer.scss";
 import {Link, useLocation} from "react-router-dom";
 import {UserProfile} from "../../assets/entities/userProfile.ts";
+
 type Props = {
-    userProfile: UserProfile | undefined
+    readonly userProfile: UserProfile | undefined
 }
 export default function Footer(props: Props) {
     const location = useLocation();
 
 
-    const isOnWelcomePage = location.pathname === "/";
-   const isLoggedIn = props.userProfile?.id
+    const isOnWelcomePage: boolean = location.pathname === "/";
+    const isLoggedIn: string | undefined = props.userProfile?.name
     if (isOnWelcomePage || isLoggedIn) {
         return null;
     }
-
-    /* TODO
-     if (isUserLoggedIn) {
-          return null;
-      }*/
 
     return (
         <footer>

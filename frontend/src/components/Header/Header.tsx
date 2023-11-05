@@ -6,14 +6,14 @@ import logo from "../../assets/images/logo.jpg";
 import {UserProfile} from "../../assets/entities/userProfile.ts";
 
 type Props = {
-    userProfile: UserProfile | undefined
+    readonly userProfile: UserProfile | undefined
 }
 export default function Header(props: Props) {
     const [isOpen, setIsOpen] = useState(false)
     const location = useLocation();
 
     const isOnWelcomePage = location.pathname === "/";
-    const isLoggedIn = props.userProfile?.id
+    const isLoggedIn = props.userProfile?.name
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
