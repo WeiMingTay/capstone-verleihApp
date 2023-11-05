@@ -24,8 +24,8 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.DELETE, "/api/tools/*").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/tools/*").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/tools/*").authenticated()
-                        .requestMatchers(HttpMethod.PATCH, "/api/tools/*").authenticated()
                         .anyRequest().permitAll())
 
                 .sessionManagement(sessions ->

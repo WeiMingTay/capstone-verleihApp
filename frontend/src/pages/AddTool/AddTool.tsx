@@ -84,10 +84,11 @@ export default function AddTool(props: Props) {
                 props.onToolUpdate();
             })
             .catch(error => {
-                console.error(error);
+                console.error("Fehler beim POSiT",error);
             });
 
     }
+
 
     function resetForm() {
         setName("");
