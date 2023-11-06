@@ -5,17 +5,20 @@ import {useNavigate, useParams} from "react-router-dom";
 import "./ToolPage.scss";
 import {capitalizeWords} from "../../components/FavoriteCategories/FavoriteCategories.tsx";
 import ButtonLarge from "../../components/Button/ButtonLarge.tsx";
+import {UserProfile} from "../../assets/entities/userProfile.ts";
 
 type Props = {
     onToolUpdate: () => void
+    userProfile: UserProfile | undefined
 };
 
 export default function ToolPage(props: Props) {
     const [tool, setTool] = useState<Tools>()
-
     const {id} = useParams()
-
     const navigate = useNavigate();
+
+    const isLoggedIn: string | undefined = props.userProfile?.name;
+
     useEffect(() => {
         getTool()
     }, [])
@@ -60,10 +63,14 @@ export default function ToolPage(props: Props) {
         }
         <p className={"italic"}>Ort: <span>{tool?.location}</span></p>
         <p className={"italic"}>Ansprechpartner:in: <span>{tool?.author}</span></p>
-        <ButtonLarge name={"Anfrage"}/>
-        <p> Anleitung: {tool?.description}</p>
-        <ButtonLarge name={"Löschen"} onClick={() => tool?.id && deleteToolById(tool.id)}/>
-
+        { isLoggedIn && <ButtonLarge name={"Anfrage"}/>
+        }
+            <p> Anleitung: {tool?.description}</p>
+        {
+            isLoggedIn
+                ? <ButtonLarge name={"Löschen"} onClick={() => tool?.id && deleteToolById(tool.id)}/>
+                : null
+        }
 
     </article>)
         ;

@@ -182,10 +182,10 @@ class ToolsServiceTest {
         Tool tool = tool1;
         NewTool newTool = new NewTool(
                 "Hammer",
-                imageFile,
-                "Dim Sum",
+
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
+
                 "Keller",
                 "Bla Bla",
                 "25.10.2021"
@@ -214,8 +214,8 @@ class ToolsServiceTest {
         Tool tool = tool1;
         NewTool newTool = new NewTool(
                 "Hammer",
-                imageFile,
-                "image.jpg",
+
+
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",

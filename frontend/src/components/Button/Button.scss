@@ -10,6 +10,7 @@
   background-color: $secondaryColor;
   color: $textColorLight;
   cursor: pointer;
+  @include flexCenter(0);
 
   &:active {
     scale: .95;

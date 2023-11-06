@@ -12,18 +12,17 @@ export default function LatestTool(props: Props) {
     const randomIndex = Math.floor(Math.random() * props.tools?.length);
     const randomTool = props.tools[randomIndex];
 
-
-   const inlineStyle = {
+    console.log(randomTool.image)
+    const inlineStyle = {
         backgroundImage: `url(${randomTool.image})`
     }
 
-    return (
-        <Link className="latestTool" to={randomTool ? `/werkzeuge/${randomTool.id}` : "#"}>
-
-            <div>
-                <h5>Frisch dabei</h5>
-                <Link to={"/werkzeuge"}>Alle</Link>
-            </div>
+    return (<div className="latestTool">
+        <div>
+            <h5>Frisch dabei</h5>
+            <Link to={"/werkzeuge"}>Alle</Link>
+        </div>
+        <Link to={randomTool ? `/werkzeuge/${randomTool.id}` : "#"}>
             <div style={inlineStyle}>
                 <div>
                     <h6>{randomTool?.name}</h6>
@@ -32,5 +31,5 @@ export default function LatestTool(props: Props) {
             </div>
 
         </Link>
-    );
+    </div>);
 }
