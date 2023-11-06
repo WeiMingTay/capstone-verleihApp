@@ -4,5 +4,7 @@ export const strassen = [
     "Griegstraße",
     "Bielfeldtstraße",
     "Grünebergstraße",
-    "Lisztstraße"
-    ]
+    "Lisztstraße",
+    "Walderseestraße",
+    "Weidenstraße"
+]

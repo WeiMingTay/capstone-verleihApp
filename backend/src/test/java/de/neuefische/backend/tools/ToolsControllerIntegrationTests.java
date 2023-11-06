@@ -18,13 +18,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -121,7 +121,14 @@ class ToolsControllerIntegrationTests {
                 null,
                 MediaType.APPLICATION_JSON_VALUE,
                 """
-                            {"name":"docker-image"}
+                            {
+                            "name": "Hammer",
+                        "categories": ["TOOLS"],
+                        "author": "Max Mustermann",
+                        "location": "Keller",
+                        "description": "Ein Hammer",
+                        "timestamp": "2021-07-01T12:00:00.000+00:00"
+                            }
                         """
                         .getBytes()
         );
@@ -136,19 +143,19 @@ class ToolsControllerIntegrationTests {
         when(cloudinary.uploader()).thenReturn(uploader);
         when(uploader.upload(any(), any())).thenReturn(Map.of("url", "test-url"));
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/tools/add")
+        mockMvc.perform(multipart("/api/tools/add")
                         .file(data)
                         .file(file))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                                                     {
                         "name": "Hammer",
-                        "imageFile": "test-url",
-                        "image": "testImage.png",                        "categories": ["TOOLS"],
+                        "image": "test-url",
+                        "categories": ["TOOLS"],
                         "author": "Max Mustermann",
                         "location": "Keller",
                         "description": "Ein Hammer",
-                        "timestamp": "2021-07-01T12:00:00.000+00:00",
+                        "timestamp": "2021-07-01T12:00:00.000+00:00"
                         }
                                                 """))
                 .andExpect(jsonPath("$.id").isNotEmpty());
@@ -177,7 +184,7 @@ class ToolsControllerIntegrationTests {
         when(cloudinary.uploader()).thenReturn(uploader);
         when(uploader.upload(any(), any())).thenReturn(Map.of("url", "test-url"));
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/tools/add")
+        mockMvc.perform(multipart("/api/tools/add")
                         .file(data)
                         .file(file))
                 .andExpect(status().isOk())

@@ -27,8 +27,8 @@ export default function Header(props: Props) {
         <header className={isOpen ? "open" : ""}>
             <div>
                 {isLoggedIn
-                ? <Link to={"/start"}><img src={logo} alt="Logo"/></Link>
-                : <Link to={"/"}><img src={logo} alt="Logo"/></Link>
+                    ? <Link to={"/start"}><img src={logo} alt="Logo"/></Link>
+                    : <Link to={"/"}><img src={logo} alt="Logo"/></Link>
                 }
                 <h1>Capstone</h1>
 
@@ -36,6 +36,7 @@ export default function Header(props: Props) {
             <div
                 className={`menu-toggle ${isOpen ? "open" : ""}`}
                 onClick={toggleMenu}
+                onKeyDown={toggleMenu}
             >
                 <div>
                     <span className="bar"></span>
@@ -52,8 +53,10 @@ export default function Header(props: Props) {
                     <ul>
                         <li><Link onClick={toggleMenu} to={"/start"}><i className="las la-home"></i></Link></li>
                         {isLoggedIn
-                            ? <li><Link onClick={toggleMenu} to={"/profil"}><i className="las la-user-circle"></i></Link></li>
-                        : <></>
+                            ?
+                            <li><Link onClick={toggleMenu} to={"/profil"}><i className="las la-user-circle"></i></Link>
+                            </li>
+                            : <></>
                         }
                         <li><Link onClick={toggleMenu} to={"/contact"}><i className="las la-envelope"></i></Link></li>
                     </ul>

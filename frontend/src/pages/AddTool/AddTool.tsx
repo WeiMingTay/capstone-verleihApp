@@ -9,7 +9,7 @@ import ButtonLarge from "../../components/Button/ButtonLarge.tsx";
 import Select from "react-select";
 
 type Props = {
-    onToolUpdate: () => void
+    readonly onToolUpdate: () => void
 }
 export default function AddTool(props: Props) {
     const [tool, setTool] = useState<Tools>()
@@ -35,10 +35,10 @@ export default function AddTool(props: Props) {
     }));
 
 
-    function submitNewTool(event: FormEvent) {
+    function submitNewTool(event: FormEvent): void {
         event.preventDefault();
 
-        const selectedCategoryValues = selectedOptions.map(option => option.value);
+        const selectedCategoryValues: string[] = selectedOptions.map(option => option.value);
 
         const formData = new FormData();
         formData.append('name', name);
@@ -84,7 +84,7 @@ export default function AddTool(props: Props) {
                 props.onToolUpdate();
             })
             .catch(error => {
-                console.error("Fehler beim POSiT",error);
+                console.error("Fehler beim POST", error);
             });
 
     }
