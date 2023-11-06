@@ -1,6 +1,8 @@
 @import "../../assets/Variables.scss";
 
 .CategoryPage {
+  width: 100%;
+
 
   h2 {
     height: 5rem;
@@ -12,6 +14,11 @@
     align-items: flex-end;
     color: $textColorLight;
     text-shadow: 0 0 15px $textColorDark;
+  }
+
+  a {
+    margin: 1rem 1rem 0 1rem;
+    width: calc(100% - 2rem)
   }
 
   p {

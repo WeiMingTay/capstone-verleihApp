@@ -26,7 +26,10 @@ export default function Header(props: Props) {
     return (
         <header className={isOpen ? "open" : ""}>
             <div>
-                <Link to={"/"}><img src={logo} alt="Logo"/></Link>
+                {isLoggedIn
+                ? <Link to={"/start"}><img src={logo} alt="Logo"/></Link>
+                : <Link to={"/"}><img src={logo} alt="Logo"/></Link>
+                }
                 <h1>Capstone</h1>
 
             </div>

@@ -87,11 +87,11 @@ export default function App() {
                 <Route path={"/start"} element={<StartPage tools={tools}/>}/>
                 <Route path={"/profil"} element={<UserProfilePage userProfile={userProfile} logout={logout}/>}/>
                 <Route path={"/contact"} element={<ContactPage/>}/>
-                <Route path={"/werkzeuge"} element={<ToolGallery tools={tools}/>}/>
-                <Route path={"/werkzeuge/:id"} element={<ToolPage onToolUpdate={getAllTools}/>}/>
+                <Route path={"/werkzeuge"} element={<ToolGallery tools={tools} userProfile={userProfile}/>}/>
+                <Route path={"/werkzeuge/:id"} element={<ToolPage onToolUpdate={getAllTools} userProfile={userProfile}/>}/>
                 <Route path={"/werkzeuge/add"} element={<AddTool onToolUpdate={getAllTools}/>}/>
                 <Route path={"/kategorie"} element={<CategoryGalleryPage/>}/>
-                <Route path={"/kategorie/:id"} element={<CategoryPage tools={tools}/>}/>
+                <Route path={"/kategorie/:id"} element={<CategoryPage tools={tools} userProfile={userProfile}/>}/>
                 <Route path={"/schwarzes-brett"} element={<SchwarzesBrett/>}/>
             </Routes>
             <Footer userProfile={userProfile}/>
