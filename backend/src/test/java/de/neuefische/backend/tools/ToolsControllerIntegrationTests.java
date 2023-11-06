@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
@@ -25,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class ToolsControllerIntegrationTests {
+
     @Autowired
     MockMvc mockMvc;
 
@@ -34,6 +36,9 @@ class ToolsControllerIntegrationTests {
     @MockBean
     Cloudinary cloudinary;
     Uploader uploader = mock(Uploader.class);
+
+    @MockBean
+    ClientRegistrationRepository clientRegistrationRepository;
 
 
     // === GET ===
@@ -104,6 +109,7 @@ class ToolsControllerIntegrationTests {
     // === POST ===
     @Test
     @DirtiesContext
+    @WithMockUser
     void createTool_POST_expectCreatedToolObject() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/tools/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -128,6 +134,7 @@ class ToolsControllerIntegrationTests {
 
     @Test
     @DirtiesContext
+
     void createToolWithEmpty_POST_expectNullPointerException() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/tools/add")
                         .contentType(MediaType.APPLICATION_JSON)
