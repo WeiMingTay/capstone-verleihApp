@@ -16,14 +16,13 @@ export default function CategoryGalleryPage() {
                 };
 
 
-                return (<>
-
+                return (
                     <Link to={"/kategorie/" + cat} key={cat} style={inlineStyle}>
                         <article className="category">
                             <p>{capitalizeWords(getCategoryTranslation(cat))}</p>
                         </article>
                     </Link>
-                </>);
+                );
             })}
 
         </section>

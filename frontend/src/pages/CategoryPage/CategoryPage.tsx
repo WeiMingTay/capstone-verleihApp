@@ -6,7 +6,7 @@ import {UserProfile} from "../../assets/entities/userProfile.ts";
 
 type Props = {
     readonly tools: Tools[];
-    userProfile: UserProfile | undefined
+   readonly userProfile: UserProfile | undefined
 };
 
 export default function CategoryPage(props: Props) {
