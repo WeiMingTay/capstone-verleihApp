@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -16,12 +17,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Map;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -111,41 +117,69 @@ class ToolsControllerIntegrationTests {
     @DirtiesContext
     @WithMockUser
     void createTool_POST_expectCreatedToolObject() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/tools/add")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                "name": "Hammer",
-                                "location": "Keller",
-                                "categories": ["TOOLS"]
-                                }
-                                """)
-                )
+        MockMultipartFile data = new MockMultipartFile("data",
+                null,
+                MediaType.APPLICATION_JSON_VALUE,
+                """
+                            {"name":"docker-image"}
+                        """
+                        .getBytes()
+        );
+        MockMultipartFile file = new MockMultipartFile("file",
+                "testImage.png",
+                MediaType.IMAGE_PNG_VALUE,
+                "testImage".getBytes()
+        );
+        File fileToUpload = File.createTempFile("image", null);
+        file.transferTo(fileToUpload);
+
+        when(cloudinary.uploader()).thenReturn(uploader);
+        when(uploader.upload(any(), any())).thenReturn(Map.of("url", "test-url"));
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/tools/add")
+                        .file(data)
+                        .file(file))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
-                            {
-                            "name": "Hammer",
-                            "location": "Keller",
-                            "categories": ["TOOLS"]
-                            }
-                        """
-                ));
+                                                    {
+                        "name": "Hammer",
+                        "imageFile": "test-url",
+                        "image": "testImage.png",                        "categories": ["TOOLS"],
+                        "author": "Max Mustermann",
+                        "location": "Keller",
+                        "description": "Ein Hammer",
+                        "timestamp": "2021-07-01T12:00:00.000+00:00",
+                        }
+                                                """))
+                .andExpect(jsonPath("$.id").isNotEmpty());
     }
 
     @Test
     @DirtiesContext
-
+    @WithMockUser
     void createToolWithEmpty_POST_expectNullPointerException() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/tools/add")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                "name": "Hammer",
-                                "location": null,
-                                "categories": ["TOOLS"]
-                                                               
-                                }
-                                """))
+        MockMultipartFile data = new MockMultipartFile("data",
+                null,
+                MediaType.APPLICATION_JSON_VALUE,
+                """
+                            {"name":"docker-image"}
+                        """
+                        .getBytes()
+        );
+        MockMultipartFile file = new MockMultipartFile("file",
+                "testImage.png",
+                MediaType.IMAGE_PNG_VALUE,
+                "testImage".getBytes()
+        );
+        File fileToUpload = File.createTempFile("image", null);
+        file.transferTo(fileToUpload);
+
+        when(cloudinary.uploader()).thenReturn(uploader);
+        when(uploader.upload(any(), any())).thenReturn(Map.of("url", "test-url"));
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/tools/add")
+                        .file(data)
+                        .file(file))
                 .andExpect(status().isOk())
                 .andExpect(content().string(
                         "Elemente können nicht null sein!"
@@ -192,6 +226,7 @@ class ToolsControllerIntegrationTests {
                 );
 
     }
+
     @Test
     @DirtiesContext
     @WithAnonymousUser
