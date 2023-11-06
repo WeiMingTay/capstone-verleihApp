@@ -34,10 +34,9 @@ public class ToolsService {
         String url = null;
         if (image != null) {
             url = cloudinaryService.uploadImage(image);
-
-
         }
-        Tool tool = new Tool(
+
+        Tool toolToSave = new Tool(
                 null,
                 newTool.getName(),
                 url,
@@ -48,7 +47,7 @@ public class ToolsService {
                 newTool.getTimestamp()
         );
 
-        return toolsRepository.save(tool);
+        return toolsRepository.save(toolToSave);
     }
 
     // === DELETE ===

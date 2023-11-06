@@ -8,6 +8,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class ToolsControllerIntegrationTests {
+
     @Autowired
     MockMvc mockMvc;
 
@@ -32,6 +36,9 @@ class ToolsControllerIntegrationTests {
     @MockBean
     Cloudinary cloudinary;
     Uploader uploader = mock(Uploader.class);
+
+    @MockBean
+    ClientRegistrationRepository clientRegistrationRepository;
 
 
     // === GET ===
@@ -102,6 +109,7 @@ class ToolsControllerIntegrationTests {
     // === POST ===
     @Test
     @DirtiesContext
+    @WithMockUser
     void createTool_POST_expectCreatedToolObject() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/tools/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -126,6 +134,7 @@ class ToolsControllerIntegrationTests {
 
     @Test
     @DirtiesContext
+
     void createToolWithEmpty_POST_expectNullPointerException() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/tools/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -147,6 +156,7 @@ class ToolsControllerIntegrationTests {
     // === DELETE ===
     @Test
     @DirtiesContext
+    @WithMockUser
     void deleteToolById_expectDeleteMessage() throws Exception {
 
         String id = "65317b1294a88f39ea92a61a";
@@ -169,6 +179,7 @@ class ToolsControllerIntegrationTests {
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void deleteToolById_expectIdNotFoundMessage() throws Exception {
 
         String id = "quatschId";
@@ -179,6 +190,17 @@ class ToolsControllerIntegrationTests {
                         content()
                                 .string("Die ID '" + id + "' existiert nicht!")
                 );
+
+    }
+    @Test
+    @DirtiesContext
+    @WithAnonymousUser
+    void deleteToolByIdWhenNotLoggedIn_expectUnauthorized() throws Exception {
+
+        String id = "65317b1294a88f39ea92a61a";
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/tools/" + id))
+                .andExpect(status().isUnauthorized());
 
     }
 
