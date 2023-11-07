@@ -50,6 +50,22 @@ public class ToolsService {
         return toolsRepository.save(toolToSave);
     }
 
+    // === PUT ===
+    public Tool updateTool(String id, Tool tool) {
+
+        Tool updatedTool = new Tool(
+                id,
+                tool.getName(),
+                tool.getImage(),
+                tool.getCategories(),
+                tool.getAuthor(),
+                tool.getLocation(),
+                tool.getDescription(),
+                tool.getTimestamp()
+        );
+        return toolsRepository.save(updatedTool);
+    }
+
     // === DELETE ===
     public ResponseEntity<String> deleteToolById(String id) {
         if (toolsRepository.existsById(id)) {
@@ -59,5 +75,6 @@ public class ToolsService {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Die ID '" + id + "' existiert nicht!");
     }
+
 
 }

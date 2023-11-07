@@ -1,6 +1,5 @@
 package de.neuefische.backend.tools;
 
-import com.cloudinary.Cloudinary;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ public class ToolsController {
 
     private final ToolsService toolsService;
 
-    private final Cloudinary cloudinary;
 
     // === GET ===
     @GetMapping("/tools")
@@ -40,7 +38,11 @@ public class ToolsController {
         return toolsService.createTool(newTool, image);
 
     }
-
+// === PUT ===
+    @PutMapping("/tools/{id}")
+    public Tool updateTool(@PathVariable String id, @RequestBody Tool tool) {
+        return toolsService.updateTool(id, tool);
+    }
 
     // === DELETE ===
     @DeleteMapping("/tools/{id}")
