@@ -1,27 +1,50 @@
 package de.neuefische.backend.tools;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.Uploader;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+
+import java.io.File;
 import java.util.Collections;
+import java.util.Map;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class ToolsControllerIntegrationTests {
+
     @Autowired
     MockMvc mockMvc;
 
     @Autowired
     ToolsRepository toolsRepo;
+
+    @MockBean
+    Cloudinary cloudinary;
+    Uploader uploader = mock(Uploader.class);
+
+    @MockBean
+    ClientRegistrationRepository clientRegistrationRepository;
 
 
     // === GET ===
@@ -30,7 +53,7 @@ class ToolsControllerIntegrationTests {
     void getAllTools_expectEmptyList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
+                .andExpect(content().json("""
                         []
                         """));
     }
@@ -44,7 +67,7 @@ class ToolsControllerIntegrationTests {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
+                .andExpect(content().json("""
                         [
                             {
                             "name": "Hammer",
@@ -70,7 +93,7 @@ class ToolsControllerIntegrationTests {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools/" + tool1.getId()))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
+                .andExpect(content().json("""
                         {
                         "name": "Hammer",
                         "location": "Keller",
@@ -84,7 +107,7 @@ class ToolsControllerIntegrationTests {
     void getToolsById_expectNoSuchElementException() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools/" + "quatschID"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(
+                .andExpect(content().string(
                         "Die ID gibt es leider nicht"
                 ));
     }
@@ -92,43 +115,80 @@ class ToolsControllerIntegrationTests {
     // === POST ===
     @Test
     @DirtiesContext
+    @WithMockUser
     void createTool_POST_expectCreatedToolObject() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/tools/add")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                "name": "Hammer",
-                                "location": "Keller",
-                                "categories": ["TOOLS"]
-                                }
-                                """)
-                )
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json("""
+        MockMultipartFile data = new MockMultipartFile("data",
+                null,
+                MediaType.APPLICATION_JSON_VALUE,
+                """
                             {
                             "name": "Hammer",
-                            "location": "Keller",
-                            "categories": ["TOOLS"]
+                        "categories": ["TOOLS"],
+                        "author": "Max Mustermann",
+                        "location": "Keller",
+                        "description": "Ein Hammer",
+                        "timestamp": "2021-07-01T12:00:00.000+00:00"
                             }
                         """
-                ));
+                        .getBytes()
+        );
+        MockMultipartFile file = new MockMultipartFile("file",
+                "testImage.png",
+                MediaType.IMAGE_PNG_VALUE,
+                "testImage".getBytes()
+        );
+        File fileToUpload = File.createTempFile("image", null);
+        file.transferTo(fileToUpload);
+
+        when(cloudinary.uploader()).thenReturn(uploader);
+        when(uploader.upload(any(), any())).thenReturn(Map.of("url", "test-url"));
+
+        mockMvc.perform(multipart("/api/tools/add")
+                        .file(data)
+                        .file(file))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                                                    {
+                        "name": "Hammer",
+                        "image": "test-url",
+                        "categories": ["TOOLS"],
+                        "author": "Max Mustermann",
+                        "location": "Keller",
+                        "description": "Ein Hammer",
+                        "timestamp": "2021-07-01T12:00:00.000+00:00"
+                        }
+                                                """))
+                .andExpect(jsonPath("$.id").isNotEmpty());
     }
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void createToolWithEmpty_POST_expectNullPointerException() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/tools/add")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                "name": "Hammer",
-                                "location": null,
-                                "categories": ["TOOLS"]
-                                                               
-                                }
-                                """))
+        MockMultipartFile data = new MockMultipartFile("data",
+                null,
+                MediaType.APPLICATION_JSON_VALUE,
+                """
+                            {"name":"docker-image"}
+                        """
+                        .getBytes()
+        );
+        MockMultipartFile file = new MockMultipartFile("file",
+                "testImage.png",
+                MediaType.IMAGE_PNG_VALUE,
+                "testImage".getBytes()
+        );
+        File fileToUpload = File.createTempFile("image", null);
+        file.transferTo(fileToUpload);
+
+        when(cloudinary.uploader()).thenReturn(uploader);
+        when(uploader.upload(any(), any())).thenReturn(Map.of("url", "test-url"));
+
+        mockMvc.perform(multipart("/api/tools/add")
+                        .file(data)
+                        .file(file))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(
+                .andExpect(content().string(
                         "Elemente können nicht null sein!"
                 ));
     }
@@ -137,6 +197,7 @@ class ToolsControllerIntegrationTests {
     // === DELETE ===
     @Test
     @DirtiesContext
+    @WithMockUser
     void deleteToolById_expectDeleteMessage() throws Exception {
 
         String id = "65317b1294a88f39ea92a61a";
@@ -151,14 +212,15 @@ class ToolsControllerIntegrationTests {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/tools/" + id))
                 .andExpect(status().isOk())
                 .andExpect(
-                        MockMvcResultMatchers
-                                .content()
+                        content()
                                 .string("Tool with id: " + id + " was deleted.")
                 );
 
     }
+
     @Test
     @DirtiesContext
+    @WithMockUser
     void deleteToolById_expectIdNotFoundMessage() throws Exception {
 
         String id = "quatschId";
@@ -166,10 +228,21 @@ class ToolsControllerIntegrationTests {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/tools/" + id))
                 .andExpect(status().isNotFound())
                 .andExpect(
-                        MockMvcResultMatchers
-                                .content()
+                        content()
                                 .string("Die ID '" + id + "' existiert nicht!")
                 );
+
+    }
+
+    @Test
+    @DirtiesContext
+    @WithAnonymousUser
+    void deleteToolByIdWhenNotLoggedIn_expectUnauthorized() throws Exception {
+
+        String id = "65317b1294a88f39ea92a61a";
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/tools/" + id))
+                .andExpect(status().isUnauthorized());
 
     }
 

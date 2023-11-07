@@ -5,17 +5,20 @@ import {useNavigate, useParams} from "react-router-dom";
 import "./ToolPage.scss";
 import {capitalizeWords} from "../../components/FavoriteCategories/FavoriteCategories.tsx";
 import ButtonLarge from "../../components/Button/ButtonLarge.tsx";
+import {UserProfile} from "../../assets/entities/userProfile.ts";
 
 type Props = {
     onToolUpdate: () => void
+    userProfile: UserProfile | undefined
 };
 
 export default function ToolPage(props: Props) {
     const [tool, setTool] = useState<Tools>()
-
     const {id} = useParams()
-
     const navigate = useNavigate();
+
+    const isLoggedIn: string | undefined = props.userProfile?.name;
+
     useEffect(() => {
         getTool()
     }, [])
@@ -37,15 +40,24 @@ export default function ToolPage(props: Props) {
             .catch(error => console.error(error))
     }
 
+    const isoTime = tool?.timestamp || new Date().toISOString()
+    const formattedTimeStamp = new Date(isoTime).toLocaleString([], {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    })
+
     return (<article className={"toolPage-page"}>
-        <p>{tool?.timestamp.toLocaleString()}</p>
+        <p>{formattedTimeStamp}</p>
 
         <h4>{tool?.name}</h4>
-        <a target={"_blank"}
-           href={"https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&q=80&w=1170&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}><img
-            src={"https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&q=80&w=1170&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
-            alt={tool?.name}/>
-        </a>
+        <img
+            src={tool?.image}
+            alt={tool?.name + "-image"}
+        />
+
         {tool?.categories
             ? <div className={"categories"}>
                 {
@@ -58,12 +70,16 @@ export default function ToolPage(props: Props) {
             :
             <div></div>
         }
-        <p>Ort: <span>{tool?.location}</span></p>
-        <p>Ansprechpartner:in: <span>{tool?.author}</span></p>
-        <ButtonLarge name={"Anfrage"}/>
+        <p className={"italic"}>Ort: <span>{tool?.location}</span></p>
+        <p className={"italic"}>Ansprechpartner:in: <span>{tool?.author}</span></p>
+        {isLoggedIn && <ButtonLarge name={"Anfrage"}/>
+        }
         <p> Anleitung: {tool?.description}</p>
-        <ButtonLarge name={"Löschen"} onClick={() => tool?.id && deleteToolById(tool.id)}/>
-
+        {
+            isLoggedIn
+                ? <ButtonLarge name={"Löschen"} onClick={() => tool?.id && deleteToolById(tool.id)}/>
+                : null
+        }
 
     </article>)
         ;

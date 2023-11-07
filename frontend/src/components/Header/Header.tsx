@@ -3,12 +3,17 @@ import "./Header.scss"
 import {useState} from "react";
 
 import logo from "../../assets/images/logo.jpg";
+import {UserProfile} from "../../assets/entities/userProfile.ts";
 
-export default function Header() {
+type Props = {
+    readonly userProfile: UserProfile | undefined
+}
+export default function Header(props: Props) {
     const [isOpen, setIsOpen] = useState(false)
     const location = useLocation();
 
     const isOnWelcomePage = location.pathname === "/";
+    const isLoggedIn = props.userProfile?.name
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -21,11 +26,19 @@ export default function Header() {
     return (
         <header className={isOpen ? "open" : ""}>
             <div>
-                <Link to={"/"}><img src={logo} alt="Logo"/></Link>
+                {isLoggedIn
+                    ? <Link to={"/start"}><img src={logo} alt="Logo"/></Link>
+                    : <Link to={"/"}><img src={logo} alt="Logo"/></Link>
+                }
                 <h1>Capstone</h1>
+
             </div>
-            <div className={`menu-toggle ${isOpen ? "open" : ""}`}>
-                <div onClick={toggleMenu}>
+            <div
+                className={`menu-toggle ${isOpen ? "open" : ""}`}
+                onClick={toggleMenu}
+                onKeyDown={toggleMenu}
+            >
+                <div>
                     <span className="bar"></span>
                     <span className="bar"></span>
                     <span className="bar"></span>
@@ -38,8 +51,14 @@ export default function Header() {
                         <li><Link onClick={toggleMenu} to={"/schwarzes-brett"}>Schwarzes Brett</Link></li>
                     </ul>
                     <ul>
-                        <li><Link to={"/start"}><i className="las la-home"></i></Link></li>
-                        <li><Link to={"/"}><i className="las la-user-circle"></i></Link></li>
+                        <li><Link onClick={toggleMenu} to={"/start"}><i className="las la-home"></i></Link></li>
+                        {isLoggedIn
+                            ?
+                            <li><Link onClick={toggleMenu} to={"/profil"}><i className="las la-user-circle"></i></Link>
+                            </li>
+                            : <></>
+                        }
+                        <li><Link onClick={toggleMenu} to={"/contact"}><i className="las la-envelope"></i></Link></li>
                     </ul>
                 </nav>
             </div>

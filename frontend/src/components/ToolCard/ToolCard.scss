@@ -1,46 +1,45 @@
 @import "../../assets/Variables.scss";
 
 .toolCard-comp {
+  aspect-ratio: 1.25;
   height: max-content;
-  padding: .15rem;
+position: relative;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: top;
-  border-radius: 0 0 .25rem .25rem;
-
+  background-position: center;
+  border-radius:  .25rem;
+  outline: 1px solid $secondaryColor;
   transition: all 250ms ease-in-out;
+  overflow: hidden;
 
 
   article {
+
     color: $textColorDark;
-    padding: 4rem .25rem .25rem .25rem;
+
     height: 100%;
     width: 100%;
-    background-image: linear-gradient(transparent, $backgroundColorLight 90%);
-    border-radius: .25rem;
+    display: flex;
+    align-items: flex-end;
 
 
     h5 {
+      position: absolute;
+      bottom: 0;
+      padding: .25rem;
+      width: 100%;
       font-size: $fontSizeS;
+      background-color: $backgroundColorLight;
+      border-radius: .25rem .25rem 0 0 ;
     }
 
 
   }
 
   &:hover {
-    h5 {
-      text-decoration: underline;
-    }
+    box-shadow: 0 0 1.75rem -.5rem $secondaryColor;
+
 
   }
 }
 
-/*
-@media (prefers-color-scheme: dark) {
-  .toolCard-comp {
-    article {
-      color: $textColorLight;
-      background-image: linear-gradient(transparent, $backgroundColorDark 90%);
-    }
-  }
-}*/

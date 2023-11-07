@@ -1,9 +1,6 @@
 package de.neuefische.backend.tools;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 public class Tool {
     private String id;
     private @NonNull String name;
+    @With
     private String image;
     private @NonNull List<Category> categories;
     private String author;
@@ -23,12 +21,11 @@ public class Tool {
     private String timestamp;
 
 
-
     public Tool(@NonNull String name, @NonNull List<Category> categories, @NonNull String location) {
         this.name = name;
         this.categories = categories;
         this.location = location;
-            }
+    }
 
     public Tool(String id, @NonNull String name, @NonNull List<Category> categories, @NonNull String location) {
         this.id = id;
@@ -46,5 +43,7 @@ public class Tool {
         this.description = description;
         this.timestamp = timestamp;
     }
+
+
 
 }

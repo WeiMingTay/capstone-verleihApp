@@ -4,13 +4,24 @@ import ToolCard from "../../components/ToolCard/ToolCard.tsx";
 
 import "./ToolGallery.scss"
 
+import {UserProfile} from "../../assets/entities/userProfile.ts";
+
+
 type Props = {
     readonly tools: Tools[]
+    readonly userProfile: UserProfile | undefined
+
 }
 export default function ToolGallery(props: Props) {
-    return (<section  className={"toolGallery-page"}>
-        <Link className={"buttonLarge"} to={"/werkzeuge/add"}>+</Link>
+    const isLoggedIn: string | undefined = props.userProfile?.name;
 
+    return (<section className={"toolGallery-page"}>
+        {
+            isLoggedIn
+            ? <Link className={"buttonLarge"} to={"/werkzeuge/add"}>+</Link>
+                : null
+
+        }
         <section>
             {props.tools.map(tool => <ToolCard key={tool.id} tool={tool}/>)}
         </section>

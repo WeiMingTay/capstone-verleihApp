@@ -2,7 +2,9 @@ package de.neuefische.backend.tools;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,7 +13,8 @@ import static org.mockito.Mockito.*;
 class ToolsServiceTest {
 
     ToolsRepository toolsRepository = mock(ToolsRepository.class);
-    ToolsService toolsService = new ToolsService(toolsRepository);
+    CloudinaryService cloudinaaryService = mock(CloudinaryService.class);
+    ToolsService toolsService = new ToolsService(toolsRepository, cloudinaaryService);
 
     Tool tool1 = new Tool(
             "Hammer",
@@ -27,6 +30,8 @@ class ToolsServiceTest {
             Collections.singletonList(Category.TOOLS),
             "Keller");
 
+
+    MockMultipartFile imageFile = new MockMultipartFile("image", "image.jpg", "image/jpeg", new byte[]{});
     // === Constructor Tests ===
     @Test
     void testNoArgConstructor() {
@@ -172,13 +177,15 @@ class ToolsServiceTest {
 
     // === POST newTool ===
     @Test
-    void createTool_expectCreatedToolObject() {
+    void createTool_expectCreatedToolObject() throws IOException {
         //GIVEN
         Tool tool = tool1;
         NewTool newTool = new NewTool(
                 "Hammer",
+
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
+
                 "Keller",
                 "Bla Bla",
                 "25.10.2021"
@@ -186,7 +193,7 @@ class ToolsServiceTest {
 
         //WHEN
         when(toolsRepository.save(tool)).thenReturn(tool);
-        Tool actual = toolsService.createTool(newTool);
+        Tool actual = toolsService.createTool(newTool, imageFile);
         //THEN
 
         Tool expected = new Tool(
@@ -202,11 +209,13 @@ class ToolsServiceTest {
     }
 
     @Test
-    void createToolWithWrongId_expectWrongArgument() {
+    void createToolWithWrongId_expectWrongArgument() throws IOException {
         //GIVEN
         Tool tool = tool1;
         NewTool newTool = new NewTool(
                 "Hammer",
+
+
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
@@ -217,7 +226,7 @@ class ToolsServiceTest {
         //WHEN
         Tool unexpected = new Tool("Bohrmaschine", Collections.singletonList(Category.TOOLS), "Keller");
         when(toolsRepository.save(tool)).thenReturn(unexpected);
-        Tool actual = toolsService.createTool(newTool);
+        Tool actual = toolsService.createTool(newTool, imageFile);
         //THEN
 
         Tool expected = new Tool(
@@ -256,7 +265,7 @@ class ToolsServiceTest {
 
         when(toolsRepository.existsById(id)).thenReturn(false);
 
-        ToolsService toolsService = new ToolsService(toolsRepository);
+        ToolsService toolsService = new ToolsService(toolsRepository, cloudinaaryService);
 
         // WHEN
         ResponseEntity<String> responseEntity = toolsService.deleteToolById(id);

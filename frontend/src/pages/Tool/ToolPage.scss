@@ -1,12 +1,15 @@
 @import "../../assets/Variables.scss";
 
 .toolPage-page {
-  height: calc(100vh - $headerHeight);
+  height: calc(100dvh - $headerHeight);
   padding: 0 1rem;
   font-size: $fontSizeM;
 
+
   > p:first-of-type {
     font-size: $fontSizeS;
+
+    color: $textColorMedium;
   }
 
   h4 {
@@ -16,6 +19,9 @@
   img {
     margin: 1rem 0;
     width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    object-position: top;
 
   }
 
@@ -38,12 +44,19 @@
 
   p {
     display: flex;
-    justify-content: space-between;
+
     margin-bottom: .25rem;
-    span {
-      font-size: $fontSizeL;
+
+    &.italic {
+      font-style: italic;
     }
+    span {
+      margin-left: .5rem;
+font-style: normal;
+    }
+
   }
+
 
   button {
     width: 100%;
@@ -55,5 +68,9 @@
     background-color: $secondaryColor;
     color: $textColorLight;
     cursor: pointer;
+
+    &:last-of-type {
+      margin-bottom: 3rem;
+    }
   }
 }

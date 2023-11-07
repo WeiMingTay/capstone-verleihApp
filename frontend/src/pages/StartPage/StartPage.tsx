@@ -14,7 +14,7 @@ export default function StartPage(props: Props) {
         <section className={"start-page"}>
 
             <LatestTool tools={props.tools}/>
-            <FavoriteCategories/>
+            <FavoriteCategories tools={props.tools}/>
             <Link className="schwarzesBrett-img" to={"/schwarzes-brett"}>
                 <h5>Schwarzes Brett</h5>
                 <div>

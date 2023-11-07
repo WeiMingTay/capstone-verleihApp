@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -15,6 +17,7 @@ import java.util.NoSuchElementException;
 public class ToolsService {
 
     private final ToolsRepository toolsRepository;
+    private final CloudinaryService cloudinaryService;
 
     // === GET ===
     public List<Tool> getAllTools() {
@@ -26,17 +29,25 @@ public class ToolsService {
     }
 
     // === POST ===
-    public Tool createTool(NewTool newTool) {
-        Tool tool = new Tool();
-        tool.setName(newTool.getName());
-        tool.setCategories(newTool.getCategories());
-        tool.setLocation(newTool.getLocation());
-        tool.setAuthor(newTool.getAuthor());
-        tool.setDescription(newTool.getDescription());
-        tool.setTimestamp(newTool.getTimestamp());
+    public Tool createTool(NewTool newTool, MultipartFile image) throws IOException {
 
+        String url = null;
+        if (image != null) {
+            url = cloudinaryService.uploadImage(image);
+        }
 
-        return toolsRepository.save(tool);
+        Tool toolToSave = new Tool(
+                null,
+                newTool.getName(),
+                url,
+                newTool.getCategories(),
+                newTool.getAuthor(),
+                newTool.getLocation(),
+                newTool.getDescription(),
+                newTool.getTimestamp()
+        );
+
+        return toolsRepository.save(toolToSave);
     }
 
     // === DELETE ===

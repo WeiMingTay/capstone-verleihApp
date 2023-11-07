@@ -11,8 +11,8 @@ export default function WelcomePage() {
             </section>
             <section>
                 <div>
-                    <button>Login</button>
-                    <button>Registrieren</button>
+                    <Link to={"/login"}>Login</Link>
+                    <Link to={"/login"}>Registrieren</Link>
                 </div>
                 <p>Erstmal nur <Link to={"/start"}>Stöbern</Link></p>
             </section>
