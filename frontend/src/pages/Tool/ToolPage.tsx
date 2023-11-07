@@ -40,8 +40,17 @@ export default function ToolPage(props: Props) {
             .catch(error => console.error(error))
     }
 
+    const isoTime = tool?.timestamp || new Date().toISOString()
+    const formattedTimeStamp = new Date(isoTime).toLocaleString([], {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    })
+
     return (<article className={"toolPage-page"}>
-        <p>{tool?.timestamp.toLocaleString()}</p>
+        <p>{formattedTimeStamp}</p>
 
         <h4>{tool?.name}</h4>
         <img
@@ -63,9 +72,9 @@ export default function ToolPage(props: Props) {
         }
         <p className={"italic"}>Ort: <span>{tool?.location}</span></p>
         <p className={"italic"}>Ansprechpartner:in: <span>{tool?.author}</span></p>
-        { isLoggedIn && <ButtonLarge name={"Anfrage"}/>
+        {isLoggedIn && <ButtonLarge name={"Anfrage"}/>
         }
-            <p> Anleitung: {tool?.description}</p>
+        <p> Anleitung: {tool?.description}</p>
         {
             isLoggedIn
                 ? <ButtonLarge name={"Löschen"} onClick={() => tool?.id && deleteToolById(tool.id)}/>

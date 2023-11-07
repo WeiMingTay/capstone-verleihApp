@@ -7,14 +7,18 @@ type Props = {
 }
 export default function LatestTool(props: Props) {
 
-    // Sobald timestamp eingebaut wird, wird hier der neuste Eintrag angezeigt
+    /*    const randomIndex = Math.floor(Math.random() * props.tools?.length);
+        const randomTool = props.tools[randomIndex];
+        */
 
-    const randomIndex = Math.floor(Math.random() * props.tools?.length);
-    const randomTool = props.tools[randomIndex];
+    const sortedTools = [...props.tools].sort((a, b) => {
+        return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+    });
 
-    console.log(randomTool.image)
+    const latestTool = sortedTools[0];
+
     const inlineStyle = {
-        backgroundImage: `url(${randomTool.image})`
+        backgroundImage: `url(${latestTool.image})`
     }
 
     return (<div className="latestTool">
@@ -22,11 +26,11 @@ export default function LatestTool(props: Props) {
             <h5>Frisch dabei</h5>
             <Link to={"/werkzeuge"}>Alle</Link>
         </div>
-        <Link to={randomTool ? `/werkzeuge/${randomTool.id}` : "#"}>
+        <Link to={latestTool ? `/werkzeuge/${latestTool.id}` : "#"}>
             <div style={inlineStyle}>
                 <div>
-                    <h6>{randomTool?.name}</h6>
-                    <p>{randomTool?.location}</p>
+                    <h6>{latestTool?.name}</h6>
+                    <p>{latestTool?.location}</p>
                 </div>
             </div>
 

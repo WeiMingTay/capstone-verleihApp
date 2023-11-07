@@ -54,16 +54,16 @@ export default function AddTool(props: Props) {
             author: author,
             location: strasse + ' ' + hausnummer,
             description: description,
-            timestamp: new Date().toLocaleString([], {
+            timestamp: new Date().toISOString()
+        }
+/*[], {
                 day: '2-digit',
                 month: 'long',
                 year: 'numeric',
                 hour: '2-digit',
                 minute: '2-digit',
 
-            })
-        }
-
+            }*/
         if (imageFile) {
             formData.append("file", imageFile);
         }

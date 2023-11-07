@@ -85,7 +85,7 @@ export default function App() {
                 <Route path={"/login"} element={<UserLogin userProfile={userProfile} login={login} logout={logout}/>}/>
                 <Route path={"/"} element={<WelcomePage/>}/>
                 <Route path={"/start"} element={<StartPage tools={tools}/>}/>
-                <Route path={"/profil"} element={<UserProfilePage userProfile={userProfile} logout={logout}/>}/>
+                <Route path={"/profil"} element={<UserProfilePage userProfile={userProfile} tools={tools} logout={logout}/>}/>
                 <Route path={"/contact"} element={<ContactPage/>}/>
                 <Route path={"/werkzeuge"} element={<ToolGallery tools={tools} userProfile={userProfile}/>}/>
                 <Route path={"/werkzeuge/:id"} element={<ToolPage onToolUpdate={getAllTools} userProfile={userProfile}/>}/>
