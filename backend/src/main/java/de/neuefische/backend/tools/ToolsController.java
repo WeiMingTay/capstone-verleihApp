@@ -6,14 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.cloudinary.utils.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -39,7 +34,9 @@ public class ToolsController {
     // === POST ===
 
     @PostMapping("/tools/add")
-    public Tool createTool(@RequestPart("data") NewTool newTool, @RequestPart(name = "file", required = false) MultipartFile image) throws Exception {
+    public Tool createTool(
+            @RequestPart("data") NewTool newTool,
+            @RequestPart(name = "file", required = false) MultipartFile image) throws Exception {
         return toolsService.createTool(newTool, image);
 
     }
