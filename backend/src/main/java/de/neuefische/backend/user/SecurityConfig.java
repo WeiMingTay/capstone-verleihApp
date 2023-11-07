@@ -15,16 +15,16 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+String url = "/api/tools";
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.DELETE, "/api/tools/*").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/tools/*").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/tools/*").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, url+"/*").authenticated()
+                        .requestMatchers(HttpMethod.POST, url+"/*").authenticated()
+                        .requestMatchers(HttpMethod.PUT, url+"/*").authenticated()
                         .anyRequest().permitAll())
 
                 .sessionManagement(sessions ->
