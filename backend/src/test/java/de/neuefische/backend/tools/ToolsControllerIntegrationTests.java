@@ -193,6 +193,80 @@ class ToolsControllerIntegrationTests {
                 ));
     }
 
+    // === PUT ===
+    @Test
+    @WithMockUser
+    void updateToolWhenLoggedIn_expectUpdatedToolObject() throws Exception {
+        Tool tool1 = toolsRepo.save(new Tool(
+                "12345",
+                "Hammer",
+                "test-url",
+                Collections.singletonList(Category.TOOLS),
+                "Max Mustermann",
+                "Keller",
+                "Ein Hammer",
+                "2021-07-01T12:00:00.000+00:00"
+        ));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/tools/" + tool1.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                        "id": "12345",
+                                        "name": "Hammer",
+                                        "image": "test-url",
+                                        "categories": ["TOOLS"],
+                                        "author": "Max Mustermann",
+                                        "location": "Keller",
+                                        "description": "Ein Hammer",
+                                        "timestamp": "2021-07-01T12:00:00.000+00:00"
+                                    }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {
+                            "id": "12345",
+                            "name": "Hammer",
+                            "image": "test-url",
+                            "categories": ["TOOLS"],
+                            "author": "Max Mustermann",
+                            "location": "Keller",
+                            "description": "Ein Hammer",
+                            "timestamp": "2021-07-01T12:00:00.000+00:00"
+                        }
+                        """));
+    }
+
+    @Test
+    @WithAnonymousUser
+    void updateToolWhenLoggedOff_expectHtmlStatus401() throws Exception {
+        Tool tool1 = toolsRepo.save(new Tool(
+                "12345",
+                "Hammer",
+                "test-url",
+                Collections.singletonList(Category.TOOLS),
+                "Max Mustermann",
+                "Keller",
+                "Ein Hammer",
+                "2021-07-01T12:00:00.000+00:00"
+        ));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/tools/" + tool1.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                    {
+                                        "id": "12345",
+                                        "name": "Hammer",
+                                        "image": "test-url",
+                                        "categories": ["TOOLS"],
+                                        "author": "Max Mustermann",
+                                        "location": "Keller",
+                                        "description": "Ein Hammer",
+                                        "timestamp": "2021-07-01T12:00:00.000+00:00"
+                                    }
+                                """))
+                .andExpect(status().isUnauthorized());
+    }
 
     // === DELETE ===
     @Test
@@ -245,5 +319,6 @@ class ToolsControllerIntegrationTests {
                 .andExpect(status().isUnauthorized());
 
     }
+
 
 }
