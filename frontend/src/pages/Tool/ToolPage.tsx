@@ -1,4 +1,4 @@
-import {getCategoryTranslation, Tools} from "../../assets/entities/tools.ts";
+import {allCategories, getCategoryTranslation, Tools} from "../../assets/entities/tools.ts";
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
@@ -6,6 +6,7 @@ import "./ToolPage.scss";
 import {capitalizeWords} from "../../components/FavoriteCategories/FavoriteCategories.tsx";
 import ButtonLarge from "../../components/Button/ButtonLarge.tsx";
 import {UserProfile} from "../../assets/entities/userProfile.ts";
+import Select from "react-select";
 
 type Props = {
     readonly onToolUpdate: () => void
@@ -17,6 +18,10 @@ export default function ToolPage(props: Props) {
     const [isBeingEdited, setIsBeingEdited] = useState(false)
 
     const [name, setName] = useState<string>("")
+    const [selectedOptions, setSelectedOptions] = useState<{
+        label: string;
+        value: string
+    }[]>([]);
     const [location, setLocation] = useState<string>("")
     const [author, setAuthor] = useState<string>("")
     const [description, setDescription] = useState<string>("")
@@ -33,6 +38,11 @@ export default function ToolPage(props: Props) {
     useEffect(() => {
         if (isBeingEdited) {
             setName(tool?.name ?? '');
+            const initialSelectedOptions = (tool?.categories ?? []).map(category => ({
+                label: capitalizeWords(getCategoryTranslation(category)),
+                value: category,
+            }));
+            setSelectedOptions(initialSelectedOptions);
             setLocation(tool?.location ?? '');
             setAuthor(tool?.author ?? '');
             setDescription(tool?.description ?? '')
@@ -70,6 +80,7 @@ export default function ToolPage(props: Props) {
         axios.put(`/api/tools/${id}`, {
             ...tool,
             name: name,
+            categories: selectedOptions.map(option => option.value),
             location: location,
             author: author,
             description: description,
@@ -89,7 +100,10 @@ export default function ToolPage(props: Props) {
         const newName: string = event.target.value;
         setName(newName);
     }
-
+    const catOptions = allCategories.map(category => ({
+        label: capitalizeWords(getCategoryTranslation(category)),
+        value: category
+    }));
     function changeLocation(event: ChangeEvent<HTMLInputElement>) {
         const newLocation: string = event.target.value;
         setLocation(newLocation)
@@ -99,11 +113,27 @@ export default function ToolPage(props: Props) {
         const newAuthor: string = event.target.value;
         setAuthor(newAuthor)
     }
+
     function changeDescription(event: ChangeEvent<HTMLTextAreaElement>) {
         const newDescription: string = event.target.value;
         setDescription(newDescription)
     }
+    let buttonContent;
 
+    if (isLoggedIn) {
+        if (!isBeingEdited) {
+            buttonContent = (
+                <ButtonLarge name="Bearbeiten" onClick={() => setIsBeingEdited(true)} />
+            );
+        } else {
+            buttonContent = (
+                <div className={"edit-btn"}>
+                    <ButtonLarge name={"Abbrechen"} onClick={() => setIsBeingEdited(false)} />
+                    <ButtonLarge name={"Speichern"} onClick={() => setIsBeingEdited(false)} />
+                </div>
+            );
+        }
+    }
     return (<article className={"toolPage-page"}>
         <p>{formattedTimeStamp}</p>
         {
@@ -135,58 +165,48 @@ export default function ToolPage(props: Props) {
                 </>
                 : <form onSubmit={(event) => submitEditedTool(event, tool?.id ?? "")}>
                     <label>
-                        <input id="nameInput" type="text" value={name ?? tool?.name} placeholder="Bezeichnung" onChange={changeName}/>
+                        <input id="nameInput" type="text" value={name ?? tool?.name} placeholder="Bezeichnung"
+                               onChange={changeName}/>
                     </label>
                     <img
                         src={tool?.image}
                         alt={tool?.name + "-image"}
                     />
+                    <label id="select-input">
+                        <Select
+                            isMulti
+                            options={catOptions}
+                            value={selectedOptions}
+                            onChange={(newValue) => {
+                                // Create a mutable copy of selectedOptions
+                                const mutableSelectedOptions = [...newValue];
 
-                    {tool?.categories
-                        ? <div className={"categories"}>
-                            {
-                                tool?.categories.map((category) => {
-                                    return <p key={category}
-                                              className={"category"}>{capitalizeWords(getCategoryTranslation(category))}</p>
-                                })
-                            }
-                        </div>
-                        :
-                        <div></div>
-                    }
-                    <label>Ort: <input type="text"
-                            value={location ?? tool?.location}
-                            placeholder="Ort"
-                            onChange={changeLocation}/>
+                                // Update the state with the mutable copy
+                                setSelectedOptions(mutableSelectedOptions);
+                            }}
+                        />
                     </label>
-                    <label>Ansprechpartner:in <input
-                            type="text"
-                            value={author ?? tool?.author}
-                            placeholder="Ansprechpartner:in"
-                            onChange={changeAuthor}/>
-                    </label>
-                    <label>Anleitung/ Beschreibung: <textarea
-                                       value={description ?? tool?.description}
 
-                                       onChange={changeDescription}/>
+                    <label id="location-input">Ort: <input type="text"
+                                       value={location ?? tool?.location}
+                                       placeholder="Ort"
+                                       onChange={changeLocation}/>
+                    </label>
+                    <label id="author-input">Ansprechpartner:in <input
+                        type="text"
+                        value={author ?? tool?.author}
+                        placeholder="Ansprechpartner:in"
+                        onChange={changeAuthor}/>
+                    </label>
+                    <label id="description-input">Anleitung/ Beschreibung: <textarea rows={5}
+                        value={description ?? tool?.description}
+
+                        onChange={changeDescription}/>
                     </label>
                     <button style={{display: "none"}}>Save</button>
                 </form>
         }
-
-
-        {
-            (!isBeingEdited)
-                ? <ButtonLarge name="Bearbeiten" onClick={() => setIsBeingEdited(true)}/>
-                : <div className={"edit-btn"}>
-                    <ButtonLarge name={"Abbrechen"} onClick={() => setIsBeingEdited(false)}/>
-                    <ButtonLarge
-                        name={"Speichern"}
-                        onClick={() => setIsBeingEdited(false)}
-                    />
-
-                </div>
-        }
+        {buttonContent}
         {
             isLoggedIn
                 ? <ButtonLarge name={"Löschen"} onClick={() => tool?.id && deleteToolById(tool.id)}/>

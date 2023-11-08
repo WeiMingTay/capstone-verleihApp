@@ -170,28 +170,7 @@ export default function AddTool(props: Props) {
                     />
                     {imageUrl && <img src={imageUrl} alt={name}/>}
                 </label>
-                {/*<label>
-                    <select
-                        onChange={changeCategory}
-                        value={category}
 
-                    >
-                        <option
-                            value=""
-                            disabled
-                        >
-                            Kategorie
-                        </option>
-                        {
-                            allCategories.map(category => {
-                                return <option
-                                    key={category}
-                                    value={category}>{capitalizeWords(category)}
-                                </option>
-                            })
-                        }
-                    </select>
-                </label>*/}
                 <label>
                     <Select
                         isMulti
@@ -205,8 +184,6 @@ export default function AddTool(props: Props) {
                             setSelectedOptions(mutableSelectedOptions);
                         }}
                     />
-
-
                 </label>
                 <label>
                     <input
