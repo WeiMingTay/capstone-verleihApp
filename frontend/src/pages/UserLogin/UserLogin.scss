@@ -31,16 +31,28 @@
 
   }
 
-  hr {
-    margin: 1rem;
-    color: $backgroundColorMedium;
-  }
 
   .externalLogin {
-    margin: 0 1rem;
+    margin: 1rem;
     text-align: center;
+    display: grid;
+    place-items: center;
 
-    button {
+    > a {
+      background-color: $primaryColor;
+    }
+
+    img {
+      aspect-ratio: 1;
+      width: 40%;
+      border-radius: 50%;
+    }
+
+    > p {
+      font-size: $fontSizeXL;
+    }
+
+    div button {
       border: none;
       background-color: inherit;
       cursor: pointer;

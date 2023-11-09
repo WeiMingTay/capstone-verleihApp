@@ -3,25 +3,25 @@
 .latestTool {
   height: 100%;
 
+
   > div {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 .25rem;
 
+
     a {
       font-size: $fontSizeS;
       text-decoration: underline;
-      width: fit-content;
+      margin-bottom: .1rem;
     }
   }
 
-  a {
+  > a {
 
     width: 100%;
     height: 100%;
-    border-radius: .25rem;
-    overflow: hidden;
 
 
     > div {
@@ -35,6 +35,9 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-end;
+      border-radius: 1rem;
+      overflow: hidden;
+
 
       > div {
         background: linear-gradient(transparent, rgba($backgroundColorDark, .9) 90%);
