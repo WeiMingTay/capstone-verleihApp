@@ -22,7 +22,7 @@ import {UserProfile} from "./assets/entities/userProfile.ts";
 export default function App() {
     const [tools, setTools] = useState<Tools[]>([])
     const [userProfile, setUserProfile] = useState<UserProfile>()
-    const [isDarkMode, setIsDarkMode] = useState(true);
+    const [isDarkMode, setIsDarkMode] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
         getAllTools();
@@ -33,6 +33,7 @@ export default function App() {
         // Update the body class when isDarkMode changes
         document.body.className = isDarkMode ? 'dark-theme' : 'light-theme';
     }, [isDarkMode]);
+
     function toggleTheme() {
         setIsDarkMode(prevMode => !prevMode);
     }
