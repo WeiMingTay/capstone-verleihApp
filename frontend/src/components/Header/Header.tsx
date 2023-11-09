@@ -7,6 +7,8 @@ import {UserProfile} from "../../assets/entities/userProfile.ts";
 
 type Props = {
     readonly userProfile: UserProfile | undefined
+    readonly toggleTheme: () => void
+
 }
 export default function Header(props: Props) {
     const [isOpen, setIsOpen] = useState(false)
@@ -45,7 +47,7 @@ export default function Header(props: Props) {
                 </div>
                 <nav>
                     <ul>
-
+                        <button onClick={() => props.toggleTheme()}><i className="las la-adjust"></i></button>
                         <li><Link onClick={toggleMenu} to={"/start"}>Start</Link></li>
                         <li><Link onClick={toggleMenu} to={"/werkzeuge"}>Werkzeuge</Link></li>
                         <li><Link onClick={toggleMenu} to={"/schwarzes-brett"}>Schwarzes Brett</Link></li>

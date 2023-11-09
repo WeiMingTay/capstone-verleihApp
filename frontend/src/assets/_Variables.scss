@@ -1,6 +1,10 @@
-/* === FONTS ===*/
-$fontFamily: Arial, Helvetica, sans-serif;
 
+/* === FONTS ===*/
+@import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
+
+
+$fontFamily: Arial, Helvetica, sans-serif;
+$fontFamilySchool: 'Schoolbell', cursive;
 /* fontSize */
 $fontSizeXS: .5rem;
 $fontSizeS: .75rem;

@@ -32,12 +32,26 @@ button {
   }
 }
 
-/*
-@media (prefers-color-scheme: dark) {
+.dark-theme{
+  background-color: rgba($backgroundColorDark, .75);
+  color: $textColorLight;
 
-    body {
-        background-color: $backgroundColorDark;
-        color: $textColorLight;
-    }
+  header .menu-toggle nav {
+    background-color: rgb($backgroundColorDark, .85);
+  }
+
+  header .menu-toggle div .bar {
+    background-color: $textColorMedium;
+  }
+
 }
-*/
+
+.light-theme {
+  background-color: $backgroundColorLight;
+  color: $textColorDark;
+  header .menu-toggle nav {
+    background-color: rgb($backgroundColorLight, .95);
+  }
+
+}
+

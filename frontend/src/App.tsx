@@ -22,15 +22,21 @@ import {UserProfile} from "./assets/entities/userProfile.ts";
 export default function App() {
     const [tools, setTools] = useState<Tools[]>([])
     const [userProfile, setUserProfile] = useState<UserProfile>()
-
+    const [isDarkMode, setIsDarkMode] = useState(false);
     const navigate = useNavigate();
-    useEffect(
-        getAllTools, []
-    )
-    useEffect(
-        profile, []
-    )
+    useEffect(() => {
+        getAllTools();
+        profile();
+    }, [])
 
+    useEffect(() => {
+        // Update the body class when isDarkMode changes
+        document.body.className = isDarkMode ? 'dark-theme' : 'light-theme';
+    }, [isDarkMode]);
+
+    function toggleTheme() {
+        setIsDarkMode(prevMode => !prevMode);
+    }
 
     function getAllTools() {
         axios.get("/api/tools")
@@ -80,15 +86,19 @@ export default function App() {
 
     return (
         <>
-            <Header userProfile={userProfile}/>
+            <Header
+                toggleTheme={toggleTheme}
+                userProfile={userProfile}/>
             <Routes>
                 <Route path={"/login"} element={<UserLogin userProfile={userProfile} login={login} logout={logout}/>}/>
                 <Route path={"/"} element={<WelcomePage/>}/>
                 <Route path={"/start"} element={<StartPage tools={tools}/>}/>
-                <Route path={"/profil"} element={<UserProfilePage userProfile={userProfile} tools={tools} logout={logout}/>}/>
+                <Route path={"/profil"}
+                       element={<UserProfilePage userProfile={userProfile} tools={tools} logout={logout}/>}/>
                 <Route path={"/contact"} element={<ContactPage/>}/>
                 <Route path={"/werkzeuge"} element={<ToolGallery tools={tools} userProfile={userProfile}/>}/>
-                <Route path={"/werkzeuge/:id"} element={<ToolPage onToolUpdate={getAllTools} userProfile={userProfile}/>}/>
+                <Route path={"/werkzeuge/:id"}
+                       element={<ToolPage onToolUpdate={getAllTools} userProfile={userProfile}/>}/>
                 <Route path={"/werkzeuge/add"} element={<AddTool onToolUpdate={getAllTools}/>}/>
                 <Route path={"/kategorie"} element={<CategoryGalleryPage/>}/>
                 <Route path={"/kategorie/:id"} element={<CategoryPage tools={tools} userProfile={userProfile}/>}/>

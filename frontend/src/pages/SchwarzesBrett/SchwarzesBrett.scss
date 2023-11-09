@@ -1,1 +1,58 @@
 @import "../../assets/Variables";
+
+.schwarzesBrett-page {
+  background-image: url(https://images.unsplash.com/photo-1528328791021-a7d71822ffcd?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  overflow: hidden;
+  height: calc(100% - $headerHeight - 1rem);
+  width: calc(100% - 2rem);
+  margin: 0 1rem;
+  background-size: cover;
+  font-family: $fontFamilySchool;
+  font-size: $fontSizeXXL;
+  color: $textColorLight;
+
+  section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    h5 {
+      width: calc(100vw - 4rem);
+      background-color: rgb($backgroundColorDark, .35);
+      padding: 0 .5rem;
+
+    }
+
+    button {
+      position: absolute;
+      top: 0;
+      right: .5rem;
+      display: grid;
+      place-items: center;
+      color: $textColorLight;
+      background-color: transparent;
+      border: none;
+      font-size: $fontSizeXXL;
+    }
+
+    div {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      article {
+        background-image: url(../../assets/images/postit.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        aspect-ratio: 1;
+        color: $textColorDark;
+        display: grid;
+        place-items: center;
+        p {
+          font-size: $fontSizeL;
+          transform: translateY(-20%);
+        }
+
+      }
+    }
+  }
+}
