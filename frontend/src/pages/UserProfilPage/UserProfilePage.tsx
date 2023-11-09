@@ -13,10 +13,10 @@ export default function UserProfilePage(props: Props) {
         <img src={props.userProfile?.avatarUrl} alt={props.userProfile?.id}/>
         <h3>{props.userProfile?.name}</h3>
         <button onClick={props.logout}>Logout</button>
-        <div><h2>My Tools</h2>
+        <div><h2>My Tools oder lieber "als Favorit markiert"?</h2>
             <section>
 
-                {props.tools.slice(0, 2).map(tool => <ToolCard key={tool.id} tool={tool}/>)}
+                {props.tools.slice(0, 4).map(tool => <ToolCard key={tool.id} tool={tool}/>)}
             </section>
         </div>
     </>);

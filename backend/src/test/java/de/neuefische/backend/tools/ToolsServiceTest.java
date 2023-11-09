@@ -32,6 +32,7 @@ class ToolsServiceTest {
 
 
     MockMultipartFile imageFile = new MockMultipartFile("image", "image.jpg", "image/jpeg", new byte[]{});
+
     // === Constructor Tests ===
     @Test
     void testNoArgConstructor() {
@@ -239,6 +240,37 @@ class ToolsServiceTest {
         );
         verify(toolsRepository).save(expected);
         assertNotEquals(expected, actual);
+    }
+
+    // === PUT ===
+    @Test
+    void updateToolById_expectUpdatedToolObject() {
+        // GIVEN
+        Tool t1update = new Tool(
+                toolId.getId(),
+                toolId.getName(),
+                toolId.getImage(),
+                toolId.getCategories(),
+                toolId.getAuthor(),
+                toolId.getLocation(),
+                toolId.getDescription(),
+                toolId.getTimestamp()
+        );
+        // WHEN
+        when(toolsRepository.save(t1update)).thenReturn(t1update);
+        Tool actual = toolsService.updateTool(toolId.getId(), t1update);
+
+        // THEN
+        Tool expected = new Tool(
+                "65317b1294a88f39ea92a61a",
+                "Hammer",
+
+                Collections.singletonList(Category.TOOLS),
+                "Keller"
+
+        );
+        verify(toolsRepository).save(t1update);
+        assertEquals(expected, actual);
     }
 
     // === DELETE ===
