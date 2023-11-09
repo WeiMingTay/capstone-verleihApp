@@ -1,5 +1,6 @@
 package de.neuefische.backend.tools;
 
+import de.neuefische.backend.user.UserProfile;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,6 +20,7 @@ public class Tool {
     private @NonNull String location;
     private String description;
     private String timestamp;
+/*    private UserProfile user;*/
 
 
     public Tool(@NonNull String name, @NonNull List<Category> categories, @NonNull String location) {
