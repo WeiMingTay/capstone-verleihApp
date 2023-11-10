@@ -62,6 +62,11 @@ export default function App() {
         }, 1000);
     }
 
+    useEffect(() => {
+        if (userProfile) {
+            navigate('/start')
+        }
+    }, [userProfile]);
 
     function logout() {
         axios.post("/api/logout")
