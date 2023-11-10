@@ -12,6 +12,8 @@
     background-size: cover;
     height: 100%;
     width: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
 
     article {
       height: 100%;
@@ -23,11 +25,16 @@
       justify-content: center;
 
       p {
-        font-size: $fontSizeXL;
+        font-size: $fontSizeXXL;
         color: $textColorLight;
         text-shadow: 0 0 15px $textColorDark;
 
       }
+
+    }
+    &:focus-visible {
+      outline: 4px solid $accentColor;
+      scale: .95;
     }
   }
 }
