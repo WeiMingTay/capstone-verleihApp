@@ -45,6 +45,7 @@ header {
         right: 0;
 
       }
+
     }
 
     nav {
@@ -106,7 +107,7 @@ header {
             @include aTag;
 
 
-            &:hover {
+            &:hover, &:focus-visible {
               text-decoration: underline;
 
             }
@@ -127,7 +128,6 @@ header {
         }
       }
     }
-
 
   }
 
