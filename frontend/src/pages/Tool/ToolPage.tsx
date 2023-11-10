@@ -255,7 +255,7 @@ export default function ToolPage(props: Props) {
                     </g>
                 </svg>
                 : <>
-                    <ButtonLarge name={"Lö"} onClick={handleDeleteClick}/>
+                    <ButtonLarge name={"Löschen"} onClick={handleDeleteClick}/>
                     {isModalOpen &&
                         <div className="deleteConfirmation">
                             <p>Wollen Sie das Element wirklich löschen?</p>

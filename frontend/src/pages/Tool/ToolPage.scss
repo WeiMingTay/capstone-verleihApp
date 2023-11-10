@@ -127,13 +127,13 @@
   flex-direction: column;
 
   position: absolute;
-  width: 50%;
-
-  top: 0;
-  left: 0;
+  width: 80%;
+aspect-ratio: .75;
+  bottom: 50%;
+  left: 50%;
   padding: 1rem;
-  transform: translate(50%, 50%);
-  border: 2px solid $accentColor;
+  transform: translate(-50%,50%);
+  border: 2px solid $secondaryColor;
   outline: 2px solid $textColorLight;
   background-color: $backgroundColorLight;
   box-shadow: 0 0 10px 2px $backgroundColorMedium;
