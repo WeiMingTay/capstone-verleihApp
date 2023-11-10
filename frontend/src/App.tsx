@@ -48,7 +48,10 @@ export default function App() {
             })
     }
 
-    // TODO: After login, jump to "/start" page
+    function onAuthenticationSuccess() {
+        navigate('/start')
+    }
+
     function login() {
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
 
@@ -57,11 +60,10 @@ export default function App() {
         const checkInterval = setInterval(function () {
             if (authWindow?.closed) {
                 clearInterval(checkInterval);
-                window.location.href = host + '/start';
+                onAuthenticationSuccess();
             }
         }, 1000);
     }
-
 
     function logout() {
         axios.post("/api/logout")
