@@ -8,6 +8,23 @@
   flex-direction: column;
   justify-content: flex-start;
 
+  .ladebildschirm {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+    background-color: rgb($backgroundColorLight, .95);
+    display: grid;
+    place-items: center;
+    z-index: 2;
+
+    p {
+      font-size: $fontSizeXXL;
+    }
+    svg {
+      fill: $primaryColor;
+    }
+  }
   form {
     @include flexCenter(1rem);
     justify-content: flex-start;
