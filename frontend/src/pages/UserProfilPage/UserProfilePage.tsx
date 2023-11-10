@@ -10,6 +10,7 @@ type Props = {
     readonly tools: Tools[]
 }
 export default function UserProfilePage(props: Props) {
+    console.log(props.userProfile)
     return (<div className={"userProfil-page"}>
         <img src={props.userProfile?.avatarUrl} alt={props.userProfile?.id}/>
         <h3>{props.userProfile?.name}</h3>

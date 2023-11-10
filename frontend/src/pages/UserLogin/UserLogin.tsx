@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 type Props = {
     readonly userProfile: UserProfile | undefined
     readonly login: () => void
+    readonly loginGoogle: () => void
     readonly logout: () => void
 }
 export default function UserLogin(props: Props) {
@@ -52,7 +53,7 @@ export default function UserLogin(props: Props) {
                         <div className="oAuthAnbieter">
 
                             <button onClick={props.login}><i className="lab la-github"></i></button>
-                            <button onClick={props.login}><i className="lab la-google"></i></button>
+                            <button onClick={props.loginGoogle}><i className="lab la-google"></i></button>
                         </div>
                     </>
                     : <>
