@@ -36,10 +36,11 @@ position: relative;
 
   }
 
-  &:hover {
+  &:hover, &:focus-visible {
     box-shadow: 0 0 1.75rem -.5rem $secondaryColor;
-
-
+  }
+  &:focus-visible {
+    scale: 1.05;
   }
 }
 
