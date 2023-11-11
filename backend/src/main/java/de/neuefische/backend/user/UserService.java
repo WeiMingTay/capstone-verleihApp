@@ -19,7 +19,7 @@ public class UserService {
     }
 
     private String getUserId(Map<String, Object> attributes) {
-        return attributes.getOrDefault("sub", "").toString();
+        return attributes.getOrDefault("id", attributes.getOrDefault("sub", "")).toString();
     }
 
     private String getUserName(Map<String, Object> attributes) {
@@ -37,6 +37,6 @@ public class UserService {
     }
 
     private String getEmail(Map<String, Object> attributes) {
-        return attributes.getOrDefault("email", attributes.getOrDefault("email", "")).toString();
+        return attributes.getOrDefault("email", "").toString();
     }
 }

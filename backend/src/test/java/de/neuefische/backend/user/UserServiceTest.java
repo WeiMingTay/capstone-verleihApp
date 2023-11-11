@@ -37,6 +37,7 @@ class UserServiceTest {
         attributes.put("id", "12345");
         attributes.put("login", "testuser");
         attributes.put("avatar_url", "https://example.com/avatar.jpg");
+        attributes.put("email", "testuser@example.com");
 
         OAuth2User oauth2User = new DefaultOAuth2User(
                 Set.of(new SimpleGrantedAuthority("ROLE_USER")),
@@ -44,7 +45,6 @@ class UserServiceTest {
                 "login"
         );
 
-        // Mock the getPrincipal() method to return the oauth2User object
         when(mockOAuth2AuthenticationToken.getPrincipal()).thenReturn(oauth2User);
 
         UserProfile userProfile = userService.createUserProfile(mockOAuth2AuthenticationToken);
@@ -52,5 +52,7 @@ class UserServiceTest {
         assertEquals("12345", userProfile.id());
         assertEquals("testuser", userProfile.name());
         assertEquals("https://example.com/avatar.jpg", userProfile.avatarUrl());
+        assertEquals("testuser@example.com", userProfile.email());
     }
+
 }
