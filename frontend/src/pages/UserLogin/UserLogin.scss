@@ -16,11 +16,17 @@
         accent-color: $accentColor;
       }
 
+      #user-password {
+        position: relative;
+      }
+
       span {
         position: absolute;
         right: 1%;
         top: 50%;
+        transform: translateY(-20%);
         cursor: pointer;
+        font-size: $fontSizeM;
       }
     }
 
@@ -31,6 +37,34 @@
 
   }
 
+  .trenner {
+    position: relative;
+
+    display: grid;
+    place-items: center;
+    margin: 0 3rem;
+
+    p {
+      text-align: center;
+      position: relative;
+      width: fit-content;
+      background-color: $backgroundColorLight;
+      z-index: 1;
+      padding: 0 .5rem;
+      font-size: $fontSizeS;
+    }
+
+    div {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 1px;
+      width: 100%;
+      background-color: $primaryColor;
+    }
+
+
+  }
 
   .externalLogin {
     margin: 1rem;
