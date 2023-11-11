@@ -37,6 +37,8 @@ public class UserService {
     }
 
     private String getEmail(Map<String, Object> attributes) {
-        return attributes.getOrDefault("email", "").toString();
+        Object emailObject = attributes.get("email");
+        return emailObject != null ? emailObject.toString() : "";
     }
+
 }
