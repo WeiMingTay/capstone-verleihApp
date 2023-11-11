@@ -24,6 +24,6 @@ public class UserController {
         if (auth instanceof OAuth2AuthenticationToken token) {
             return userService.createUserProfile(token);
         }
-        return new UserProfile(auth.getName(), "", "");
+        return null;
     }
 }

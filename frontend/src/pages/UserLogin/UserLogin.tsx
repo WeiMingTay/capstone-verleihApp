@@ -25,7 +25,6 @@ export default function UserLogin(props: Props) {
             changeVisibility();
         }
     }
-
     return (
         <div className="userLogin">
             {(!props.userProfile?.name)

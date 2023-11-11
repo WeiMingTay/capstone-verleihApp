@@ -64,6 +64,7 @@ export default function App() {
             }
         }, 1000);
     }
+
     function loginGoogle() {
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin;
         window.open(host + '/oauth2/authorization/google',
@@ -97,7 +98,9 @@ export default function App() {
                 toggleTheme={toggleTheme}
                 userProfile={userProfile}/>
             <Routes>
-                <Route path={"/login"} element={<UserLogin userProfile={userProfile} login={login} loginGoogle={loginGoogle} logout={logout}/>}/>
+                <Route path={"/login"}
+                       element={<UserLogin userProfile={userProfile} login={login} loginGoogle={loginGoogle}
+                                           logout={logout}/>}/>
                 <Route path={"/"} element={<WelcomePage/>}/>
                 <Route path={"/start"} element={<StartPage tools={tools}/>}/>
                 <Route path={"/profil"}
