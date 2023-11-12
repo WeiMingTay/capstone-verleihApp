@@ -8,9 +8,10 @@ import ButtonLarge from "../../components/Button/ButtonLarge.tsx";
 import {UserProfile} from "../../assets/entities/userProfile.ts";
 import Select from "react-select";
 
+
 type Props = {
     readonly onToolUpdate: () => void
-    readonly userProfile: UserProfile | undefined
+    readonly userProfile?: UserProfile
 };
 
 export default function ToolPage(props: Props) {
@@ -58,6 +59,8 @@ export default function ToolPage(props: Props) {
             .catch(error => console.error(error))
     }
 
+    console.log(tool?.name + ", " + tool?.userId)
+
     function deleteToolById(id: string) {
         setLoading(true);
         axios.delete(`/api/tools/${id}`)
@@ -77,7 +80,7 @@ export default function ToolPage(props: Props) {
     const handleCancelClick = () => {
         setIsModalOpen(false);
     };
-    console.log(isModalOpen)
+
     const isoTime = tool?.timestamp ?? new Date().toISOString()
     const formattedTimeStamp = new Date(isoTime).toLocaleString([], {
         day: '2-digit',
@@ -151,6 +154,7 @@ export default function ToolPage(props: Props) {
     }
     return (<article className={"toolPage-page"}>
         <p>{formattedTimeStamp}</p>
+        <p>{tool?.userId}</p>
         {
             (!isBeingEdited)
                 ?

@@ -1,4 +1,3 @@
-
 export type Tools = {
     id: string;
     name: string;
@@ -8,6 +7,7 @@ export type Tools = {
     location: string;
     description: string;
     timestamp : Date;
+    userId: string;
 
 }
 
