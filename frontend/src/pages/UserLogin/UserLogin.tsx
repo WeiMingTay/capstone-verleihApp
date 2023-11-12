@@ -32,7 +32,7 @@ export default function UserLogin(props: Props) {
                     <label>
                         Username <input type="text"/>
                     </label>
-                    <label >
+                    <label>
                         Password <input id={"user-password"} type={passwordVisible ? "text" : "password"}
                                         onKeyDown={handleKeyDown}/>
                         <span
@@ -54,15 +54,13 @@ export default function UserLogin(props: Props) {
             </div>
             <div className="externalLogin">
                 {(!props.userProfile?.name)
-                    ? <>
+                    ? <div className="oAuthAnbieter">
 
-                        <div className="oAuthAnbieter">
+                        <button onClick={props.login}><i className="lab la-github"></i></button>
+                        <button onClick={props.loginGoogle}><i className="lab la-google"></i></button>
+                        <button><i className="lab la-facebook"></i></button>
+                    </div>
 
-                            <button onClick={props.login}><i className="lab la-github"></i></button>
-                            <button onClick={props.loginGoogle}><i className="lab la-google"></i></button>
-                            <button><i className="lab la-facebook"></i></button>
-                        </div>
-                    </>
                     : <>
                         <Link className="buttonLarge" to={"/start"}>zur Startseite</Link>
                         <img src={props.userProfile.avatarUrl} alt={props.userProfile.id}/>
