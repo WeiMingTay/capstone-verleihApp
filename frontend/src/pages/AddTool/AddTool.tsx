@@ -60,7 +60,7 @@ export default function AddTool(props: Props) {
             location: strasse + ' ' + hausnummer,
             description: description,
             timestamp: new Date().toISOString(),
-            userId: props.userProfile?.id
+            user: props.userProfile
         }
 
         if (imageFile) {
@@ -89,8 +89,7 @@ export default function AddTool(props: Props) {
             });
 
     }
-console.log(props.userProfile?.id)
-    console.log(tool)
+
 
     function resetForm() {
         setName("");

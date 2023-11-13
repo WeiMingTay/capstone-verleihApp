@@ -45,7 +45,7 @@ public class ToolsService {
                 newTool.getLocation(),
                 newTool.getDescription(),
                 newTool.getTimestamp(),
-                newTool.getUserId()
+                newTool.getUser()
         );
 
         return toolsRepository.save(toolToSave);
@@ -63,7 +63,7 @@ public class ToolsService {
                 tool.getLocation(),
                 tool.getDescription(),
                 tool.getTimestamp(),
-                tool.getUserId()
+                tool.getUser()
         );
         return toolsRepository.save(updatedTool);
     }

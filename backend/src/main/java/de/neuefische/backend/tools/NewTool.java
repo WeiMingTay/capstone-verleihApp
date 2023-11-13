@@ -1,6 +1,7 @@
 package de.neuefische.backend.tools;
 
 
+import de.neuefische.backend.user.UserProfile;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -18,7 +19,7 @@ public class NewTool {
     private String location;
     private String description;
     private String timestamp;
-    private String userId;
+    private UserProfile user;
 
 
 

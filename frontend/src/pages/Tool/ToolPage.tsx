@@ -154,7 +154,11 @@ export default function ToolPage(props: Props) {
     }
     return (<article className={"toolPage-page"}>
         <p>{formattedTimeStamp}</p>
-        <p>{tool?.userId}</p>
+        <div>
+            <img src={tool?.user.avatarUrl} alt={tool?.user.name}/>
+            {/*<p>{tool?.user.name}</p>*/}
+        </div>
+
         {
             (!isBeingEdited)
                 ?
