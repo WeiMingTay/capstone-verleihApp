@@ -7,5 +7,6 @@ public enum Category {
     PLUMBING,
     ELECTRONICS,
     SEWING,
+    VACATION,
     OTHER
 }

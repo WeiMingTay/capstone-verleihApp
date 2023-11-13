@@ -9,12 +9,12 @@ export type Tools = {
     location: string;
     description: string;
     timestamp : Date;
-    user: UserProfile;
+    user?: UserProfile;
 
 }
 
 
-export type Category = "GARDEN" | "TOOLS" | "KITCHEN" | "PLUMBING" | "ELECTRONICS" | "SEWING" | "OTHER";
+export type Category = "GARDEN" | "TOOLS" | "KITCHEN" | "PLUMBING" | "ELECTRONICS" | "SEWING" | "VACATION" | "OTHER";
 
 const categoryTranslations: Record<Category, string> = {
     GARDEN: "GARTEN",
@@ -23,6 +23,7 @@ const categoryTranslations: Record<Category, string> = {
     PLUMBING: "SANITÄR",
     ELECTRONICS: "ELEKTRONIK",
     SEWING: "NÄHEN & STRICKEN",
+    VACATION: "REISEN",
     OTHER: "SONSTIGES",
 };
 const categoryImages: Record<Category, string> = {
@@ -32,10 +33,11 @@ const categoryImages: Record<Category, string> = {
     PLUMBING: "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&q=80&w=1374&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ELECTRONICS: "https://images.unsplash.com/photo-1555864326-5cf22ef123cf?auto=format&fit=crop&q=80&w=1167&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     SEWING: "https://images.unsplash.com/photo-1528578577235-b963df6db908?auto=format&fit=crop&q=80&w=1170&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    VACATION: "https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHZhY2F0aW9ufGVufDB8fDB8fHww",
     OTHER: "https://images.unsplash.com/photo-1472289065668-ce650ac443d2?auto=format&fit=crop&q=80&w=1169&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 };
 
-export const allCategories: Category[] = ["GARDEN", "TOOLS", "KITCHEN", "PLUMBING", "ELECTRONICS", "SEWING", "OTHER"];
+export const allCategories: Category[] = ["GARDEN", "TOOLS", "KITCHEN", "PLUMBING", "ELECTRONICS", "SEWING", "VACATION", "OTHER"];
 
 // Funktion zum Abrufen der deutschen Übersetzung
 export function getCategoryTranslation(category: Category): string {

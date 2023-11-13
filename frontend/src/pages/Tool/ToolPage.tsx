@@ -59,8 +59,6 @@ export default function ToolPage(props: Props) {
             .catch(error => console.error(error))
     }
 
-    console.log(tool?.name + ", " + tool?.userId)
-
     function deleteToolById(id: string) {
         setLoading(true);
         axios.delete(`/api/tools/${id}`)
@@ -152,10 +150,16 @@ export default function ToolPage(props: Props) {
             );
         }
     }
+    let AuthorSameAsUser
+        if(tool?.author == props.userProfile?.name) {
+           AuthorSameAsUser = <img id={"authorUser"} src={tool?.user?.avatarUrl} alt={tool?.user?.name}/>
+        }
+
+
     return (<article className={"toolPage-page"}>
         <p>{formattedTimeStamp}</p>
-        <div>
-            <img src={tool?.user.avatarUrl} alt={tool?.user.name}/>
+        <div className={"userOfTool"}>
+            {tool?.user && <img src={tool.user.avatarUrl} alt={tool.user.name}/>}
             {/*<p>{tool?.user.name}</p>*/}
         </div>
 
@@ -181,7 +185,7 @@ export default function ToolPage(props: Props) {
                         <div></div>
                     }
                     <p className={"italic"}>Ort: <span>{tool?.location}</span></p>
-                    <p className={"italic"}>Ansprechpartner:in: <span>{tool?.author}</span></p>
+                    <p className={"italic"}>Ansprechpartner:in: <span id={"authorUser-container"}>{tool?.author}{AuthorSameAsUser}</span></p>
                     {isLoggedIn && <ButtonLarge name={"Anfrage"}/>
                     }
                     <p> Anleitung: {tool?.description}</p>

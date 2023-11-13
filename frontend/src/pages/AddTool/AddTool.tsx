@@ -25,7 +25,7 @@ export default function AddTool(props: Props) {
         label: string;
         value: string
     }[]>([]);
-    const [author, setAuthor] = useState("")
+    const [author, setAuthor] = useState(props.userProfile?.name ??"")
     const [description, setDescription] = useState("")
 
     const [loading, setLoading] = useState(false);
