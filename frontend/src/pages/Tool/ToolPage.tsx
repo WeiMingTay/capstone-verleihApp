@@ -88,7 +88,12 @@ export default function ToolPage(props: Props) {
         minute: '2-digit',
     })
 
-    function submitEditedTool(event: FormEvent, id: string) {
+    function submitEditedTool(event: FormEvent<HTMLFormElement> | undefined, id: string) {
+        if (!event) {
+            console.error("Event is undefined in submitEditedTool");
+            return;
+        }
+
         event.preventDefault()
         axios.put(`/api/tools/${id}`, {
             ...tool,
@@ -97,16 +102,12 @@ export default function ToolPage(props: Props) {
             location: location,
             author: author,
             description: description,
-            /*categories: tool?.categories,
-            location: tool?.location,
-            author: tool?.author,
-            description: tool?.description,*/
         })
             .then((response) => {
                 setTool(response.data)
             })
             .then(props.onToolUpdate)
-        setIsBeingEdited(false)
+            .finally(() => setIsBeingEdited(false));
     }
 
     function changeName(event: ChangeEvent<HTMLInputElement>) {
@@ -145,7 +146,7 @@ export default function ToolPage(props: Props) {
             buttonContent = (
                 <div className={"edit-btn"}>
                     <ButtonLarge name={"Abbrechen"} onClick={() => setIsBeingEdited(false)}/>
-                    <ButtonLarge name={"Speichern"} onClick={() => setIsBeingEdited(false)}/>
+                    <ButtonLarge name={"Speichern"} formId="submitEditForm"/>
                 </div>
             );
         }
@@ -190,7 +191,7 @@ export default function ToolPage(props: Props) {
                     }
                     <p> Anleitung: {tool?.description}</p>
                 </>
-                : <form onSubmit={(event) => submitEditedTool(event, tool?.id ?? "")}>
+                : <form id="submitEditForm" onSubmit={(event) => submitEditedTool(event, tool?.id ?? "")}>
                     <label>
                         <input id="nameInput" type="text" value={name ?? tool?.name} placeholder="Bezeichnung"
                                onChange={changeName}/>
