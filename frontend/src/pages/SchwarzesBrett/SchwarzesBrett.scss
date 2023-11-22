@@ -24,20 +24,33 @@
     }
 
     button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .add-btn {
       position: absolute;
       top: 0;
       right: .5rem;
-      display: grid;
-      place-items: center;
       color: $textColorLight;
-      background-color: transparent;
-      border: none;
       font-size: $fontSizeXXL;
+    }
+
+    .delete-btn {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: fit-content;
+      padding: .5rem;
     }
 
     div {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+
       article {
         background-image: url(../../assets/images/postit.png);
         background-size: contain;
@@ -47,6 +60,8 @@
         color: $textColorDark;
         display: grid;
         place-items: center;
+        position: relative;
+
         p {
           font-size: $fontSizeL;
           transform: translateY(-20%);
