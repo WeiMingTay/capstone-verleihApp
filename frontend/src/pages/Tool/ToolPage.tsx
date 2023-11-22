@@ -151,7 +151,7 @@ export default function ToolPage(props: Props) {
         }
     }
     let AuthorSameAsUser
-        if(tool?.author == props.userProfile?.name) {
+        if(tool?.author == tool?.user?.name) {
            AuthorSameAsUser = <img id={"authorUser"} src={tool?.user?.avatarUrl} alt={tool?.user?.name}/>
         }
 
