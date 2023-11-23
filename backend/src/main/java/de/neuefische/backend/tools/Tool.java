@@ -23,7 +23,8 @@ public class Tool {
     private String timestamp;
     private UserProfile user;
 
-    public Tool( @NonNull String name, String image, @NonNull List<Category> categories, String author, @NonNull String location, String description, String timestamp, UserProfile user) {
+
+    public Tool(@NonNull String name, String image, @NonNull List<Category> categories, String author, @NonNull String location, String description, String timestamp, UserProfile user) {
 
         this.name = name;
         this.image = image;
@@ -34,30 +35,6 @@ public class Tool {
         this.timestamp = timestamp;
         this.user = user;
     }
-
-/*    public Tool(@NonNull String name, @NonNull List<Category> categories, @NonNull String location) {
-        this.name = name;
-        this.categories = categories;
-        this.location = location;
-    }
-
-    public Tool(String id, @NonNull String name, @NonNull List<Category> categories, @NonNull String location) {
-        this.id = id;
-        this.name = name;
-        this.categories = categories;
-        this.location = location;
-
-    }
-
-    public Tool(@NonNull String name, @NonNull List<Category> categories, String author, @NonNull String location, String description, String timestamp) {
-        this.name = name;
-        this.categories = categories;
-        this.author = author;
-        this.location = location;
-        this.description = description;
-        this.timestamp = timestamp;
-
-    }*/
 
 
 }

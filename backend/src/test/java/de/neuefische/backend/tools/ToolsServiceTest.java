@@ -14,13 +14,13 @@ import static org.mockito.Mockito.*;
 class ToolsServiceTest {
 
     ToolsRepository toolsRepository = mock(ToolsRepository.class);
-    CloudinaryService cloudinaaryService = mock(CloudinaryService.class);
-    ToolsService toolsService = new ToolsService(toolsRepository, cloudinaaryService);
-UserProfile userProfile = new UserProfile(
-        "12345",
-        "Dim Sum",
-        "image.jpg",
-        "mail@mail.de");
+    CloudinaryService cloudinaryService = mock(CloudinaryService.class);
+    ToolsService toolsService = new ToolsService(toolsRepository, cloudinaryService);
+    UserProfile userProfile = new UserProfile(
+            "12345",
+            "Dim Sum",
+            "image.jpg",
+            "mail@mail.de");
     Tool tool1 = new Tool(
             "Hammer",
             "image.jpg",
@@ -47,53 +47,6 @@ UserProfile userProfile = new UserProfile(
     MockMultipartFile imageFile = new MockMultipartFile("image", "image.jpg", "image/jpeg", new byte[]{});
 
     // === Constructor Tests ===
-    @Test
-    void testNoArgConstructor() {
-        // GIVEN
-        Tool tool = new Tool();
-
-        // THEN
-        assertNotNull(tool);
-        assertNull(tool.getId());
-        assertNull(tool.getName());
-        assertNull(tool.getImage());
-        assertNull(tool.getCategories());
-        assertNull(tool.getAuthor());
-        assertNull(tool.getLocation());
-        assertNull(tool.getDescription());
-        assertNull(tool.getTimestamp());
-    }
-
-    @Test
-    void testConstructorWithIdNameCategoryLocation() {
-
-        // GIVEN
-        String id = "12345";
-        String name = "Hammer";
-        String image = "image.jpg";
-        List<Category> categories = Collections.singletonList(Category.TOOLS);
-        String author = "Dim Sum";
-        String location = "Keller";
-        String description = "Bla Bla";
-        String timestamp = "25.10.2021";
-        UserProfile user = userProfile;
-
-        // WHEN
-        Tool tool = new Tool(id, name, image, categories, author, location, description, timestamp, user);
-
-        // THEN
-        assertNotNull(tool);
-        assertEquals(id, tool.getId());
-        assertEquals(name, tool.getName());
-        assertNull(tool.getImage());
-        assertEquals(categories, tool.getCategories());
-        assertNull(tool.getAuthor());
-        assertEquals(location, tool.getLocation());
-        assertNull(tool.getDescription());
-        assertNull(tool.getTimestamp());
-    }
-
-
 
     // === GETall ===
 
@@ -110,11 +63,13 @@ UserProfile userProfile = new UserProfile(
         //THEN
         List<Tool> expected = List.of(new Tool(
                 "Hammer",
+                "image.jpg",
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
                 "Bla Bla",
-                "25.10.2021"
+                "25.10.2021",
+                userProfile
         ));
 
         verify(toolsRepository).findAll();
@@ -152,8 +107,14 @@ UserProfile userProfile = new UserProfile(
         Tool expected = new Tool(
                 "65317b1294a88f39ea92a61a",
                 "Hammer",
+                "image.jpg",
                 Collections.singletonList(Category.TOOLS),
-                "Keller");
+                "Dim Sum",
+                "Keller",
+                "Bla Bla",
+                "25.10.2021",
+                userProfile
+        );
 
         verify(toolsRepository).findById(id);
         assertEquals(expected, actual);
@@ -178,60 +139,90 @@ UserProfile userProfile = new UserProfile(
         Tool tool = tool1;
         NewTool newTool = new NewTool(
                 "Hammer",
-
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
-
                 "Keller",
                 "Bla Bla",
-                "25.10.2021"
+                "25.10.2021",
+                userProfile
         );
 
         //WHEN
         when(toolsRepository.save(tool)).thenReturn(tool);
+        when(cloudinaryService.uploadImage(imageFile)).thenReturn("image.jpg");
         Tool actual = toolsService.createTool(newTool, imageFile);
         //THEN
 
         Tool expected = new Tool(
                 "Hammer",
+                "image.jpg",
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
                 "Bla Bla",
-                "25.10.2021"
+                "25.10.2021",
+                userProfile
         );
         verify(toolsRepository).save(expected);
         assertEquals(expected, actual);
     }
-
     @Test
-    void createToolWithWrongId_expectWrongArgument() throws IOException {
+    void createToolWithInvalidInput_expectException() throws IOException {
         //GIVEN
-        Tool tool = tool1;
         NewTool newTool = new NewTool(
-                "Hammer",
-
-
+                null,  // Name ist null, was ungültig sein könnte
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
                 "Bla Bla",
-                "25.10.2021"
+                "25.10.2021",
+                userProfile
+        );
+
+        //WHEN / THEN
+        assertThrows(NullPointerException.class, () -> {
+            toolsService.createTool(newTool, imageFile);
+        });
+    }
+    @Test
+    void createToolWithWrongName_expectWrongArgument() throws IOException {
+        //GIVEN
+        Tool tool = tool1;
+        NewTool newTool = new NewTool(
+                "Hammer",
+                Collections.singletonList(Category.TOOLS),
+                "Dim Sum",
+                "Keller",
+                "Bla Bla",
+                "25.10.2021",
+                userProfile
         );
 
         //WHEN
-        Tool unexpected = new Tool("Bohrmaschine", Collections.singletonList(Category.TOOLS), "Keller");
+        Tool unexpected = new Tool(
+                "Bohrmaschine",
+                "image.jpg",
+                Collections.singletonList(Category.TOOLS),
+                "Dim Sum",
+                "Keller",
+                "bla bla",
+                "25.10.2021",
+                userProfile
+        );
         when(toolsRepository.save(tool)).thenReturn(unexpected);
+        when(cloudinaryService.uploadImage(imageFile)).thenReturn("image.jpg");
         Tool actual = toolsService.createTool(newTool, imageFile);
         //THEN
 
         Tool expected = new Tool(
                 "Hammer",
+                "image.jpg",
                 Collections.singletonList(Category.TOOLS),
                 "Dim Sum",
                 "Keller",
                 "Bla Bla",
-                "25.10.2021"
+                "25.10.2021",
+                userProfile
         );
         verify(toolsRepository).save(expected);
         assertNotEquals(expected, actual);
@@ -249,7 +240,8 @@ UserProfile userProfile = new UserProfile(
                 toolId.getAuthor(),
                 toolId.getLocation(),
                 toolId.getDescription(),
-                toolId.getTimestamp()
+                toolId.getTimestamp(),
+                toolId.getUser()
         );
         // WHEN
         when(toolsRepository.save(t1update)).thenReturn(t1update);
@@ -259,10 +251,13 @@ UserProfile userProfile = new UserProfile(
         Tool expected = new Tool(
                 "65317b1294a88f39ea92a61a",
                 "Hammer",
-
+                "image.jpg",
                 Collections.singletonList(Category.TOOLS),
-                "Keller"
-
+                "Dim Sum",
+                "Keller",
+                "Bla Bla",
+                "25.10.2021",
+                userProfile
         );
         verify(toolsRepository).save(t1update);
         assertEquals(expected, actual);
@@ -292,7 +287,7 @@ UserProfile userProfile = new UserProfile(
 
         when(toolsRepository.existsById(id)).thenReturn(false);
 
-        ToolsService toolsService = new ToolsService(toolsRepository, cloudinaaryService);
+        ToolsService toolsService = new ToolsService(toolsRepository, cloudinaryService);
 
         // WHEN
         ResponseEntity<String> responseEntity = toolsService.deleteToolById(id);

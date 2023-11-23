@@ -134,6 +134,7 @@ class ToolsControllerIntegrationTests {
     @DirtiesContext
     void getToolsById_expectTool() throws Exception {
         Tool tool1 = new Tool(
+                "12345",
                 "Hammer",
                 "image.jpg",
                 Collections.singletonList(Category.TOOLS),
@@ -149,11 +150,13 @@ class ToolsControllerIntegrationTests {
 
                 )
         );
+        toolsRepo.save(tool1);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools/" + tool1.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                         {
+                        "id": "12345",
                             "name": "Hammer",
                             "image": "image.jpg",
                             "categories": ["TOOLS"],
