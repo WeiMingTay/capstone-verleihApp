@@ -1,5 +1,6 @@
 package de.neuefische.backend.tools;
 
+import de.neuefische.backend.user.UserProfile;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
@@ -15,20 +16,32 @@ class ToolsServiceTest {
     ToolsRepository toolsRepository = mock(ToolsRepository.class);
     CloudinaryService cloudinaaryService = mock(CloudinaryService.class);
     ToolsService toolsService = new ToolsService(toolsRepository, cloudinaaryService);
-
+UserProfile userProfile = new UserProfile(
+        "12345",
+        "Dim Sum",
+        "image.jpg",
+        "mail@mail.de");
     Tool tool1 = new Tool(
             "Hammer",
+            "image.jpg",
             Collections.singletonList(Category.TOOLS),
             "Dim Sum",
             "Keller",
             "Bla Bla",
-            "25.10.2021"
+            "25.10.2021",
+            userProfile
     );
     Tool toolId = new Tool(
             "65317b1294a88f39ea92a61a",
             "Hammer",
+            "image.jpg",
             Collections.singletonList(Category.TOOLS),
-            "Keller");
+            "Dim Sum",
+            "Keller",
+            "Bla Bla",
+            "25.10.2021",
+            userProfile
+    );
 
 
     MockMultipartFile imageFile = new MockMultipartFile("image", "image.jpg", "image/jpeg", new byte[]{});
@@ -53,14 +66,20 @@ class ToolsServiceTest {
 
     @Test
     void testConstructorWithIdNameCategoryLocation() {
+
         // GIVEN
         String id = "12345";
         String name = "Hammer";
+        String image = "image.jpg";
         List<Category> categories = Collections.singletonList(Category.TOOLS);
+        String author = "Dim Sum";
         String location = "Keller";
+        String description = "Bla Bla";
+        String timestamp = "25.10.2021";
+        UserProfile user = userProfile;
 
         // WHEN
-        Tool tool = new Tool(id, name, categories, location);
+        Tool tool = new Tool(id, name, image, categories, author, location, description, timestamp, user);
 
         // THEN
         assertNotNull(tool);
@@ -74,31 +93,7 @@ class ToolsServiceTest {
         assertNull(tool.getTimestamp());
     }
 
-    @Test
-    void testConstructorWithNameCategoryLocationDescription() {
-        // GIVEN
-        String name = "Hammer";
-        List<Category> categories = Collections.singletonList(Category.TOOLS);
-        String author = "Dim Sum";
-        String location = "Keller";
-        String description = "Bla Bla";
-        String timestamp = "25.10.2021";
 
-        // WHEN
-        Tool tool = new Tool(name, categories, author, location, description, timestamp);
-
-        // THEN
-        assertNotNull(tool);
-        assertNull(tool.getId());
-        assertEquals(name, tool.getName());
-        assertNull(tool.getImage());
-        assertEquals(categories, tool.getCategories());
-        assertEquals(author, tool.getAuthor());
-        assertEquals(location, tool.getLocation());
-        assertEquals(description, tool.getDescription());
-        assertEquals(timestamp, tool.getTimestamp());
-
-    }
 
     // === GETall ===
 

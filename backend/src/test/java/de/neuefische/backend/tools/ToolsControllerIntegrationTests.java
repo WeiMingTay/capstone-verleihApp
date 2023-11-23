@@ -2,6 +2,7 @@ package de.neuefische.backend.tools;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Uploader;
+import de.neuefische.backend.user.UserProfile;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -61,9 +62,38 @@ class ToolsControllerIntegrationTests {
     @Test
     @DirtiesContext
     void getAllTools_expectTools() throws Exception {
-        Tool tool1 = new Tool("Hammer", Collections.singletonList(Category.TOOLS), "Keller");
+        Tool tool1 = new Tool(
+                "Hammer",
+                "image.jpg",
+                Collections.singletonList(Category.TOOLS),
+                "Dim Sum",
+                "Keller",
+                "Bla Bla",
+                "25.10.2021",
+                new UserProfile(
+                        "12345",
+                        "Dim Sum",
+                        "image.jpg",
+                        "mail@mail.de"
+
+                )
+        );
         toolsRepo.save(tool1);
-        toolsRepo.save(new Tool("Bohrmaschine", Collections.singletonList(Category.TOOLS), "Keller"));
+        toolsRepo.save(new Tool(
+                "Bohrmaschine",
+                "image.jpg",
+                Collections.singletonList(Category.TOOLS),
+                "Dim Sum",
+                "Dachboden",
+                "Bla Bla",
+                "25.11.2021",
+                new UserProfile(
+                        "12345",
+                        "Dim Sum",
+                        "image.jpg",
+                        "mail@mail.de"
+                )
+        ));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools"))
                 .andExpect(status().isOk())
@@ -71,14 +101,31 @@ class ToolsControllerIntegrationTests {
                         [
                             {
                             "name": "Hammer",
+                            "image": "image.jpg",
+                            "categories": ["TOOLS"],
                             "location": "Keller",
-                            "categories": ["TOOLS"]
+                            "description": "Bla Bla",
+                            "timestamp": "25.10.2021",
+                            "user": {
+                                "id": "12345",
+                                "name": "Dim Sum",
+                                "avatarUrl": "image.jpg",
+                                "email": "mail@mail.de"
+                                }
                             },
                             {
                             "name": "Bohrmaschine",
-                            "location": "Keller",
-                            "categories": ["TOOLS"]
-                            }
+                            "image": "image.jpg",
+                            "categories": ["TOOLS"],
+                            "location": "Dachboden",
+                            "description": "Bla Bla",
+                            "timestamp": "25.11.2021",
+                            "user": {
+                                "id": "12345",
+                                "name": "Dim Sum",
+                                "avatarUrl": "image.jpg",
+                                "email": "mail@mail.de"
+                                }}
                         ]
                         """));
     }
@@ -86,19 +133,40 @@ class ToolsControllerIntegrationTests {
     @Test
     @DirtiesContext
     void getToolsById_expectTool() throws Exception {
-        Tool tool1 = toolsRepo.save(new Tool(
+        Tool tool1 = new Tool(
                 "Hammer",
+                "image.jpg",
                 Collections.singletonList(Category.TOOLS),
-                "Keller"));
+                "Dim Sum",
+                "Keller",
+                "Bla Bla",
+                "25.10.2021",
+                new UserProfile(
+                        "12345",
+                        "Dim Sum",
+                        "image.jpg",
+                        "mail@mail.de"
+
+                )
+        );
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tools/" + tool1.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                         {
-                        "name": "Hammer",
-                        "location": "Keller",
-                        "categories": ["TOOLS"]
-                        }
+                            "name": "Hammer",
+                            "image": "image.jpg",
+                            "categories": ["TOOLS"],
+                            "location": "Keller",
+                            "description": "Bla Bla",
+                            "timestamp": "25.10.2021",
+                            "user": {
+                                "id": "12345",
+                                "name": "Dim Sum",
+                                "avatarUrl": "image.jpg",
+                                "email": "mail@mail.de"
+                                }
+                            }
                         """));
     }
 
@@ -197,6 +265,8 @@ class ToolsControllerIntegrationTests {
     @Test
     @WithMockUser
     void updateToolWhenLoggedIn_expectUpdatedToolObject() throws Exception {
+        UserProfile userProfile = new UserProfile("user12345", "Dim Sum", "image.png", "mail@mail.de");
+
         Tool tool1 = toolsRepo.save(new Tool(
                 "12345",
                 "Hammer",
@@ -206,7 +276,7 @@ class ToolsControllerIntegrationTests {
                 "Keller",
                 "Ein Hammer",
                 "2021-07-01T12:00:00.000+00:00",
-                "user12345"
+                userProfile
         ));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/tools/" + tool1.getId())
@@ -221,7 +291,12 @@ class ToolsControllerIntegrationTests {
                                         "location": "Keller",
                                         "description": "Ein Hammer",
                                         "timestamp": "2021-07-01T12:00:00.000+00:00",
-                                        "user": "user12345"
+                                        "user": {
+                                            "id": "user12345",
+                                            "name": "Dim Sum",
+                                            "avatarUrl": "image.png",
+                                            "email": "mail@mail.de"
+                                            }
                                     }
                                 """))
                 .andExpect(status().isOk())
@@ -235,7 +310,12 @@ class ToolsControllerIntegrationTests {
                             "location": "Keller",
                             "description": "Ein Hammer",
                             "timestamp": "2021-07-01T12:00:00.000+00:00",
-                            "user": "user12345"
+                            "user": {
+                                            "id": "user12345",
+                                            "name": "Dim Sum",
+                                            "avatarUrl": "image.png",
+                                            "email": "mail@mail.de"
+                                            }
                         }
                         """));
     }
@@ -243,6 +323,8 @@ class ToolsControllerIntegrationTests {
     @Test
     @WithAnonymousUser
     void updateToolWhenLoggedOff_expectHtmlStatus401() throws Exception {
+        UserProfile userProfile = new UserProfile("user12345", "Dim Sum", "image.png", "mail@mail.de");
+
         Tool tool1 = toolsRepo.save(new Tool(
                 "12345",
                 "Hammer",
@@ -252,7 +334,7 @@ class ToolsControllerIntegrationTests {
                 "Keller",
                 "Ein Hammer",
                 "2021-07-01T12:00:00.000+00:00",
-                "user12345"
+                userProfile
         ));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/tools/" + tool1.getId())
@@ -267,7 +349,12 @@ class ToolsControllerIntegrationTests {
                                         "location": "Keller",
                                         "description": "Ein Hammer",
                                         "timestamp": "2021-07-01T12:00:00.000+00:00",
-                                        "user": "user12345"
+                                         "user": {
+                                            "id": "user12345",
+                                            "name": "Dim Sum",
+                                            "avatarUrl": "image.png",
+                                            "email": "mail@mail.de"
+                                            }
                                     }
                                 """))
                 .andExpect(status().isUnauthorized());
@@ -278,14 +365,20 @@ class ToolsControllerIntegrationTests {
     @DirtiesContext
     @WithMockUser
     void deleteToolById_expectDeleteMessage() throws Exception {
+        UserProfile userProfile = new UserProfile("user12345", "Dim Sum", "image.png", "mail@mail.de");
 
         String id = "65317b1294a88f39ea92a61a";
 
         toolsRepo.save(new Tool(
                 "65317b1294a88f39ea92a61a",
                 "Hammer",
+                "test-url",
                 Collections.singletonList(Category.TOOLS),
-                "Keller"
+                "Max Mustermann",
+                "Keller",
+                "Ein Hammer",
+                "2021-07-01T12:00:00.000+00:00",
+                userProfile
         ));
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/tools/" + id))
