@@ -220,7 +220,8 @@ class ToolsControllerIntegrationTests {
                                         "author": "Max Mustermann",
                                         "location": "Keller",
                                         "description": "Ein Hammer",
-                                        "timestamp": "2021-07-01T12:00:00.000+00:00"
+                                        "timestamp": "2021-07-01T12:00:00.000+00:00",
+                                        "user": "user12345"
                                     }
                                 """))
                 .andExpect(status().isOk())
@@ -233,7 +234,8 @@ class ToolsControllerIntegrationTests {
                             "author": "Max Mustermann",
                             "location": "Keller",
                             "description": "Ein Hammer",
-                            "timestamp": "2021-07-01T12:00:00.000+00:00"
+                            "timestamp": "2021-07-01T12:00:00.000+00:00",
+                            "user": "user12345"
                         }
                         """));
     }
@@ -264,7 +266,8 @@ class ToolsControllerIntegrationTests {
                                         "author": "Max Mustermann",
                                         "location": "Keller",
                                         "description": "Ein Hammer",
-                                        "timestamp": "2021-07-01T12:00:00.000+00:00"
+                                        "timestamp": "2021-07-01T12:00:00.000+00:00",
+                                        "user": "user12345"
                                     }
                                 """))
                 .andExpect(status().isUnauthorized());
