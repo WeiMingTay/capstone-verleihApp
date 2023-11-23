@@ -6,4 +6,5 @@ public record UserProfile(
         String avatarUrl,
         String email) {
 
+
 }
