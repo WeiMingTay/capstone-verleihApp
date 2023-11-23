@@ -28,30 +28,33 @@ export default function UserLogin(props: Props) {
         <div className="userLogin">
             {(!props.userProfile?.name)
                 ?
-                <form>
-                    <label>
-                        Username <input type="text"/>
-                    </label>
-                    <label>
-                        Password <input id={"user-password"} type={passwordVisible ? "text" : "password"}
-                                        onKeyDown={handleKeyDown}/>
-                        <span
-                            onClick={changeVisibility}
-                            onKeyDown={handleKeyDown}
-                            id="passwort-span">
+                <>
+                    <form>
+                        <label>
+                            Username <input type="text"/>
+                        </label>
+                        <label>
+                            Password <input id={"user-password"} type={passwordVisible ? "text" : "password"}
+                                            onKeyDown={handleKeyDown}/>
+                            <span
+                                onClick={changeVisibility}
+                                onKeyDown={handleKeyDown}
+                                id="passwort-span">
                             <i className={passwordVisible ? "las la-eye" : "las la-eye-slash"}></i>
                         </span>
-                    </label>
+                        </label>
 
-                    <ButtonLarge name={"Login"} onClick={props.login}/>
-                </form>
+                        <ButtonLarge name={"Login"} onClick={props.login}/>
+                    </form>
+                    <div className="trenner">
+                        <p>oder</p>
+                        <div/>
+
+                    </div>
+                </>
                 : <></>
             }
-            <div className="trenner">
-                <p>oder</p>
-                <div/>
 
-            </div>
             <div className="externalLogin">
                 {(!props.userProfile?.name)
                     ? <div className="oAuthAnbieter">

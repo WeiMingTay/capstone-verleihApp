@@ -21,14 +21,15 @@ class UserServiceTest {
 
     @Mock
     private OAuth2AuthenticationToken mockOAuth2AuthenticationToken;
-
+    @Mock
+    private UserRepository mockUserRepository;
     private UserService userService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        userService = new UserService();
+        userService = new UserService(mockUserRepository);
     }
 
     @Test

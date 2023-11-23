@@ -109,7 +109,7 @@ export default function App() {
                 <Route path={"/werkzeuge"} element={<ToolGallery tools={tools} userProfile={userProfile}/>}/>
                 <Route path={"/werkzeuge/:id"}
                        element={<ToolPage onToolUpdate={getAllTools} userProfile={userProfile}/>}/>
-                <Route path={"/werkzeuge/add"} element={<AddTool onToolUpdate={getAllTools}/>}/>
+                <Route path={"/werkzeuge/add"} element={<AddTool onToolUpdate={getAllTools} userProfile={userProfile}/>}/>
                 <Route path={"/kategorie"} element={<CategoryGalleryPage/>}/>
                 <Route path={"/kategorie/:id"} element={<CategoryPage tools={tools} userProfile={userProfile}/>}/>
                 <Route path={"/schwarzes-brett"} element={<SchwarzesBrett/>}/>

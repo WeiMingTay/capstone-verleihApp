@@ -1,12 +1,17 @@
 package de.neuefische.backend.user;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
+private final UserRepository userRepository;
+
 
     public UserProfile createUserProfile(OAuth2AuthenticationToken token) {
         Map<String, Object> attributes = token.getPrincipal().getAttributes();
@@ -41,4 +46,8 @@ public class UserService {
         return emailObject != null ? emailObject.toString() : "";
     }
 
+
+    public UserProfile getUserProfileById(String userId) throws NoSuchElementException {
+        return userRepository.findById(userId).orElseThrow();
+    }
 }

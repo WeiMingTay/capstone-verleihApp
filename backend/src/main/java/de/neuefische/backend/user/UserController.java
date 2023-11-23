@@ -10,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
@@ -25,5 +27,9 @@ public class UserController {
             return userService.createUserProfile(token);
         }
         return null;
+    }
+    @GetMapping("/profile/{userId}")
+    public UserProfile getUserProfile(String userId) throws NoSuchElementException {
+        return userService.getUserProfileById(userId);
     }
 }

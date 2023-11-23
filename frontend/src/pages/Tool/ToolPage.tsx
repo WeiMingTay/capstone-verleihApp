@@ -8,9 +8,10 @@ import ButtonLarge from "../../components/Button/ButtonLarge.tsx";
 import {UserProfile} from "../../assets/entities/userProfile.ts";
 import Select from "react-select";
 
+
 type Props = {
     readonly onToolUpdate: () => void
-    readonly userProfile: UserProfile | undefined
+    readonly userProfile?: UserProfile
 };
 
 export default function ToolPage(props: Props) {
@@ -77,7 +78,7 @@ export default function ToolPage(props: Props) {
     const handleCancelClick = () => {
         setIsModalOpen(false);
     };
-    console.log(isModalOpen)
+
     const isoTime = tool?.timestamp ?? new Date().toISOString()
     const formattedTimeStamp = new Date(isoTime).toLocaleString([], {
         day: '2-digit',
@@ -87,7 +88,12 @@ export default function ToolPage(props: Props) {
         minute: '2-digit',
     })
 
-    function submitEditedTool(event: FormEvent, id: string) {
+    function submitEditedTool(event: FormEvent<HTMLFormElement> | undefined, id: string) {
+        if (!event) {
+            console.error("Event is undefined in submitEditedTool");
+            return;
+        }
+
         event.preventDefault()
         axios.put(`/api/tools/${id}`, {
             ...tool,
@@ -96,16 +102,12 @@ export default function ToolPage(props: Props) {
             location: location,
             author: author,
             description: description,
-            /*categories: tool?.categories,
-            location: tool?.location,
-            author: tool?.author,
-            description: tool?.description,*/
         })
             .then((response) => {
                 setTool(response.data)
             })
             .then(props.onToolUpdate)
-        setIsBeingEdited(false)
+            .finally(() => setIsBeingEdited(false));
     }
 
     function changeName(event: ChangeEvent<HTMLInputElement>) {
@@ -144,13 +146,24 @@ export default function ToolPage(props: Props) {
             buttonContent = (
                 <div className={"edit-btn"}>
                     <ButtonLarge name={"Abbrechen"} onClick={() => setIsBeingEdited(false)}/>
-                    <ButtonLarge name={"Speichern"} onClick={() => setIsBeingEdited(false)}/>
+                    <ButtonLarge name={"Speichern"} formId="submitEditForm"/>
                 </div>
             );
         }
     }
+    let AuthorSameAsUser
+        if(tool?.author == tool?.user?.name) {
+           AuthorSameAsUser = <img id={"authorUser"} src={tool?.user?.avatarUrl} alt={tool?.user?.name}/>
+        }
+
+
     return (<article className={"toolPage-page"}>
         <p>{formattedTimeStamp}</p>
+        <div className={"userOfTool"}>
+            {tool?.user && <img src={tool.user.avatarUrl} alt={tool.user.name}/>}
+            {/*<p>{tool?.user.name}</p>*/}
+        </div>
+
         {
             (!isBeingEdited)
                 ?
@@ -173,12 +186,12 @@ export default function ToolPage(props: Props) {
                         <div></div>
                     }
                     <p className={"italic"}>Ort: <span>{tool?.location}</span></p>
-                    <p className={"italic"}>Ansprechpartner:in: <span>{tool?.author}</span></p>
+                    <p className={"italic"}>Ansprechpartner:in: <span id={"authorUser-container"}>{tool?.author}{AuthorSameAsUser}</span></p>
                     {isLoggedIn && <ButtonLarge name={"Anfrage"}/>
                     }
                     <p> Anleitung: {tool?.description}</p>
                 </>
-                : <form onSubmit={(event) => submitEditedTool(event, tool?.id ?? "")}>
+                : <form id="submitEditForm" onSubmit={(event) => submitEditedTool(event, tool?.id ?? "")}>
                     <label>
                         <input id="nameInput" type="text" value={name ?? tool?.name} placeholder="Bezeichnung"
                                onChange={changeName}/>

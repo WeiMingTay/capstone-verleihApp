@@ -32,7 +32,7 @@ export default function Header(props: Props) {
                     ? <Link to={"/start"}><img src={logo} alt="Logo"/></Link>
                     : <Link to={"/"}><img src={logo} alt="Logo"/></Link>
                 }
-                <h1>Capstone</h1>
+                <h1>VerleihApp</h1>
 
             </div>
             <div
