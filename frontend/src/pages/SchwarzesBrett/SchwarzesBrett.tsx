@@ -2,11 +2,11 @@ import "./SchwarzesBrett.scss";
 
 export default function SchwarzesBrett() {
 
-    function addPost() {
+    function addPost() :void {
         console.log("addPost");
 
     }
-    function deletePost() {
+    function deletePost() :void {
         console.log("deletePost");
     }
     return (
@@ -19,7 +19,7 @@ export default function SchwarzesBrett() {
                 <div>
                     <article>
                         <p>Schlagzeug</p>
-                        <button onClick={deletePost} className="delete-btn">-</button>
+                        <button onClick={deletePost} className="delete-btn"><i className="las la-trash"></i></button>
                     </article>
                 </div>
             </section>

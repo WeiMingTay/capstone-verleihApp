@@ -40,9 +40,11 @@
     }
 
     .delete-btn {
+      font-size: $fontSizeL;
       position: absolute;
-      bottom: 1.5rem;
-      right: 1.5rem;
+      bottom: .75rem;
+      right: 50%;
+      transform: translateX(50%);
       width: fit-content;
       padding: .5rem;
     }
