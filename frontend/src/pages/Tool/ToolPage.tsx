@@ -59,10 +59,13 @@ export default function ToolPage(props: Props) {
             .catch(error => console.error(error))
     }
 
+
     function deleteToolById(id: string) {
+
         setLoading(true);
         axios.delete(`/api/tools/${id}`)
             .then(() => {
+
                 navigate("/werkzeuge")
                 props.onToolUpdate?.()
             })
@@ -71,6 +74,7 @@ export default function ToolPage(props: Props) {
             .finally(() => setIsModalOpen(false));
     }
 
+    console.log(tool?.image)
     const handleDeleteClick = () => {
         setIsModalOpen(true);
     };
@@ -152,9 +156,9 @@ export default function ToolPage(props: Props) {
         }
     }
     let AuthorSameAsUser
-        if(tool?.author == tool?.user?.name) {
-           AuthorSameAsUser = <img id={"authorUser"} src={tool?.user?.avatarUrl} alt={tool?.user?.name}/>
-        }
+    if (tool?.author == tool?.user?.name) {
+        AuthorSameAsUser = <img id={"authorUser"} src={tool?.user?.avatarUrl} alt={tool?.user?.name}/>
+    }
 
 
     return (<article className={"toolPage-page"}>
@@ -186,7 +190,8 @@ export default function ToolPage(props: Props) {
                         <div></div>
                     }
                     <p className={"italic"}>Ort: <span>{tool?.location}</span></p>
-                    <p className={"italic"}>Ansprechpartner:in: <span id={"authorUser-container"}>{tool?.author}{AuthorSameAsUser}</span></p>
+                    <p className={"italic"}>Ansprechpartner:in: <span
+                        id={"authorUser-container"}>{tool?.author}{AuthorSameAsUser}</span></p>
                     {isLoggedIn && <ButtonLarge name={"Anfrage"}/>
                     }
                     <p> Anleitung: {tool?.description}</p>
