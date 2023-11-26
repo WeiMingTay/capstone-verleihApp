@@ -97,6 +97,13 @@ class ToolsServiceTest {
         assertThat(tool.getTimestamp()).isNull();
         assertThat(tool.getUser()).isEqualTo(user);
     }
+
+    @Test
+    void setAndGetImage_shouldSetAndReturnImage() {
+        Tool tool = new Tool();
+        tool.setImage("test-image.jpg");
+        assertThat(tool.getImage()).isEqualTo("test-image.jpg");
+    }
     // === GETall ===
 
     @Test
