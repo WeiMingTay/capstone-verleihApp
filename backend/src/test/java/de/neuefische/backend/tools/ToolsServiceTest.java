@@ -8,6 +8,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.io.IOException;
 import java.util.*;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -47,7 +48,55 @@ class ToolsServiceTest {
     MockMultipartFile imageFile = new MockMultipartFile("image", "image.jpg", "image/jpeg", new byte[]{});
 
     // === Constructor Tests ===
+    @Test
+    void createToolWithAllParameters_shouldCreateToolInstance() {
+        // Given
+        String name = "Test Tool";
+        String image = "test-image.jpg";
+        List<Category> categories = List.of(Category.ELECTRONICS);
+        String author = "John Doe";
+        String location = "Test Location";
+        String description = "Test Description";
+        String timestamp = "2023-01-01T12:00:00";
+        UserProfile user = new UserProfile("123", "John Doe", "https://example.com/avatar.jpg", "john.doe@example.com");
 
+        // When
+        Tool tool = new Tool(name, image, categories, author, location, description, timestamp, user);
+
+        // Then
+        assertThat(tool).isNotNull();
+        assertThat(tool.getName()).isEqualTo(name);
+        assertThat(tool.getImage()).isEqualTo(image);
+        assertThat(tool.getCategories()).isEqualTo(categories);
+        assertThat(tool.getAuthor()).isEqualTo(author);
+        assertThat(tool.getLocation()).isEqualTo(location);
+        assertThat(tool.getDescription()).isEqualTo(description);
+        assertThat(tool.getTimestamp()).isEqualTo(timestamp);
+        assertThat(tool.getUser()).isEqualTo(user);
+    }
+
+    @Test
+    void createToolWithRequiredParameters_shouldCreateToolInstance() {
+        // Given
+        String name = "Test Tool";
+        List<Category> categories = List.of(Category.ELECTRONICS);
+        String location = "Test Location";
+        UserProfile user = new UserProfile("123", "John Doe", "https://example.com/avatar.jpg", "john.doe@example.com");
+
+        // When
+        Tool tool = new Tool(name, null, categories, null, location, null, null, user);
+
+        // Then
+        assertThat(tool).isNotNull();
+        assertThat(tool.getName()).isEqualTo(name);
+        assertThat(tool.getImage()).isNull();
+        assertThat(tool.getCategories()).isEqualTo(categories);
+        assertThat(tool.getAuthor()).isNull();
+        assertThat(tool.getLocation()).isEqualTo(location);
+        assertThat(tool.getDescription()).isNull();
+        assertThat(tool.getTimestamp()).isNull();
+        assertThat(tool.getUser()).isEqualTo(user);
+    }
     // === GETall ===
 
     @Test
