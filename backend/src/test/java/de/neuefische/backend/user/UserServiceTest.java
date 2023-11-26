@@ -55,6 +55,23 @@ class UserServiceTest {
         assertEquals("testuser@example.com", userProfile.email());
     }
     @Test
+    void getUserProfileById_shouldReturnUserProfile() {
+        // Mocking a UserProfile for testing
+        UserProfile mockUserProfile = new UserProfile("12345", "testuser", "https://example.com/avatar.jpg", "testuser@example.com");
+
+        // Mocking the behavior of the UserRepository
+        when(mockUserRepository.findById("12345")).thenReturn(Optional.of(mockUserProfile));
+
+        // Calling the method under test
+        UserProfile userProfile = userService.getUserProfileById("12345");
+
+        // Verifying the result
+        assertEquals("12345", userProfile.id());
+        assertEquals("testuser", userProfile.name());
+        assertEquals("https://example.com/avatar.jpg", userProfile.avatarUrl());
+        assertEquals("testuser@example.com", userProfile.email());
+    }
+    @Test
     void getUserProfileById_shouldThrowNoSuchElementException() {
         // Mocking the behavior of the UserRepository to return an empty optional
         when(mockUserRepository.findById("nonexistentUserId")).thenReturn(Optional.empty());
