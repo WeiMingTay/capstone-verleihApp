@@ -4,7 +4,34 @@
   height: calc(100dvh - $headerHeight);
   padding: 0 1rem;
   font-size: $fontSizeM;
+  position: relative;
 
+  .userOfTool {
+    background-color: rgb(red, .25);
+    position: absolute;
+    top: 0;
+    right: .5rem;
+    cursor: pointer;
+    height: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: all 250ms ease-in;
+
+    img {
+      transition: all 250ms ease-in;
+      margin: 0;
+    }
+
+    &:hover {
+
+
+      img {
+        scale: 1.1;
+      }
+
+    }
+  }
 
   > p:first-of-type {
     font-size: $fontSizeS;
@@ -63,10 +90,24 @@
     margin: .5rem 0;
     accent-color: $accentColor;
 
+
     input, textarea {
       font-style: normal;
-      margin-left: .5rem;
+      margin-left: 1px;
       font-size: $fontSizeM;
+
+    }
+  }
+
+  #authorUser-container {
+    position: relative;
+
+    #authorUser {
+      position: absolute;
+      top: -1rem;
+      right: -.75rem;
+      width: 10px;
+      border-radius: 50%;
     }
   }
 
@@ -128,24 +169,27 @@
 
   position: absolute;
   width: 80%;
-aspect-ratio: .75;
+  aspect-ratio: .75;
   bottom: 50%;
   left: 50%;
   padding: 1rem;
-  transform: translate(-50%,50%);
+  transform: translate(-50%, 50%);
   border: 2px solid $secondaryColor;
   outline: 2px solid $textColorLight;
   background-color: $backgroundColorLight;
   box-shadow: 0 0 10px 2px $backgroundColorMedium;
-p {
-  text-align: center;
-}
+
+  p {
+    text-align: center;
+  }
+
   div {
 
     gap: 1rem;
 
     button {
       height: max-content;
+
       &:first-of-type {
         background-color: $primaryColor;
       }

@@ -10,9 +10,11 @@ type Props = {
     readonly tools: Tools[]
 }
 export default function UserProfilePage(props: Props) {
+
     return (<div className={"userProfil-page"}>
         <img src={props.userProfile?.avatarUrl} alt={props.userProfile?.id}/>
         <h3>{props.userProfile?.name}</h3>
+        <h4>{props.userProfile?.email}</h4>
         <ButtonLarge name="Logout" onClick={props.logout}/>
         <div><h2>My Tools oder lieber "als Favorit markiert"?</h2>
             <section>
